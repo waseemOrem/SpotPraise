@@ -39,9 +39,28 @@ class DescriptionVC: BaseViewController {
     }
     
     @IBAction func btnActionUpload(_ sender: UIButton) {
+        
+        guard let vc = getVC(withId: VC.PostVideoPOPVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostVideoPOPVC else {
+            return
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overFullScreen
+        vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
+        self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func btnActionPower(_ sender: UIButton) {
+        Alert.shared.showAlertWithCompletion(buttons: ["logout","dismiss"], msg: "Are you sure to logout?", success: { [weak self]
+            
+                decision in
+            
+            if decision == "logout"{
+               AppManager.Manager.initStoryBoard(type: .Login)
+               // for vc in  AppManager.Manager.customStackTree.enumerated() 
+               // self?.navigationController?.popToRootViewController(animated: true)
+            }
+            
+        })
     }
     /*
     // MARK: - Navigation
@@ -53,4 +72,12 @@ class DescriptionVC: BaseViewController {
     }
     */
 
+}
+
+extension DescriptionVC : UploadPopUpListner{
+    func didTappedOnDone(prefrence: UploadChoices, dataSource: Any?) {
+        
+    }
+    
+    
 }

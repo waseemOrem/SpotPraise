@@ -36,6 +36,7 @@ class ProfileVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 self.tableView?.dataSource = self
+        self.tableView?.delegate = self
        // r.[0].Pipe
         // Do any additional setup after loading the view.
     }
@@ -72,13 +73,29 @@ extension ProfileVC : UITableViewDataSource,UITableViewDelegate{
          let item = menuItemsArray[indexPath.row]
         switch item {
         case .personalInfo: break
+        case .postHistory:
+            guard let vc = self.getVC(withId: VC.PostHistoryVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostHistoryVC else {
+                return
+            }
+            self.pushVC(vc)
             
+        case .subscriptionPlan:
+            guard let vc = self.getVC(withId: VC.SubscriptionVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? SubscriptionVC else {
+                return
+            }
+            self.pushVC(vc)
+            
+        case .changePassword:
+            guard let vc = self.getVC(withId: VC.ChangePssVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? ChangePssVC else {
+                return
+            }
+            self.pushVC(vc)
         default:
             break
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        return 60.0
     }
 }

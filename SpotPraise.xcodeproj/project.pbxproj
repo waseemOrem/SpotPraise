@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		2ED275CB5271B8F0C404434A /* Pods_SpotPraiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A4D2FEC10BBCAE3B04A668 /* Pods_SpotPraiseTests.framework */; };
+		840A487A2478E6B700241B79 /* PostVideoPOPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A48792478E6B700241B79 /* PostVideoPOPVC.swift */; };
+		840A487E2478F6E200241B79 /* post_history.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 840A487D2478F6E100241B79 /* post_history.jpg */; };
+		840A48802478F76B00241B79 /* PostHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A487F2478F76B00241B79 /* PostHistoryVC.swift */; };
+		840A48832478F83900241B79 /* PostHistoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A48812478F83900241B79 /* PostHistoryTableCell.swift */; };
+		840A48842478F83900241B79 /* PostHistoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840A48822478F83900241B79 /* PostHistoryTableCell.xib */; };
+		840A4886247913AE00241B79 /* post_details.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 840A4885247913AA00241B79 /* post_details.jpg */; };
+		840A48882479141400241B79 /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A48872479141400241B79 /* PostDetailVC.swift */; };
+		841D869824791F6A0062EC61 /* subscription_plan_purchased.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841D869724791F670062EC61 /* subscription_plan_purchased.jpg */; };
+		841D869A247923590062EC61 /* SubscriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D8699247923590062EC61 /* SubscriptionVC.swift */; };
 		844F4FD52477DEE5007ACC82 /* ChangePssVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FD42477DEE5007ACC82 /* ChangePssVC.swift */; };
 		844F4FD72477E086007ACC82 /* 3_Forgot_Password.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 844F4FD62477E086007ACC82 /* 3_Forgot_Password.jpg */; };
 		844F4FD92477E1A0007ACC82 /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FD82477E1A0007ACC82 /* ForgotVC.swift */; };
@@ -24,6 +33,7 @@
 		8451EE352478AF3A008F3E39 /* prof.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8451EE342478AF39008F3E39 /* prof.jpg */; };
 		8451EE372478B422008F3E39 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE362478B422008F3E39 /* ProfileVC.swift */; };
 		8451EE3A2478B912008F3E39 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE392478B912008F3E39 /* ProfileTableCell.swift */; };
+		8451EE792478DB01008F3E39 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE782478DB01008F3E39 /* ImagePicker.swift */; };
 		8484BA2E2477C4F1002324EC /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484BA2D2477C4F1002324EC /* SignUpVC.swift */; };
 		8484BA302477C72B002324EC /* change_password.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8484BA2F2477C72A002324EC /* change_password.jpg */; };
 		849919882477AECC0073A1DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849919872477AECC0073A1DE /* AppDelegate.swift */; };
@@ -105,6 +115,15 @@
 /* Begin PBXFileReference section */
 		56E0ABFAC36406C97D69DA69 /* Pods-SpotPraise-SpotPraiseUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotPraise-SpotPraiseUITests.debug.xcconfig"; path = "Target Support Files/Pods-SpotPraise-SpotPraiseUITests/Pods-SpotPraise-SpotPraiseUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7885876DD042A854B32D8795 /* Pods-SpotPraise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotPraise.debug.xcconfig"; path = "Target Support Files/Pods-SpotPraise/Pods-SpotPraise.debug.xcconfig"; sourceTree = "<group>"; };
+		840A48792478E6B700241B79 /* PostVideoPOPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVideoPOPVC.swift; sourceTree = "<group>"; };
+		840A487D2478F6E100241B79 /* post_history.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = post_history.jpg; path = Docs/Spot_Praise_Designs_2020/post_history.jpg; sourceTree = SOURCE_ROOT; };
+		840A487F2478F76B00241B79 /* PostHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHistoryVC.swift; sourceTree = "<group>"; };
+		840A48812478F83900241B79 /* PostHistoryTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHistoryTableCell.swift; sourceTree = "<group>"; };
+		840A48822478F83900241B79 /* PostHistoryTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostHistoryTableCell.xib; sourceTree = "<group>"; };
+		840A4885247913AA00241B79 /* post_details.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = post_details.jpg; path = Docs/Spot_Praise_Designs_2020/post_details.jpg; sourceTree = SOURCE_ROOT; };
+		840A48872479141400241B79 /* PostDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
+		841D869724791F670062EC61 /* subscription_plan_purchased.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = subscription_plan_purchased.jpg; path = Docs/Spot_Praise_Designs_2020/subscription_plan_purchased.jpg; sourceTree = SOURCE_ROOT; };
+		841D8699247923590062EC61 /* SubscriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionVC.swift; sourceTree = "<group>"; };
 		844F4FD42477DEE5007ACC82 /* ChangePssVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePssVC.swift; sourceTree = "<group>"; };
 		844F4FD62477E086007ACC82 /* 3_Forgot_Password.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3_Forgot_Password.jpg; path = Docs/Spot_Praise_Designs_2020/3_Forgot_Password.jpg; sourceTree = SOURCE_ROOT; };
 		844F4FD82477E1A0007ACC82 /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
@@ -121,6 +140,7 @@
 		8451EE342478AF39008F3E39 /* prof.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = prof.jpg; path = Docs/Spot_Praise_Designs_2020/prof.jpg; sourceTree = SOURCE_ROOT; };
 		8451EE362478B422008F3E39 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		8451EE392478B912008F3E39 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
+		8451EE782478DB01008F3E39 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		8484BA2D2477C4F1002324EC /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		8484BA2F2477C72A002324EC /* change_password.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = change_password.jpg; path = Docs/Spot_Praise_Designs_2020/change_password.jpg; sourceTree = SOURCE_ROOT; };
 		849919842477AECC0073A1DE /* SpotPraise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotPraise.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,6 +273,10 @@
 				849E639024780A4400064806 /* UploadVideoPopUpVC.swift */,
 				8451EE322478AB37008F3E39 /* DescriptionVC.swift */,
 				8451EE362478B422008F3E39 /* ProfileVC.swift */,
+				840A48792478E6B700241B79 /* PostVideoPOPVC.swift */,
+				840A487F2478F76B00241B79 /* PostHistoryVC.swift */,
+				840A48872479141400241B79 /* PostDetailVC.swift */,
+				841D8699247923590062EC61 /* SubscriptionVC.swift */,
 			);
 			path = HomeStory;
 			sourceTree = "<group>";
@@ -261,6 +285,8 @@
 			isa = PBXGroup;
 			children = (
 				8451EE392478B912008F3E39 /* ProfileTableCell.swift */,
+				840A48812478F83900241B79 /* PostHistoryTableCell.swift */,
+				840A48822478F83900241B79 /* PostHistoryTableCell.xib */,
 			);
 			path = TableCells;
 			sourceTree = "<group>";
@@ -322,8 +348,11 @@
 			isa = PBXGroup;
 			children = (
 				8451EE342478AF39008F3E39 /* prof.jpg */,
+				840A487D2478F6E100241B79 /* post_history.jpg */,
+				840A4885247913AA00241B79 /* post_details.jpg */,
 				844F4FE8247804F3007ACC82 /* 6_1_choose_option.jpg */,
 				8451EE302478A5D9008F3E39 /* 8_description.jpg */,
+				841D869724791F670062EC61 /* subscription_plan_purchased.jpg */,
 				844F4FE02477EA28007ACC82 /* 6_0_home.jpg */,
 				8451EE2E2478A546008F3E39 /* 7_home_uploaded.jpg */,
 				844F4FDA2477E513007ACC82 /* 5_otp.jpg */,
@@ -387,6 +416,7 @@
 				849919C02477AF660073A1DE /* PublicEnums.swift */,
 				849919C22477AF720073A1DE /* PublicExtensions.swift */,
 				849919C42477AF790073A1DE /* Alert.swift */,
+				8451EE782478DB01008F3E39 /* ImagePicker.swift */,
 			);
 			path = HelperClasses;
 			sourceTree = "<group>";
@@ -601,14 +631,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				844F4FE12477EA29007ACC82 /* 6_0_home.jpg in Resources */,
+				840A4886247913AE00241B79 /* post_details.jpg in Resources */,
 				84991A252477BC7E0073A1DE /* Poppins-ExtraLight.ttf in Resources */,
 				84991A272477BC7E0073A1DE /* Poppins-SemiBold.ttf in Resources */,
 				844F4FE32477EA68007ACC82 /* Home.storyboard in Resources */,
 				8484BA302477C72B002324EC /* change_password.jpg in Resources */,
 				84991A102477B8B40073A1DE /* 4_sign_up.jpg in Resources */,
+				841D869824791F6A0062EC61 /* subscription_plan_purchased.jpg in Resources */,
 				84991A2D2477BC7E0073A1DE /* Poppins-Black.ttf in Resources */,
 				8451EE352478AF3A008F3E39 /* prof.jpg in Resources */,
 				844F4FD72477E086007ACC82 /* 3_Forgot_Password.jpg in Resources */,
+				840A48842478F83900241B79 /* PostHistoryTableCell.xib in Resources */,
 				84991A292477BC7E0073A1DE /* Poppins-Regular.ttf in Resources */,
 				84991A282477BC7E0073A1DE /* Poppins-Light.ttf in Resources */,
 				849919952477AECD0073A1DE /* LaunchScreen.storyboard in Resources */,
@@ -617,6 +650,7 @@
 				84991A2B2477BC7E0073A1DE /* Poppins-Bold.ttf in Resources */,
 				84991A262477BC7E0073A1DE /* Poppins-Medium.ttf in Resources */,
 				84991A2C2477BC7E0073A1DE /* Poppins-Thin.ttf in Resources */,
+				840A487E2478F6E200241B79 /* post_history.jpg in Resources */,
 				849919922477AECD0073A1DE /* Assets.xcassets in Resources */,
 				8499198D2477AECC0073A1DE /* Main.storyboard in Resources */,
 				8451EE312478A5DA008F3E39 /* 8_description.jpg in Resources */,
@@ -752,21 +786,25 @@
 				84991A032477B04B0073A1DE /* GradientDesignable.swift in Sources */,
 				849919EE2477B04B0073A1DE /* AnimatableView.swift in Sources */,
 				849919C52477AF790073A1DE /* Alert.swift in Sources */,
+				840A487A2478E6B700241B79 /* PostVideoPOPVC.swift in Sources */,
 				849919F02477B04B0073A1DE /* AnimatableImageView.swift in Sources */,
 				849E639124780A4400064806 /* UploadVideoPopUpVC.swift in Sources */,
 				849919C72477AF890073A1DE /* UnWrap.swift in Sources */,
+				840A48882479141400241B79 /* PostDetailVC.swift in Sources */,
 				849919F92477B04B0073A1DE /* GradientStartPoint.swift in Sources */,
 				8451EE3A2478B912008F3E39 /* ProfileTableCell.swift in Sources */,
 				849919FF2477B04B0073A1DE /* AnimationChainable.swift in Sources */,
 				849919F52477B04B0073A1DE /* AnimatableTextField.swift in Sources */,
 				8484BA2E2477C4F1002324EC /* SignUpVC.swift in Sources */,
 				849919902477AECC0073A1DE /* SpotPraise.xcdatamodeld in Sources */,
+				840A48802478F76B00241B79 /* PostHistoryVC.swift in Sources */,
 				84991A052477B04B0073A1DE /* Utils.swift in Sources */,
 				849919EC2477B04B0073A1DE /* BorderSide.swift in Sources */,
 				849919F42477B04B0073A1DE /* CornerSide.swift in Sources */,
 				844F4FDF2477E825007ACC82 /* BaseViewController.swift in Sources */,
 				849919F62477B04B0073A1DE /* Animatable.swift in Sources */,
 				849919FA2477B04B0073A1DE /* TimingFunctionType.swift in Sources */,
+				841D869A247923590062EC61 /* SubscriptionVC.swift in Sources */,
 				849919882477AECC0073A1DE /* AppDelegate.swift in Sources */,
 				849919F12477B04B0073A1DE /* AnimatableTextView.swift in Sources */,
 				849919F82477B04B0073A1DE /* Typealias.swift in Sources */,
@@ -776,6 +814,8 @@
 				844F4FE72477F266007ACC82 /* HomeVC.swift in Sources */,
 				84991A062477B04B0073A1DE /* AnimationType.swift in Sources */,
 				844F4FD52477DEE5007ACC82 /* ChangePssVC.swift in Sources */,
+				840A48832478F83900241B79 /* PostHistoryTableCell.swift in Sources */,
+				8451EE792478DB01008F3E39 /* ImagePicker.swift in Sources */,
 				84991A0A2477B04B0073A1DE /* ShadowDesignable.swift in Sources */,
 				849919FD2477B04B0073A1DE /* GradientType.swift in Sources */,
 				844F4FDD2477E7CD007ACC82 /* OTPVerificationVC.swift in Sources */,

@@ -15,6 +15,11 @@ class BaseViewController: UIViewController {
     popVC()
     }
     
+    @IBAction func btnLogout(){
+        AppManager.Manager.logoutFromApp(fromVc: self)
+    }
+    
+    
     func popVC() {
         
         if self.navigationController != nil {

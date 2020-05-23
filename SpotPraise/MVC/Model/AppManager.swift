@@ -11,7 +11,7 @@ class AppManager: NSObject {
     }
     static let Manager = AppManager()
     var window: UIWindow?
-    
+      var customStackTree = [VC]();
     weak var delegate:AppMangerEventListener?
     
     private let locationManager = CLLocationManager()
@@ -28,7 +28,7 @@ class AppManager: NSObject {
             navigationController.setNavigationBarHidden(true, animated: true)
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
-            
+            customStackTree.append(.LoginVC)
             
             
         case .Home:
@@ -67,6 +67,9 @@ class AppManager: NSObject {
         //        })
     }
     
+    
+    
+   
 }
 
 

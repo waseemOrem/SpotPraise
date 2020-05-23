@@ -37,6 +37,10 @@ enum VC : String {
     case UploadVideoPopUpVC = "UploadVideoPopUpVC"
     case DescriptionVC = "DescriptionVC"
     case ProfileVC = "ProfileVC"
+    case PostVideoPOPVC  = "PostVideoPOPVC"
+    case SubscriptionVC = "SubscriptionVC"
+    case PostHistoryVC  = "PostHistoryVC"
+    case PostDetailVC = "PostDetailVC"
     
 }
 
@@ -51,5 +55,11 @@ enum CustomFontPoppins:String{
 }
 enum TableCells:String{
     case ProfileTableCell = "ProfileTableCell"
+    case PostHistoryTableCell = "PostHistoryTableCell"
     
+}
+
+
+enum UploadChoices{
+    case UploadImage , UploadVideo
 }
