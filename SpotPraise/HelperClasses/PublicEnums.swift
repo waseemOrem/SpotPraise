@@ -41,6 +41,8 @@ enum VC : String {
     case SubscriptionVC = "SubscriptionVC"
     case PostHistoryVC  = "PostHistoryVC"
     case PostDetailVC = "PostDetailVC"
+    case SubscriptionPlanPopVC = "SubscriptionPlanPopVC"
+    case PersonalInfoVC = "PersonalInfoVC"
     
 }
 

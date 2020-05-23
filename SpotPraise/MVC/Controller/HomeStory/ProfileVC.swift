@@ -72,7 +72,13 @@ extension ProfileVC : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          let item = menuItemsArray[indexPath.row]
         switch item {
-        case .personalInfo: break
+        case .personalInfo:
+            
+            guard let vc = self.getVC(withId: VC.PersonalInfoVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PersonalInfoVC else {
+                return
+            }
+            self.pushVC(vc)
+
         case .postHistory:
             guard let vc = self.getVC(withId: VC.PostHistoryVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostHistoryVC else {
                 return

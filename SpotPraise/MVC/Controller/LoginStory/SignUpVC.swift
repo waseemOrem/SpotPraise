@@ -12,10 +12,7 @@ class SignUpVC: BaseViewController {
 
     //MARK: -Outlets
     
-    
-    
-
-    @IBOutlet weak var lblCreateAcc: UILabel?
+     @IBOutlet weak var lblCreateAcc: UILabel?
     
     @IBOutlet weak var tfUserName: AnimatableTextField!
     

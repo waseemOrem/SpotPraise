@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
+class HomeVC: BaseViewController {
 
     //MARK: -Outlets
     @IBOutlet weak var viewHolder:UIView?

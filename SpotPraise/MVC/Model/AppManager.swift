@@ -59,6 +59,7 @@ class AppManager: NSObject {
     }
     
     private func logout(fromVc:UIViewController){
+        self.initStoryBoard(type: .Login)
         //        APIManager.requestWebServerWithAlamo(to: .Logout,  httpMethd: .post, completion: {onSuccess in
         //
         //            self.deleteData(fromVc: fromVc)

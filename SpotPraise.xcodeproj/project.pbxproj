@@ -15,6 +15,10 @@
 		840A48842478F83900241B79 /* PostHistoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840A48822478F83900241B79 /* PostHistoryTableCell.xib */; };
 		840A4886247913AE00241B79 /* post_details.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 840A4885247913AA00241B79 /* post_details.jpg */; };
 		840A48882479141400241B79 /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A48872479141400241B79 /* PostDetailVC.swift */; };
+		840AD10124793CF2001E4F6D /* SubscriptionPlanPopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840AD10024793CF2001E4F6D /* SubscriptionPlanPopVC.swift */; };
+		840AD10324793D74001E4F6D /* pi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 840AD10224793D73001E4F6D /* pi.jpg */; };
+		840AD105247940F8001E4F6D /* PersonalInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840AD104247940F8001E4F6D /* PersonalInfoVC.swift */; };
+		840AD1072479455C001E4F6D /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840AD1062479455C001E4F6D /* Validation.swift */; };
 		841D869824791F6A0062EC61 /* subscription_plan_purchased.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841D869724791F670062EC61 /* subscription_plan_purchased.jpg */; };
 		841D869A247923590062EC61 /* SubscriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D8699247923590062EC61 /* SubscriptionVC.swift */; };
 		844F4FD52477DEE5007ACC82 /* ChangePssVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FD42477DEE5007ACC82 /* ChangePssVC.swift */; };
@@ -122,6 +126,10 @@
 		840A48822478F83900241B79 /* PostHistoryTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostHistoryTableCell.xib; sourceTree = "<group>"; };
 		840A4885247913AA00241B79 /* post_details.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = post_details.jpg; path = Docs/Spot_Praise_Designs_2020/post_details.jpg; sourceTree = SOURCE_ROOT; };
 		840A48872479141400241B79 /* PostDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
+		840AD10024793CF2001E4F6D /* SubscriptionPlanPopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanPopVC.swift; sourceTree = "<group>"; };
+		840AD10224793D73001E4F6D /* pi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pi.jpg; path = Docs/Spot_Praise_Designs_2020/pi.jpg; sourceTree = SOURCE_ROOT; };
+		840AD104247940F8001E4F6D /* PersonalInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoVC.swift; sourceTree = "<group>"; };
+		840AD1062479455C001E4F6D /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		841D869724791F670062EC61 /* subscription_plan_purchased.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = subscription_plan_purchased.jpg; path = Docs/Spot_Praise_Designs_2020/subscription_plan_purchased.jpg; sourceTree = SOURCE_ROOT; };
 		841D8699247923590062EC61 /* SubscriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionVC.swift; sourceTree = "<group>"; };
 		844F4FD42477DEE5007ACC82 /* ChangePssVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePssVC.swift; sourceTree = "<group>"; };
@@ -277,6 +285,8 @@
 				840A487F2478F76B00241B79 /* PostHistoryVC.swift */,
 				840A48872479141400241B79 /* PostDetailVC.swift */,
 				841D8699247923590062EC61 /* SubscriptionVC.swift */,
+				840AD10024793CF2001E4F6D /* SubscriptionPlanPopVC.swift */,
+				840AD104247940F8001E4F6D /* PersonalInfoVC.swift */,
 			);
 			path = HomeStory;
 			sourceTree = "<group>";
@@ -351,6 +361,7 @@
 				840A487D2478F6E100241B79 /* post_history.jpg */,
 				840A4885247913AA00241B79 /* post_details.jpg */,
 				844F4FE8247804F3007ACC82 /* 6_1_choose_option.jpg */,
+				840AD10224793D73001E4F6D /* pi.jpg */,
 				8451EE302478A5D9008F3E39 /* 8_description.jpg */,
 				841D869724791F670062EC61 /* subscription_plan_purchased.jpg */,
 				844F4FE02477EA28007ACC82 /* 6_0_home.jpg */,
@@ -417,6 +428,7 @@
 				849919C22477AF720073A1DE /* PublicExtensions.swift */,
 				849919C42477AF790073A1DE /* Alert.swift */,
 				8451EE782478DB01008F3E39 /* ImagePicker.swift */,
+				840AD1062479455C001E4F6D /* Validation.swift */,
 			);
 			path = HelperClasses;
 			sourceTree = "<group>";
@@ -655,6 +667,7 @@
 				8499198D2477AECC0073A1DE /* Main.storyboard in Resources */,
 				8451EE312478A5DA008F3E39 /* 8_description.jpg in Resources */,
 				8451EE2F2478A547008F3E39 /* 7_home_uploaded.jpg in Resources */,
+				840AD10324793D74001E4F6D /* pi.jpg in Resources */,
 				844F4FDB2477E514007ACC82 /* 5_otp.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,6 +810,7 @@
 				849919F52477B04B0073A1DE /* AnimatableTextField.swift in Sources */,
 				8484BA2E2477C4F1002324EC /* SignUpVC.swift in Sources */,
 				849919902477AECC0073A1DE /* SpotPraise.xcdatamodeld in Sources */,
+				840AD1072479455C001E4F6D /* Validation.swift in Sources */,
 				840A48802478F76B00241B79 /* PostHistoryVC.swift in Sources */,
 				84991A052477B04B0073A1DE /* Utils.swift in Sources */,
 				849919EC2477B04B0073A1DE /* BorderSide.swift in Sources */,
@@ -816,6 +830,7 @@
 				844F4FD52477DEE5007ACC82 /* ChangePssVC.swift in Sources */,
 				840A48832478F83900241B79 /* PostHistoryTableCell.swift in Sources */,
 				8451EE792478DB01008F3E39 /* ImagePicker.swift in Sources */,
+				840AD105247940F8001E4F6D /* PersonalInfoVC.swift in Sources */,
 				84991A0A2477B04B0073A1DE /* ShadowDesignable.swift in Sources */,
 				849919FD2477B04B0073A1DE /* GradientType.swift in Sources */,
 				844F4FDD2477E7CD007ACC82 /* OTPVerificationVC.swift in Sources */,
@@ -829,6 +844,7 @@
 				8451EE372478B422008F3E39 /* ProfileVC.swift in Sources */,
 				84991A082477B04B0073A1DE /* MaskType.swift in Sources */,
 				849919ED2477B04B0073A1DE /* CornerDesignable.swift in Sources */,
+				840AD10124793CF2001E4F6D /* SubscriptionPlanPopVC.swift in Sources */,
 				849919C32477AF720073A1DE /* PublicExtensions.swift in Sources */,
 				849919C12477AF660073A1DE /* PublicEnums.swift in Sources */,
 				84991A002477B04B0073A1DE /* _SwiftSupport.swift in Sources */,

@@ -22,12 +22,19 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+tFUserPassword?.isSecureTextEntry = true
         // Do any additional setup after loading the view.
     }
     //MARK: -Actions
     @IBAction func btnActionConti(){
-         AppManager.Manager.initStoryBoard(type: .Home)
+        let validM = Validation.Validate
+        validM.delegate = self
+        
+        if  validM.validateForEmpty(validatedObj: tFUserName, forInvalid: "Please enter username") &&  validM.validateForEmpty(validatedObj: tFUserPassword, forInvalid: "Please enter password"){
+            AppManager.Manager.initStoryBoard(type: .Home)
+            
+        }
+        
     }
     @IBAction func btnActionForget(){
         guard let vc = getVC(withId: VC.ForgotVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? ForgotVC else {
@@ -62,3 +69,17 @@ extension LoginVC{
 //MARK: -Delegates
 //MARK: -APIS
 
+extension LoginVC : validationListner{
+    func unableToValidate(validationCandidate: AnyObject?, message: String) {
+        Alert.shared.showAlertWithCompletion(buttons: ["ok"], msg: message, success: { [weak self]
+            ok in
+        
+            if let f = validationCandidate as? UITextField {
+                f.becomeFirstResponder()
+            }
+            
+        })
+    }
+    
+    
+}
