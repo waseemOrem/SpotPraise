@@ -20,10 +20,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //Configure IQKeyboard
         IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-         AppManager.Manager.initStoryBoard(type: .Login)
+        checkLoggedStatus()
+        
         return true
+    }
+    
+    func checkLoggedStatus(){
+        //Check is user logged
+        // AppManager.Manager.initStoryBoard(type: .Business)
+        if  LocalStorage.isUserLogin(){
+            LocalStorage.callLocalDBTo( dbActions: .Fetch, accessKey: .AccessKeyLoggedData, processComplete: {data in
+                let decoder = JSONDecoder()
+                guard let fData = data as? Data else {
+                    AppManager.Manager.initStoryBoard(type: .Login)
+                    return}
+                
+                guard let fetchedData = try? decoder.decode(RegistrationData.self, from: fData )  else {
+                    AppManager.Manager.initStoryBoard(type: .Login)
+                    return}
+                // print(fetchedData.deviceToken)
+                ModelDataHolder.shared.loggedData = fetchedData
+                
+                    AppManager.Manager.initStoryBoard(type: .Home)
+                  
+                
+                
+            })
+        }else {
+            AppManager.Manager.initStoryBoard(type: .Login)
+        }
+        
     }
 
     func checkFonts ()

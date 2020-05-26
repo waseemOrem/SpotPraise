@@ -92,7 +92,7 @@ extension ProfileVC : UITableViewDataSource,UITableViewDelegate{
             self.pushVC(vc)
             
         case .changePassword:
-            guard let vc = self.getVC(withId: VC.ChangePssVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? ChangePssVC else {
+            guard let vc = self.getVC(withId: VC.ChangePssVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? ChangePssVC else {
                 return
             }
             self.pushVC(vc)

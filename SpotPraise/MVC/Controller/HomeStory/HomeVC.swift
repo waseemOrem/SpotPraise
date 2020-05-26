@@ -18,6 +18,7 @@ class HomeVC: BaseViewController {
     lazy var  imageV:UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
+        img.clipsToBounds = true
         return img
         }()
     
@@ -120,11 +121,11 @@ extension HomeVC{
         imageV.isUserInteractionEnabled = true
         
         self.imageV.addSubview(postButton)
-        postButton.heightAnchor.constraint(equalToConstant: 130).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
         postButton.bottomAnchor.constraint(equalTo: (viewHolder?.bottomAnchor)!).isActive = true
         postButton.centerXAnchor.constraint(equalTo: imageV.centerXAnchor).isActive = true
-        postButton.setImage(#imageLiteral(resourceName: "ic_home_circle_button"), for: .normal)
+        postButton.setBackgroundImage(#imageLiteral(resourceName: "ic_home_circle_button"), for: .normal)
         
         postButton.addTarget(self, action: #selector(clickedOnAddPost), for: .touchUpInside)
     }

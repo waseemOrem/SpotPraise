@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ForgotVC: UIViewController {
+class ForgotVC: UIViewController ,validationListner{
+   
+    
 
     @IBOutlet weak var tfEmail: AnimatableTextField!
     override func viewDidLoad() {
@@ -23,16 +25,37 @@ class ForgotVC: UIViewController {
     
     
     @IBAction func btnClickDone(_ sender: Any) {
+        Validation.Validate.delegate = self
+       guard  Validation.Validate.validateForEmpty(validatedObj: tfEmail, forInvalid: "Please enter correct email"),
+        Validation.Validate.validateForEmail(tfEmail, forInvalid: "Please enter correct email") else {
+            return
+        }
+        requestForget()
+        
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func unableToValidate(validationCandidate: AnyObject?, message: String) {
+        Alert.shared.showSimpleAlert(messageStr: message)
     }
-    */
+   
+    func requestForget()  {
+        let p = RegistrationData.CodingKeys.self
+        let params = [
+            p.email.rawValue:tfEmail!.text!
+            ] as [String : Any]
+        
+        APIManager.requestWebServerWithAlamo(to: .forgetPassword, httpMethd: .post , params: params as [String : Any], completion: { response in
+            APIManager.getJsonDict(response: response, completion: {cleanDict in
+                var message = "Otp has been sent to your number.".localized
+                 if let msg = cleanDict["msg"] as? String {
+                    message = msg
+                }
+                
+                Alert.shared.showSimpleAlert(messageStr: message)
+                 
+                // print(cleanDict)
+            })
+        })
+    }
 
 }

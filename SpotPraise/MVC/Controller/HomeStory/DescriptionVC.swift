@@ -50,17 +50,8 @@ class DescriptionVC: BaseViewController {
     }
     
     @IBAction func btnActionPower(_ sender: UIButton) {
-        Alert.shared.showAlertWithCompletion(buttons: ["logout","dismiss"], msg: "Are you sure to logout?", success: { [weak self]
-            
-                decision in
-            
-            if decision == "logout"{
-               AppManager.Manager.initStoryBoard(type: .Login)
-               // for vc in  AppManager.Manager.customStackTree.enumerated() 
-               // self?.navigationController?.popToRootViewController(animated: true)
-            }
-            
-        })
+        
+        AppManager.Manager.logoutFromApp(fromVc: self)
     }
     /*
     // MARK: - Navigation

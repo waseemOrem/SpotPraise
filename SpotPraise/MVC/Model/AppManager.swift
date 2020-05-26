@@ -46,8 +46,41 @@ class AppManager: NSObject {
     }
     
     
+    private func logout(fromVc:UIViewController){
+       // APIManager.requestWebServerWithAlamo(to: .Logout,  httpMethd: .post, completion: {onSuccess in
+            
+            self.deleteData(fromVc: fromVc)
+//        }, onError: {onError in
+//            self.deleteData(fromVc: fromVc)
+//        //})
+    }
     
+    private func deleteData(fromVc:UIViewController){
+        LocalStorage.callLocalDBTo( dbActions: .Delete, accessKey: .AccessKeyLoggedData, processComplete: {pc in
+            let LoginVC =  fromVc.getVC(withId: VC.LoginVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? LoginVC
+            
+            if let LoginVC = LoginVC  {
+                
+                 DispatchQueue.main.async {
+                    // Update UI
+                    let nvc: UINavigationController = UINavigationController(rootViewController: LoginVC)
+                    nvc.setNavigationBarHidden(true, animated: false)
+                    self.window?.rootViewController = nvc
+                }
+                
+            }
+        })
+        
+    }
     
+    func loginToApp(registrationData:RegistrationRootClass?)  {
+        //Save
+        ModelDataHolder.shared.loggedData  = registrationData?.data
+        LocalStorage.saveLoggedData(authData: registrationData?.data)
+        LocalStorage.saveAccessToken(accessToken: registrationData?.data?.token)
+        AppManager.Manager.initStoryBoard(type: .Home)
+        
+    }
     
     func logoutFromApp(fromVc:UIViewController){
         Alert.shared.showAlertWithCompletion(buttons: ["YES","NO"], title: "Logout", msg: "Do you want to logout?", success: {someType in
@@ -57,20 +90,7 @@ class AppManager: NSObject {
             //  console(someType)
         })
     }
-    
-    private func logout(fromVc:UIViewController){
-        self.initStoryBoard(type: .Login)
-        //        APIManager.requestWebServerWithAlamo(to: .Logout,  httpMethd: .post, completion: {onSuccess in
-        //
-        //            self.deleteData(fromVc: fromVc)
-        //        }, onError: {onError in
-        //            self.deleteData(fromVc: fromVc)
-        //        })
-    }
-    
-    
-    
-   
+ 
 }
 
 
