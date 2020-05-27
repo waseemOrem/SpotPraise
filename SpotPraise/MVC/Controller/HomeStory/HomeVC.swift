@@ -7,7 +7,13 @@
 //
 
 import UIKit
+import Alamofire
 
+enum PostDataDict:String {
+    case postImage = "postImage"
+    case postVideo = "postVideo"
+    case postThumb = "postThumb"
+}
 class HomeVC: BaseViewController {
 
     //MARK: -Outlets
@@ -34,6 +40,10 @@ class HomeVC: BaseViewController {
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
+    
+    
+    var postData = [PostDataDict.RawValue:Any]()
+    var choosenPrefrence:UploadChoices?
   
     //MARK: -viewDidLoad
     override func viewDidLoad() {
@@ -73,6 +83,19 @@ extension HomeVC {
             return
         }
         
+        guard let thumNailImg = self.postData[PostDataDict.postThumb.rawValue] as? UIImage else {
+            return
+        }
+        if choosenPrefrence == .UploadVideo{
+            guard let videoURL = self.postData[PostDataDict.postVideo.rawValue] as? URL  else {
+                return
+            }
+          vc.videoURL = videoURL
+        }
+        
+        vc.uploadChoice = self.choosenPrefrence
+        vc.thumbNailImage = thumNailImg
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -83,13 +106,22 @@ extension HomeVC:UploadPopUpListner{
     
     func didTappedOnDone(prefrence: UploadChoices, dataSource: Any?) {
         //print(prefrence)
+        choosenPrefrence = prefrence
         switch prefrence {
         case .UploadImage:
-            guard let img = dataSource as? UIImage else {
+            guard let data = dataSource as? [String:Any] else {
                 return
             }
-            self.imageV.image = img
+            self.postData = data
+             self.imageV.image = data[PostDataDict.postThumb.rawValue] as? UIImage
             
+        case .UploadVideo:
+            guard let data = dataSource as? [String:Any] else {
+                return
+            }
+            self.postData = data
+             self.imageV.image = data[PostDataDict.postThumb.rawValue] as? UIImage
+          
         default:
             break
         }
@@ -97,7 +129,6 @@ extension HomeVC:UploadPopUpListner{
         
         
     }
-    
     
 }
 //MARK: -PREVIEW ADDITION
@@ -130,3 +161,5 @@ extension HomeVC{
         postButton.addTarget(self, action: #selector(clickedOnAddPost), for: .touchUpInside)
     }
 }
+
+

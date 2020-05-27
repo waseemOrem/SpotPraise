@@ -21,24 +21,28 @@ var a = "The model regarding paragraph length that your teacher undoubtedly taug
 
         self.tableView?.register(UINib(nibName: TableCells.PostHistoryTableCell.rawValue, bundle: nil), forCellReuseIdentifier: TableCells.PostHistoryTableCell.rawValue)
         tableView?.separatorStyle = .none
-        tableView?.estimatedRowHeight = UITableView.automaticDimension
-        tableView?.rowHeight = UITableView.automaticDimension
+      //  tableView?.estimatedRowHeight = UITableView.automaticDimension
+       // tableView?.rowHeight = UITableView.automaticDimension
         self.tableView?.dataSource = self
         self.tableView?.delegate = self
         tableView?.reloadData()
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        getPostHistory()
     }
-    */
+
+    func getPostHistory(){
+        
+        APIManager.requestWebServerWithAlamo(to: .postlist, httpMethd: .post, completion: {postResponse in
+            
+            APIManager.getJsonDict(response: postResponse, completion: {cleanDict in
+                
+                print(cleanDict)
+            })
+        })
+    }
 
 }
 
@@ -53,14 +57,14 @@ extension PostHistoryVC:UITableViewDelegate,UITableViewDataSource{
         return cell!
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300;
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       // print("Height \( arrn[indexPath.row].heightWithConstrainedWidth(width: tableView.frame.width, font: UIFont(name: CustomFontPoppins.Light.rawValue, size: 14.0)!))")
-        return  UITableView.automaticDimension
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 300;
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//       // print("Height \( arrn[indexPath.row].heightWithConstrainedWidth(width: tableView.frame.width, font: UIFont(name: CustomFontPoppins.Light.rawValue, size: 14.0)!))")
+//        return  UITableView.automaticDimension
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let vc = self.getVC(withId: VC.PostDetailVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostDetailVC else {

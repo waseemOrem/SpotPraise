@@ -224,8 +224,112 @@ class APIManager :NSObject {
     }
     }
     
-    
-    static func requestWebServerWithAlamoToUploadImage(to urlS:serverURLEndpoint ,photoKey:String,extKey:String,_mimeType:String,imageInData:[Data]? = nil,parameters:[String:AnyObject]? = nil ,anyRequirement:Any = "",completion:@escaping (_ jsonData:DataResponse<Any>) -> Void )
+    static func requestWebServerWithAlamoToUploadVideo(to urlS:serverURLEndpoint ,VideoUrl:URL,postImge:UIImage?,imagethumbnel:UIImage,parameters:[String:AnyObject]? = nil,completion:@escaping (_ jsonData:DataResponse<Any>) -> Void )
+    {
+ 
+        MonitorNetwork.networkConnection.networkMonitor(isConnected: { (isConnected, connection) in
+            
+            if isConnected{
+                var wereTwoDifferentImage = false
+                
+                DispatchQueue.main.async {
+                    Loader.shared.showLoader()
+                }
+                headerSetup()
+                guard let  urlString = MakeURL.genrateURL(endPoint: urlS)  else {return}
+                //let url =   URL(string: serverURLEndpoint.baseURL.rawValue+urlS.rawValue)
+                console("******|||| API REQUEST WAS \(urlString) |||||******")
+                console("******|||| API HEADER WAS \(Auth_header) |||||******")
+                console("******|||| PARAMETERS WAS \(parameters) |||||******")
+                
+                
+            }
+            
+        }
+            
+            )
+        print("v IS \(VideoUrl)")
+        guard let  url = MakeURL.genrateURL(endPoint: serverURLEndpoint(rawValue: serverURLEndpoint.addPost.rawValue)!)  else {return}//"videoUploading" //"http://175.176.184.119/~apis~/lakapp/api/apis/videoUploading"
+        guard let thumbnailImgData = imagethumbnel.jpegData(compressionQuality: 0.75) else { return }
+        
+        guard let logoImageData = postImge?.jpegData(compressionQuality: 0.75) else {return}
+        
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                //multipartFormData.append(self.mypath!, withName: "video")
+                
+                multipartFormData.append(VideoUrl, withName: "video", fileName: "upload.mov", mimeType: "video/mov")
+                multipartFormData.append(logoImageData , withName: "logo_image", fileName: "image.jpg", mimeType: "image/jpeg")
+                
+                multipartFormData.append(thumbnailImgData , withName: "thumbnail", fileName: "image.jpg", mimeType: "image/jpeg")
+                
+                for (key, value) in parameters! {
+                    // multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                    multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: "\(key)")
+                    // multipartFormData.append(value.data(using: Int.encode(32)), withName: key)
+                    
+                }
+          },
+            usingThreshold:UInt64.init(),
+            to:url,
+            method:.post,
+            headers:Auth_header,
+            encodingCompletion: { encodingResult in
+                
+                switch encodingResult {
+                    
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        debugPrint(response.response?.statusCode)
+                        
+                        if response.result .isSuccess
+                        {
+                            self.getJsonDict(response: response, completion: {dataDict in
+                                var statusCode = 0
+                                if  let status = dataDict["status"] as? String{
+                                    statusCode = Int(status) ?? 0
+                                }
+                                else  if  let status = dataDict["status"] as? Int{
+                                    statusCode = status
+                                }
+                                
+                                if checkAndRespondCode(responseCode:statusCode,response:response){
+                                    completion(response)
+                                }
+                                
+                            })
+                          
+                            
+                        }
+                        else
+                        {
+                            
+                        }
+                        
+                         }.uploadProgress { progress in // main queue by default
+                            print("Upload Progress: \(progress.fractionCompleted)")
+                            //                        CircularSpinner.frame
+                            
+                            print(Float(progress.fractionCompleted) * 100)
+                            
+                            let per = Int(Float(progress.fractionCompleted) * 100)
+                            print("\(per)%")
+                            //  self.viewLoader.isHidden = false
+                            //printself.lblLoading.text! =   "\(per)%"// String(per)
+                            
+                            
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                    //     self.throwError(encodingError.localizedDescription)
+                    //
+                }
+        }
+        )
+        
+        
+    }
+    static func requestWebServerWithAlamoToUploadImage(to urlS:serverURLEndpoint ,imageParameteres:[String:UIImage]?,parameters:[String:AnyObject]? = nil ,completion:@escaping (_ jsonData:DataResponse<Any>) -> Void )
     {
         
         MonitorNetwork.networkConnection.networkMonitor(isConnected: { (isConnected, connection) in
@@ -242,58 +346,28 @@ class APIManager :NSObject {
                 console("******|||| API REQUEST WAS \(urlString) |||||******")
                 console("******|||| API HEADER WAS \(Auth_header) |||||******")
                 console("******|||| PARAMETERS WAS \(parameters) |||||******")
-                
-                if let someThing = anyRequirement as? NSDictionary{
-                    if let requestForTwoDifferParamImages = someThing[OptionalSettingsKeys.multiParmImage] as? Bool{
-                        //activeSpinner = spinerStatus
-                        wereTwoDifferentImage = requestForTwoDifferParamImages
-                        // print(requestForSearch)
-                        // headerSetup(anySetup: requestForSearch)
-                    }
-                }
+                 console("******|||| imageParameteres WAS \(imageParameteres) |||||******")
                 
                 Alamofire.upload(multipartFormData:{ multipartFormData in
-                    if imageInData?.count != 0 {
-                        for byte in imageInData!{
-                            multipartFormData.append(byte, withName: photoKey, fileName: extKey, mimeType: _mimeType)
-                        }
-                        // multipartFormData.append(imageInData!, withName: "file", fileName: "image.jpg", mimeType: "image/jpg")
-                    }
                     
-                    if wereTwoDifferentImage {
-                        if let dataDict = anyRequirement as? NSDictionary{
-                            guard let ImageData = dataDict[OptionalSettingsKeys.imgData] as? Data
-                                else {
-                                    return
-                            }
-                            
-                            guard let _photoKey = dataDict[OptionalSettingsKeys.photoKey] as? String
-                                else {
-                                    return
-                            }
-                            guard let _extKey = dataDict[OptionalSettingsKeys.extKey] as? String
-                                else {
-                                    return
-                            }
-                            print(_photoKey)
-                            print(_extKey)
-                            print(_mimeType)
-                            
-                            multipartFormData.append(ImageData, withName: _photoKey, fileName: _extKey, mimeType: _mimeType)
-                        }
+//                    multipartFormData.append(logoImageData , withName: "logo_image", fileName: "image.jpg", mimeType: "image/jpeg")
+//
+//                    multipartFormData.append(postImgData , withName: "post_image", fileName: "image.jpg", mimeType: "image/jpeg")
+//
+                    
+                    for (key , value) in imageParameteres!{//(compressionQuality: 0.75)
+                        guard let imgData = value.pngData()else { return }
+                        
+                        // guard let imgVal = value.jpegData(compressionQuality: 0.75) else { return }
+                        print(key)//image.jpg
+                        multipartFormData.append(imgData , withName: key, fileName: "image.jpg", mimeType: "image/jpeg")
                         
                         
                     }
-                    
-                    // let r = String(data: try! JSONSerialization.data(withJSONObject: parameters!, options: .sortedKeys), encoding: .utf8 )!
-                    /// let rr = r.replacingOccurrences(of: "\\", with: "")
-                    
-                    for (key, value) in parameters! {
-                        // multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                     for (key, value) in parameters! {
+                      
                         multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: "\(key)")
-                        // multipartFormData.append(value.data(using: Int.encode(32)), withName: key)
-                        
-                    }
+                      }
                 },
                                  usingThreshold:UInt64.init(),
                                  to:urlString,
@@ -321,6 +395,7 @@ class APIManager :NSObject {
                                             if !barredResponseOnConsole{
                                                 print("Response IS \(String(describing: response))")
                                             }
+                                             print("code IS \(String(describing: response.response?.statusCode))")
                                             switch response.result
                                             {
                                                 
@@ -470,6 +545,8 @@ enum serverURLEndpoint:String {
     case changePassword = "changePassword"
     case  editProfile = "editProfile"
     case login = "login"
+    case addPost = "addPost"
+    case postlist = "postlist"
     
 }
 struct MakeURL {

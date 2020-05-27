@@ -18,15 +18,25 @@ class Validation {
     weak var delegate:validationListner?
     
     func validateForEmpty(validatedObj:AnyObject?, forInvalid msg:String?)->Bool{
-        guard let field = validatedObj as? UITextField else {
-            return false
+        //print(validatedObj)
+        if let field = validatedObj as? UITextField
+        {
+            if (field.text!.trimmingCharacters(in: .whitespaces).isEmpty)
+            {
+                delegate?.unableToValidate(validationCandidate: validatedObj, message: (msg)!)
+                return false
+            }
+        } else if let field = validatedObj as? UITextView{
+            
+            if (field.text!.trimmingCharacters(in: .whitespaces).isEmpty)
+            {
+                delegate?.unableToValidate(validationCandidate: validatedObj, message: (msg)!)
+                return false
+            }
+             
             
         }
-        if (field.text!.trimmingCharacters(in: .whitespaces).isEmpty)
-        {
-            delegate?.unableToValidate(validationCandidate: validatedObj, message: (msg)!)
-            return false
-        }
+        
          
         return true 
     }
