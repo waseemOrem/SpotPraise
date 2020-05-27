@@ -39,6 +39,9 @@ class AppManager: NSObject {
             let navigationController = UINavigationController(rootViewController: loginController)
             navigationController.setNavigationBarHidden(true, animated: true)
             self.window?.rootViewController = navigationController
+            let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        //   statusBar.sty = UIColor.white
+           // statusBar.col = .white
             self.window?.makeKeyAndVisible()
         case .Business:
             break;
