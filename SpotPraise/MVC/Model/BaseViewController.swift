@@ -10,7 +10,8 @@ import UIKit
  import UIKit
 
 class BaseViewController: UIViewController {
-
+    ///MARK:- Header Refresh Success Block
+    typealias HeaderRefreshSuccessBlock = () -> ()
     @IBAction func btnBackClick(){
     popVC()
     }
@@ -101,26 +102,47 @@ class BaseViewController: UIViewController {
         
         
         
-        //MARK:- Setup Header Refresh
-        //    func refreshScrollViewHeader(scroll : UIScrollView?, responseBlock: @escaping HeaderRefreshSuccessBlock) {
+        func setTableViewBgView (_title : String? , table : UITableView? , dataSource : Array<Any>? , isHideImage : Bool = false , txtAlignment : NSTextAlignment = .center, img : UIImage? =  UIImage.init(named: "no_data.png")) { // no-data
+            
+            guard let tableView = table else {return}
+            if (/dataSource?.count == 0) {
+                guard let emptyLabelView = Bundle.main.loadNibNamed("EmptyScreenView", owner: self, options: nil)?.first else { return }
+                let emptyLabel = emptyLabelView as? EmptyScreenView
+                
+                emptyLabel?.reloadBtn?.isHidden = true
+                emptyLabel?.frame = (tableView.backgroundView?.frame) ?? CGRect.init(x: 0, y: 0, width: /tableView.frame.width, height: /tableView.frame.height)
+                emptyLabel?.img?.isHidden = /isHideImage
+                emptyLabel?.img?.image = img
+                emptyLabel?.lblTitle?.textAlignment = txtAlignment
+                emptyLabel?.lblTitle?.text = _title ?? "NoDataFound".localized
+                tableView.backgroundView = emptyLabel
+                //dataSource? = []
+                tableView.reloadData()
+                
+            }else {
+                tableView.backgroundView = nil
+            }
+        }
         //
-        //        let header = DefaultRefreshHeader.header()
-        //        header.tintColor = #colorLiteral(red: 0.5032528639, green: 0.812071383, blue: 0.7847238183, alpha: 1)
-        //        header.imageRenderingWithTintColor = true
-        //        header.durationWhenHide = 0.4
-        //        header.setText("", mode: .pullToRefresh)
-        //        header.setText("", mode: .releaseToRefresh)
-        //        header.setText("", mode: .refreshSuccess)
-        //        header.setText("", mode: .refreshing)
-        //        header.setText("", mode: .refreshFailure)
-        //        scroll?.configRefreshHeader(with: header, container: self, action: {
-        //            responseBlock()
-        //            ez.dispatchDelay(0.8, closure: {
-        //                scroll?.switchRefreshHeader(to: .normal(.success, 0.3))
-        //            })
-        //        })
-        //    }
-        
+        //    ///Set up Header Refresh for Table View
+        func tableViewHeaderRefresh(_ table: UITableView?, responseBlock: @escaping HeaderRefreshSuccessBlock) {
+            
+            let header = DefaultRefreshHeader.header()
+            header.tintColor = #colorLiteral(red: 0.3176470588, green: 0.4588235294, blue: 0.9647058824, alpha: 1)
+            header.imageRenderingWithTintColor = true
+            header.durationWhenHide = 0.4
+            header.setText("", mode: .pullToRefresh)
+            header.setText("", mode: .releaseToRefresh)
+            header.setText("", mode: .refreshSuccess)
+            header.setText("", mode: .refreshing)
+            header.setText("", mode: .refreshFailure)
+            table?.configRefreshHeader(with: header,container:self) {
+                responseBlock()
+                ez.dispatchDelay(0.8, closure: {
+                    table?.switchRefreshHeader(to: .normal(.success, 0.3))
+                })
+            }
+        }
         
     }
     

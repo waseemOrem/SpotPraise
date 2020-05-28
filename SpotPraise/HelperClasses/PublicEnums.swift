@@ -61,7 +61,9 @@ enum TableCells:String{
     
 }
 
-
+enum SocialApps{
+    case FaceBook, Twitter,Youtube,Linked,Instagram
+}
 enum UploadChoices{
     case UploadImage , UploadVideo
 }

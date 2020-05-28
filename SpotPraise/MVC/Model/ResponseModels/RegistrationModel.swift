@@ -37,11 +37,14 @@ struct RegistrationData : Codable {
     
     let activationKey : String?
     let address : String?
+    let companyId : String?
+    let companyName : String?
     let countryCode : String?
     let created : String?
     let deviceToken : String?
     let deviceType : String?
     let email : String?
+    let emailVerify : String?
     let firstname : String?
     let forgotKey : String?
     let id : String?
@@ -67,11 +70,14 @@ struct RegistrationData : Codable {
     enum CodingKeys: String, CodingKey {
         case activationKey = "activationKey"
         case address = "address"
+        case companyId = "company_id"
+        case companyName = "company_name"
         case countryCode = "country_code"
         case created = "created"
         case deviceToken = "deviceToken"
         case deviceType = "deviceType"
         case email = "email"
+        case emailVerify = "email_verify"
         case firstname = "firstname"
         case forgotKey = "forgot_key"
         case id = "id"
@@ -97,11 +103,14 @@ struct RegistrationData : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         activationKey = try values.decodeIfPresent(String.self, forKey: .activationKey)
         address = try values.decodeIfPresent(String.self, forKey: .address)
+        companyId = try values.decodeIfPresent(String.self, forKey: .companyId)
+        companyName = try values.decodeIfPresent(String.self, forKey: .companyName)
         countryCode = try values.decodeIfPresent(String.self, forKey: .countryCode)
         created = try values.decodeIfPresent(String.self, forKey: .created)
         deviceToken = try values.decodeIfPresent(String.self, forKey: .deviceToken)
         deviceType = try values.decodeIfPresent(String.self, forKey: .deviceType)
         email = try values.decodeIfPresent(String.self, forKey: .email)
+        emailVerify = try values.decodeIfPresent(String.self, forKey: .emailVerify)
         firstname = try values.decodeIfPresent(String.self, forKey: .firstname)
         forgotKey = try values.decodeIfPresent(String.self, forKey: .forgotKey)
         id = try values.decodeIfPresent(String.self, forKey: .id)

@@ -7,58 +7,77 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PostDetailVC: BaseViewController {
 
-    @IBOutlet weak var imgPost: UIImageView!
-    
-    @IBOutlet weak var imgLogo: UIImageView!
-    
-    
-    @IBOutlet weak var lblName: UILabel!
-    
-    
-    @IBOutlet weak var lblCompanyName: UILabel!
-    
-    
-    
-    @IBOutlet weak var lblCompanyAdd: UILabel!
-    
-    
-    @IBOutlet weak var lblDescription: UILabel!
-    
-    
-    @IBOutlet weak var lblWebsite: UILabel!
+    //MARK: -Outlets
+     @IBOutlet weak var imgPost: UIImageView?
+     @IBOutlet weak var imgLogo: UIImageView?
+     @IBOutlet weak var lblName: UILabel?
+     @IBOutlet weak var lblCompanyName: UILabel?
+     @IBOutlet weak var lblCompanyAdd: UILabel?
+     @IBOutlet weak var lblDescription: UILabel?
+     @IBOutlet weak var lblWebsite: UILabel?
+     @IBOutlet weak var lblEmail: UILabel?
     
     
     
-    
-    @IBOutlet weak var lblEmail: UILabel!
-    
-    
-    
-    @IBAction func btnClickReport(_ sender: UIButton) {
-    }
-    
-    @IBAction func btnDetail(_ sender: UIButton) {
-    }
+    //MARK: -Parametes
+     var postData:PostHistoryData?
     
     
+     //MARK: -viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-lblDescription.text = "kjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhjkjhkhjkhj"
+        updateData()
+       
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func updateData(){
+        if let logoLink = postData?.logoImage{
+            if let logoURL =   URL(string: logoLink)  {
+                imgLogo?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+            }
+        }
+        
+        if (postData?.video?.isEmpty)!{
+            if let logoLink = postData?.postImage{
+                
+                if let logoURL =   URL(string: logoLink)  {
+                    imgPost?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+                }
+            }
+        }
+            
+        else if !(postData?.video?.isEmpty)!{
+            if let logoLink = postData?.thumbnail{
+                
+                if let logoURL =   URL(string: logoLink)  {
+                    imgPost?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+                }
+            }
+        }
+        
+        
+        
+        
+        lblEmail?.text = postData?.email
+        lblWebsite?.text = postData?.webLink
+        lblName?.text = ModelDataHolder.shared.loggedData?.name
+        lblCompanyName?.text = postData?.companyTitle
+        lblCompanyAdd?.text = ""
+        
+        lblDescription?.text = postData?.descriptionField
     }
-    */
-
+    //MARK: -Actions
+    @IBAction func btnClickRepost(_ sender: UIButton) {
+        
+        
+        
+    }
+    
 }

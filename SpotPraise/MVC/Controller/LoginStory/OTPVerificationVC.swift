@@ -99,8 +99,8 @@ extension OTPVerificationVC{
         
         
         
-        APIManager.requestWebServerWithAlamo(to: .verifyOtp, httpMethd: .post , params: params as [String : Any], completion: { response in
-        APIManager.getJsonDict(response: response, completion: {cleanDict in
+        APIManager.requestWebServerWithAlamo(to: .verifyOtp, httpMethd: .post , params: params as [String : Any], completion: { [weak self] response in
+        APIManager.getJsonDict(response: response, completion: { [weak self] cleanDict in
             print(cleanDict)
         var message = "verified successfully.".localized
         
@@ -110,7 +110,7 @@ extension OTPVerificationVC{
         
             Alert.shared.showAlertWithCompletion(buttons: ["Proceed to complete the registration?","Cancel"], msg: message, success: {option in
                 if option == "Proceed to complete the registration?"{
-                    self.registerToServer()
+                    self?.registerToServer()
                 }
             })
         // print(cleanDict)
@@ -119,12 +119,12 @@ extension OTPVerificationVC{
         })
     }
     func registerToServer() {
-         APIManager.requestWebServerWithAlamo(to: .register, httpMethd: .post , params: signUpParameters as [String : Any], completion: { response in
+         APIManager.requestWebServerWithAlamo(to: .register, httpMethd: .post , params: signUpParameters as [String : Any], completion: { [weak self] response in
             
-                                        APIManager.getJsonDict(response: response, completion: {cleanDict in
-            
-                                      console(cleanDict)
-                                        })
+//                                        APIManager.getJsonDict(response: response, completion: {cleanDict in
+//
+//                                      console(cleanDict)
+//                                        })
             
             let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
             //  let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
@@ -140,7 +140,7 @@ extension OTPVerificationVC{
                 
             }
         }
-            , onError: { (errIs) in
+            , onError: { [weak self] (errIs) in
                 if let er = errIs as? String {
                     Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
                     

@@ -44,7 +44,7 @@ class ForgotVC: UIViewController ,validationListner{
             p.email.rawValue:tfEmail!.text!
             ] as [String : Any]
         
-        APIManager.requestWebServerWithAlamo(to: .forgetPassword, httpMethd: .post , params: params as [String : Any], completion: { response in
+        APIManager.requestWebServerWithAlamo(to: .forgetPassword, httpMethd: .post , params: params as [String : Any], completion: { [weak self]  response in
             APIManager.getJsonDict(response: response, completion: {cleanDict in
                 var message = "Otp has been sent to your number.".localized
                  if let msg = cleanDict["msg"] as? String {

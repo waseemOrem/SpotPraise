@@ -7,6 +7,14 @@
 //
 
 import UIKit
+import SDWebImage
+
+enum Actions {
+    case REPOST , VIEW_DETAILS
+}
+protocol cellButtonTapped :AnyObject{
+    func onCellButtonClicked(cellActions:Actions,index:IndexPath)
+}
 
 class PostHistoryTableCell: UITableViewCell {
 
@@ -18,18 +26,38 @@ class PostHistoryTableCell: UITableViewCell {
     @IBOutlet weak var lblCompanyName: UILabel?
     @IBOutlet weak var lblUserName: UILabel?
     
-    
+    var indexP:IndexPath?
+    weak var delegate:cellButtonTapped?
     @IBAction func btnReportClick(_ sender: AnimatableButton) {
+        delegate?.onCellButtonClicked(cellActions: .REPOST, index: indexP!)
     }
     
-    
+    var item:PostHistoryData?{
+        
+        didSet{
+            if let logoLink = item?.logoImage{
+                if let logoURL =   URL(string: logoLink)  {
+                    imgLogo?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+                }
+            }
+           lblDescription?.text = item?.descriptionField ?? ""
+           lblAddress?.text =  item?.companyTitle ?? ""
+            
+        }
+    }
     
     @IBAction func btnViewDeailClick(_ sender: AnimatableButton) {
+        delegate?.onCellButtonClicked(cellActions: .VIEW_DETAILS, index: indexP!)
         
     }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        guard let uName = ModelDataHolder.shared.loggedData?.name  else {
+            return
+        }
+        self.lblUserName?.text = uName
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

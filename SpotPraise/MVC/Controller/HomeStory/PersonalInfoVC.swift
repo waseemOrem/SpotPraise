@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PersonalInfoVC: BaseViewController {
 
@@ -15,32 +16,62 @@ class PersonalInfoVC: BaseViewController {
     @IBOutlet weak var tfFullName:UITextField?
     @IBOutlet weak var tfEmail:UITextField?
     @IBOutlet weak var tfPhoneNumber:UITextField?
-    
+    private var imagePicker:ImagePicker?;
+    private let pickerController = UIImagePickerController();
     //MARK: -ViewDidload
     override func viewDidLoad() {
         super.viewDidLoad()
+         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         tfEmail?.isUserInteractionEnabled = false
         tfPhoneNumber?.isUserInteractionEnabled = false
-updateData()
+        imgUser?.isUserInteractionEnabled = true
+        imgUser?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnImageUpdate)))
+uploadData()
         // Do any additional setup after loading the view.
     }
     
     //MARK: -Custom func
+    @objc func tapOnImageUpdate(){
+          self.imagePicker?.present(from: self.view)
+    }
     func updateData(){
         let p = RegistrationData.CodingKeys.self
 
-        let paramsForSignUP = [
+        let params = [
             p.name.rawValue:tfFullName!.text!,
+            "image":"",
                                "devicetype":"ios",
                                "devicetoken":deviceTokenString
             ] as [String : Any]
-        
+        APIManager.requestWebServerWithAlamoToUploadImage(to: .editProfile, imageParameteres: ["image":(imgUser?.image)!], parameters: params as [String : AnyObject],  completion: { response in
+           
+            
+            
+            let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
+            //  let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
+            
+            if response.response?.statusCode == 200{
+                guard  resData?.data != nil else {
+                    Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
+                    return}
+                AppManager.Manager.saveLoggedData(registrationData: resData)
+                
+            }
+            
+        })
     }
     func uploadData(){
         
         guard let userData = ModelDataHolder.shared.loggedData else {
             return
         }
+        console(userData)
+        if let logoLink = userData.image{
+            if let logoURL =   URL(string: logoLink)  {
+                imgUser?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+            }
+        }
+        
         self.tfFullName?.text = userData.name
         self.tfEmail?.text = userData.email
         self.tfPhoneNumber?.text =  userData.countryCode! + " " +  userData.phone!
@@ -51,14 +82,22 @@ updateData()
      updateData()
     }
 
-    /*
-    // MARK: - Navigation
+    
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+
+
+//MARK:  ImagePickerDelegate
+
+extension PersonalInfoVC: ImagePickerDelegate {
+    
+    func didSelect(image: UIImage?) {
+        if image != nil {
+            self.imgUser?.image = image
+             self.dismiss(animated: true , completion: nil)
+            
+            //imageData =   self.imgProfile.image?.jpegData(compressionQuality: 0.5)
+        }
+        
     }
-    */
-
 }

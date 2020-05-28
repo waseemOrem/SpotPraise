@@ -9,7 +9,7 @@
 import UIKit
 
 class PostVideoPOPVC: UIViewController {
-    weak var delegate:UploadPopUpListner?
+    weak var delegate:SocialAppListener?
     var userChoice:UploadChoices?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,21 @@ class PostVideoPOPVC: UIViewController {
     }
     
     @IBAction func btnPostSocialClick(_ sender: UIButton) {
-        
+        self.dismiss(animated: true , completion: nil)
+        switch sender.tag {
+        case 1:
+            delegate?.userSelectedApp(preferedApp: .FaceBook)
+        case 2:
+            delegate?.userSelectedApp(preferedApp: .Instagram)
+        case 3:
+            delegate?.userSelectedApp(preferedApp: .Twitter)
+        case 4:
+            delegate?.userSelectedApp(preferedApp: .Linked)
+        case 5:
+            delegate?.userSelectedApp(preferedApp: .Youtube)
+        default:
+            break
+        }
         
     }
     /*

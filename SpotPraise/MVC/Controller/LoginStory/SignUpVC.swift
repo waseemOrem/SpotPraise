@@ -16,7 +16,7 @@ class SignUpVC: BaseViewController {
      @IBOutlet weak var lblCreateAcc: UILabel?
     
     @IBOutlet weak var tfUserName: AnimatableTextField!
-    
+    @IBOutlet weak var tfCompanyName: AnimatableTextField?
     @IBOutlet weak var tfEmail: AnimatableTextField!
     
     @IBOutlet weak var tfPss: AnimatableTextField!
@@ -31,16 +31,49 @@ class SignUpVC: BaseViewController {
     
     //MARK: -Parameters
     private let adpicker = ADCountryPicker()
-
+ let dropDown : DropDown = DropDown()
+    private var companyData:[CompanyListData]?
+    var companyID = "0"
     
      override func viewDidLoad() {
         super.viewDidLoad()
  adpicker.delegate = self
+        tfCompanyName?.addRightImage(img : #imageLiteral(resourceName: "ic_dropdown") , imgFrame : CGRect(x: 0, y: 0, width: 32, height: 18))
+        
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.getCompanies()
+    }
+    
     //MARK: -Actions
-   
+    @IBAction func btnActionDropDown(_ sender: UIButton) {
+        self.view.endEditing(true)
+        self.setupDropDownMenu(for: self.dropDown, on: self.tfCompanyName, with:companyData, textField: self.tfCompanyName)
+    }
+    
+    
+    func setupDropDownMenu(for dropDown : DropDown?, on anchor : AnchorView?, with dataSource : [Any]?, textField : UITextField? ) {
+        guard let dropDown = dropDown else { return }
+        dropDown.anchorView = anchor
+        guard let dataS = dataSource as? [CompanyListData] else {
+            return
+        }
+        dropDown.dataSource = ((dataS.map { return $0.name } ) as? [String])!
+        dropDown.width = /textField?.bounds.width
+        dropDown.bottomOffset.y = /anchor?.plainView.bounds.maxY
+        dropDown.direction = .bottom
+        dropDown.backgroundColor = .white
+        dropDown.selectionBackgroundColor = #colorLiteral(red: 0.2156862745, green: 0.5843137255, blue: 0.8431372549, alpha: 0.1586312072)
+        dropDown.selectionAction = { [weak self] (index, item) in
+            
+            self?.companyID = dataS[index].id!
+            textField?.text = item
+        }
+        dropDown.show()
+    }
+    
     @IBAction func btnActionBck(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true )
     }
@@ -76,6 +109,31 @@ class SignUpVC: BaseViewController {
 
 //MARK: -API Functions
 extension SignUpVC{
+    
+    func getCompanies(){
+        
+        APIManager.requestWebServerWithAlamo(to: .companylist, httpMethd: .get, completion: { [weak self] postResponse in
+
+            APIManager.getJsonDict(response: postResponse, completion: {celn in
+                
+                print(celn)
+            })
+                        let resData  = (try? JSONDecoder().decode(CompanyListRootClass.self, from: postResponse.data! ))
+            if postResponse.response?.statusCode == 200{
+                guard  resData?.data != nil else {
+                    //                    Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
+                    return}
+                
+                self?.companyData = resData?.data
+              
+                
+            }
+            
+            
+        })
+    }
+    
+    
     func requestOtpForRegistration()  {
         let p = RegistrationData.CodingKeys.self
         let params = [
@@ -91,12 +149,13 @@ extension SignUpVC{
                     p.email.rawValue:tfEmail!.text!,
             p.phone.rawValue:tfPhoneNo!.text!,
             p.countryCode.rawValue:lblCC.text!,
+            p.companyId.rawValue:self.companyID,
             "devicetype":"ios",
             "devicetoken":deviceTokenString
             ] as [String : Any]
         
          APIManager.requestWebServerWithAlamo(to: .sentOtp, httpMethd: .post , params: params as [String : Any], completion: { response in
-            APIManager.getJsonDict(response: response, completion: {cleanDict in
+            APIManager.getJsonDict(response: response, completion: {  [weak self] cleanDict in
                 var message = "Otp has been sent to your number.".localized
                 var otpIs = "0"
                 if let msg = cleanDict["msg"] as? String {
@@ -115,12 +174,12 @@ extension SignUpVC{
                     Alert.shared.showAlertWithCompletion(buttons: ["Verify" ,"Cancel"], msg: message, success: {option in
                         
                         if option == "Verify"{
-                            guard let vc = self.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
+                            guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
                                 return
                             }
                             vc.signUpParameters = paramsForSignUP
                             vc.verifiedOTP = otpIs
-                            self.pushVC(vc)
+                            self?.pushVC(vc)
                         }
                         
                     })
@@ -142,7 +201,7 @@ extension SignUpVC:validationListner{
             return
         }
         
-        Alert.shared.showAlertWithCompletion(buttons: ["ok"], msg: message, success: { _ in
+        Alert.shared.showAlertWithCompletion(buttons: ["ok"], msg: message, success: {   _ in
             
             txtField.becomeFirstResponder()
             

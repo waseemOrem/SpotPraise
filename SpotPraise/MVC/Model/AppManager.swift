@@ -75,12 +75,14 @@ class AppManager: NSObject {
         })
         
     }
-    
-    func loginToApp(registrationData:RegistrationRootClass?)  {
-        //Save
+    func saveLoggedData(registrationData:RegistrationRootClass?){
         ModelDataHolder.shared.loggedData  = registrationData?.data
         LocalStorage.saveLoggedData(authData: registrationData?.data)
         LocalStorage.saveAccessToken(accessToken: registrationData?.data?.token)
+    }
+    func loginToApp(registrationData:RegistrationRootClass?)  {
+        //Save
+        saveLoggedData(registrationData: registrationData)
         AppManager.Manager.initStoryBoard(type: .Home)
         
     }

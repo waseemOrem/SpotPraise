@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileVC: BaseViewController {
 
@@ -37,6 +38,12 @@ class ProfileVC: BaseViewController {
         super.viewDidLoad()
 self.tableView?.dataSource = self
         self.tableView?.delegate = self
+        if let imgLink = ModelDataHolder.shared.loggedData?.image{
+            if let imgURL =   URL(string: imgLink)  {
+                imgUser?.sd_setImage(with: imgURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+            }
+        }
+        
        // r.[0].Pipe
         // Do any additional setup after loading the view.
     }

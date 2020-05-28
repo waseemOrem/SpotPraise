@@ -547,6 +547,7 @@ enum serverURLEndpoint:String {
     case login = "login"
     case addPost = "addPost"
     case postlist = "postlist"
+    case companylist = "companylist"
     
 }
 struct MakeURL {

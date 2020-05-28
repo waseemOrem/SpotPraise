@@ -9,76 +9,99 @@
 import UIKit
 
 class PostHistoryVC: BaseViewController {
-var a = "The model regarding paragraph length that your teacher undoubtedly taught you involves a topic sentence, a number of facts that support that core idea, and a concluding sentence. The proviso about the number of sentences between the topic sentence and the conclusion was not given to you because it was the magic formula for creating paragraphs of the perfect length; rather, your educator was attempting to give you a good reason to do adequate research on your topic. Academic writing yields the best examples of the topic-support-conclusion paragraph structure."
+ 
+    //MARK: -Paramters
+    var postHistoryData:[PostHistoryData]?
     
-    var b = "Various educators teach rules governing the length of paragraphs. They may say that a paragraph should be 100 to 200 words long, or be no more than five or six sentences. But a good paragraph should not be measured in characters, words, or sentences. The true measure of your paragraphs should be ideas."
-    
-    var c = "fgdf"
-    var arrn = [String]()
-    override func viewDidLoad() {
+     override func viewDidLoad() {
         super.viewDidLoad()
-        arrn = [a,b,c]
-
-        self.tableView?.register(UINib(nibName: TableCells.PostHistoryTableCell.rawValue, bundle: nil), forCellReuseIdentifier: TableCells.PostHistoryTableCell.rawValue)
-        tableView?.separatorStyle = .none
-      //  tableView?.estimatedRowHeight = UITableView.automaticDimension
-       // tableView?.rowHeight = UITableView.automaticDimension
-        self.tableView?.dataSource = self
-        self.tableView?.delegate = self
-        tableView?.reloadData()
+        
+       configureTableView()
         // Do any additional setup after loading the view.
+    }
+    
+    deinit {
+        print("deniy")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getPostHistory()
+        headerRefresh()
     }
-
-    func getPostHistory(){
-        
-        APIManager.requestWebServerWithAlamo(to: .postlist, httpMethd: .post, completion: {postResponse in
-            
-            APIManager.getJsonDict(response: postResponse, completion: {cleanDict in
-                
-                print(cleanDict)
-            })
-        })
-    }
-
 }
 
-extension PostHistoryVC:UITableViewDelegate,UITableViewDataSource{
+//MARK: -Cusotm func
+
+extension PostHistoryVC{
+    
+    func configureTableView(){
+        
+        self.tableView?.register(UINib(nibName: TableCells.PostHistoryTableCell.rawValue, bundle: nil), forCellReuseIdentifier: TableCells.PostHistoryTableCell.rawValue)
+        tableView?.separatorStyle = .none
+        //  tableView?.estimatedRowHeight = UITableView.automaticDimension
+        // tableView?.rowHeight = UITableView.automaticDimension
+        self.tableView?.dataSource = self
+        self.tableView?.delegate = self
+        reloadPostTable()
+    }
+    //Header Refresh
+    func headerRefresh() {
+        
+        self.tableViewHeaderRefresh(self.tableView) { [weak self] in
+            self?.getPostHistory()
+            //self!.getRegions()
+        }
+    }
+    func reloadPostTable(with str : String? = "NoDataFound".localized) {
+        
+        self.tableView?.reloadData()
+        setTableViewBgView(_title: /str, table: tableView, dataSource: self.postHistoryData)
+    }
+    func getPostHistory(){
+        
+        APIManager.requestWebServerWithAlamo(to: .postlist, httpMethd: .post, completion: { [weak self] postResponse in
+            let resData  = (try? JSONDecoder().decode(PostHistoryRootClass.self, from: postResponse.data! ))
+           if postResponse.response?.statusCode == 200{
+                guard  resData?.data != nil else {
+//                    Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
+                    return}
+                 self?.postHistoryData = resData?.data
+                self?.reloadPostTable()
+            }
+            
+            
+        })
+    }
+}
+//MARK: -UITableViewDelegate,UITableViewDataSource,cellButtonTapped
+extension PostHistoryVC:UITableViewDelegate,UITableViewDataSource,cellButtonTapped{
+    func onCellButtonClicked(cellActions: Actions, index: IndexPath) {
+        switch cellActions {
+        case .REPOST:
+            console("Repost")
+            
+        case .VIEW_DETAILS:
+            guard let vc = self.getVC(withId: VC.PostDetailVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostDetailVC else {
+                return
+            }
+            vc.postData = self.postHistoryData?[index.row]
+            self.pushVC(vc)
+        default:
+            break
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrn.count
+        return postHistoryData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableCells.PostHistoryTableCell.rawValue) as? PostHistoryTableCell
-        cell!.lblDescription?.text = arrn[indexPath.row]
+        cell?.delegate = self
+        cell?.indexP = indexPath
+        cell?.item = postHistoryData?[indexPath.row]
         return cell!
     }
-    
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 300;
-//    }
-//    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//       // print("Height \( arrn[indexPath.row].heightWithConstrainedWidth(width: tableView.frame.width, font: UIFont(name: CustomFontPoppins.Light.rawValue, size: 14.0)!))")
-//        return  UITableView.automaticDimension
-//    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let vc = self.getVC(withId: VC.PostDetailVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostDetailVC else {
-            return
-        }
-        self.pushVC(vc)
-    }
-    
+ 
 }
 
-//extension String {
-//    func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
-//        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-//        let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: font], context: nil)
-//        return boundingBox.height
-//    }
-//}

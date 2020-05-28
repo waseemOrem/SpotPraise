@@ -20,6 +20,10 @@ protocol UploadPopUpListner:AnyObject {
     func didTappedOnDone(prefrence:UploadChoices,dataSource:Any?)
 }
 
+protocol SocialAppListener:AnyObject {
+    func userSelectedApp(preferedApp:SocialApps)
+}
+
 class UploadVideoPopUpVC: UIViewController {
 
     weak var delegate:UploadPopUpListner?
@@ -67,32 +71,6 @@ class UploadVideoPopUpVC: UIViewController {
     }
     
    
-    /*
-     
-     
-     
-    
-     
-     
-     
-     
-     
-     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
-     {
-     //****8 images selected name diplayed ******//
-    
-     }
-     
-     */
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 extension UploadVideoPopUpVC:AVPlayerViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {

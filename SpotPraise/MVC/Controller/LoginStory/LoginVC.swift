@@ -67,13 +67,13 @@ extension LoginVC{
         let p = RegistrationData.CodingKeys.self
         let param = [p.email.rawValue:tFUserName!.text!,
                      p.password.rawValue:tFUserPassword!.text!]
-            APIManager.requestWebServerWithAlamo(to: .login, httpMethd: .post , params: param as [String : Any], completion: { response in
+            APIManager.requestWebServerWithAlamo(to: .login, httpMethd: .post , params: param as [String : Any], completion: { [weak self] response in
                 
-                APIManager.getJsonDict(response: response, completion: {cleanDict in
-                    
-                    console(cleanDict)
-                })
-                
+//                APIManager.getJsonDict(response: response, completion: {cleanDict in
+//                    
+//                    console(cleanDict)
+//                })
+//                
                 let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
                 //  let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
                 
@@ -95,7 +95,7 @@ extension LoginVC{
                     
                 }
             }
-                , onError: { (errIs) in
+                , onError: { [weak self] (errIs) in
                     if let er = errIs as? String {
                         Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
                         

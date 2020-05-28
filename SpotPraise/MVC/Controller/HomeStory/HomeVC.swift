@@ -18,6 +18,7 @@ class HomeVC: BaseViewController {
 
     //MARK: -Outlets
     @IBOutlet weak var viewHolder:UIView?
+     @IBOutlet weak var lblUserName:UILabel?
     
     
     //MARK: -Parameters
@@ -48,7 +49,9 @@ class HomeVC: BaseViewController {
     //MARK: -viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
+lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
+        
+       
         // Do any additional setup after loading the view.
     }
     

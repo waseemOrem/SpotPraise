@@ -146,7 +146,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="5Of-IV-prL"/>
                         </constraints>
-                        <state key="normal" title="Report">
+                        <state key="normal" title="Repost">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                         <userDefinedRuntimeAttributes>

@@ -1,11 +1,42 @@
 import Foundation
 import UIKit
 
+struct Font {
+    
+    /// `UIFont(name: "MONTSERRAT-REGULAR.TTF", size: ...)`
+    static func fontRegular(size: CGFloat) -> UIKit.UIFont? {
+        return UIKit.UIFont.init(name: CustomFontPoppins.Regular.rawValue, size: size)
+    }
+    
+    /// `UIFont(name: "MONTSERRAT-MEDIUM.TTF", size: ...)`
+    static func fontMedium(size: CGFloat) -> UIKit.UIFont? {
+        return UIKit.UIFont.init(name: CustomFontPoppins.Medium.rawValue, size: size)
+    }
+    
+    /// `UIFont(name: "MONTSERRAT-SEMIBOLD.TTF", size: ...)`
+    static func fontSemiBold(size: CGFloat) -> UIKit.UIFont? {
+        return UIKit.UIFont.init(name: CustomFontPoppins.SemiBold.rawValue, size: size)
+    }
+    
+    /// `UIFont(name: "MONTSERRAT-BOLD.TTF", size: ...)`
+    static func fontBold(size: CGFloat) -> UIKit.UIFont? {
+        return UIKit.UIFont.init(name: CustomFontPoppins.Bold.rawValue, size: size)
+    }
+}
+
 //MARK: -UITExtFiels
 private var __maxLengths = [UITextField: Int]()
 
 extension UITextField {
     
+        func addRightImage(img : UIImage?, imgFrame : CGRect? ) {
+            
+            self.rightViewMode = UITextField.ViewMode.always
+            let imageView = UIImageView(frame: imgFrame ?? CGRect(x: 0, y: 0, width: 32, height: 20))
+            imageView.image = img
+            imageView.contentMode = .scaleAspectFit
+            self.rightView = imageView
+        }
     @IBInspectable var maxLength: Int {
         get {
             guard let l = __maxLengths[self] else {

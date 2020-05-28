@@ -8,40 +8,31 @@
 
 import UIKit
 import Alamofire
+import Social
 
 class DescriptionVC: BaseViewController {
 
+    //MARK: -Outlets
     @IBOutlet weak var lblUserName: UILabel!
-    
-    
     @IBOutlet weak var imgUpload: UIImageView!
-    
     @IBOutlet weak var tfCompanyName: AnimatableTextField!
-    
-    
-    
-    
     @IBOutlet weak var tfTitle: AnimatableTextField!
-    
-    
     @IBOutlet weak var tVDescription: AnimatableTextView!
-    
-    
-    
     @IBOutlet weak var tfWebsiteName: AnimatableTextField!
-    
-    
     @IBOutlet weak var tfEmailAddress: AnimatableTextField!
     
+    //MARK: -Parameters
     private var imagePicker:ImagePicker?;
     private let pickerController = UIImagePickerController();
     var thumbNailImage:UIImage? = nil
     var videoURL:URL? = nil
      var uploadChoice:UploadChoices?
     
+    
+    //MARK: -ViewDidlpad
     override func viewDidLoad() {
         super.viewDidLoad()
-        tfCompanyName.text = "ok"
+        tfCompanyName.text = ModelDataHolder.shared.loggedData?.companyName ?? ""
         tfCompanyName.isUserInteractionEnabled = false
         imgUpload.isUserInteractionEnabled = true
         imgUpload.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(uploadLogo)))
@@ -54,16 +45,7 @@ class DescriptionVC: BaseViewController {
     }
     
     @IBAction func btnActionUpload(_ sender: UIButton) {
-        
-//        guard let vc = getVC(withId: VC.PostVideoPOPVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostVideoPOPVC else {
-//            return
-//        }
-//        vc.delegate = self
-//        vc.modalPresentationStyle = .overFullScreen
-//        vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
-//        self.navigationController?.present(vc, animated: true, completion: nil)
-        
-        let toValidate = Validation.Validate
+          let toValidate = Validation.Validate
         toValidate.delegate = self
       
         if imgUpload.image !=   #imageLiteral(resourceName: "upload_logo"){
@@ -90,8 +72,14 @@ class DescriptionVC: BaseViewController {
     }
     
     @IBAction func btnActionPower(_ sender: UIButton) {
-        
-        AppManager.Manager.logoutFromApp(fromVc: self)
+        guard let vc = self.getVC(withId: VC.PostVideoPOPVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostVideoPOPVC else {
+            return
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overFullScreen
+        vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
+        self.navigationController?.present(vc, animated: true, completion: nil)
+       // AppManager.Manager.logoutFromApp(fromVc: self)
     }
     
     func postImage(){ ///"thumbnail":"", "video":""
@@ -116,7 +104,21 @@ class DescriptionVC: BaseViewController {
                                                                 if let msg = cleanDict["msg"] as? String {
                                                                    mm = msg
                                                                 }
-                                                                Alert.shared.showSimpleAlert(messageStr: mm)
+                                                                //Alert.shared.showSimpleAlert(messageStr: mm)
+                                                                
+                                                                Alert.shared.showAlertWithCompletion(buttons: ["Post on social apps"], msg: "", success: {[weak self] pst in
+                                                                    
+                                                                    if pst == "Post on social apps"{
+                                                                                guard let vc = self?.getVC(withId: VC.PostVideoPOPVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostVideoPOPVC else {
+                                                                                    return
+                                                                                }
+                                                                                vc.delegate = self
+                                                                                vc.modalPresentationStyle = .overFullScreen
+                                                                                vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
+                                                                                self?.navigationController?.present(vc, animated: true, completion: nil)
+                                                                    }
+                                                                    
+                                                                })
                                                                 
                                                             })
                      
@@ -171,7 +173,65 @@ extension DescriptionVC : validationListner{
     
 }
 
-
+extension DescriptionVC:SocialAppListener{
+    func userSelectedApp(preferedApp: SocialApps) {
+       
+        
+        
+        
+        switch preferedApp {
+        case .FaceBook:
+            openFB()
+        case .Youtube:break
+              case .Twitter:break
+              case .Linked:break
+        case .Instagram:break
+        default:
+            break
+        }
+    }
+    
+    func openFB(){
+        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
+            var fbShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            if uploadChoice == .UploadImage{
+                fbShare.add(thumbNailImage)
+            }
+            else if uploadChoice == .UploadVideo{
+                
+            }
+            fbShare.setInitialText(tVDescription.text)
+            //fbShare.add(tfWebsiteName.text)
+            self.present(fbShare, animated: true, completion: nil)
+            
+        } else {
+            var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertController.Style.alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func openTwitter(){
+        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
+            var twShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+             if uploadChoice == .UploadImage{
+                 twShare.add(thumbNailImage)
+            }
+            twShare.setInitialText(tVDescription.text)
+            self.present(twShare, animated: true, completion: nil)
+            
+        } else {
+            var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertController.Style.alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+}
 //MARK:  ImagePickerDelegate
 
 extension DescriptionVC: ImagePickerDelegate {
