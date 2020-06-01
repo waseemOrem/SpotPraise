@@ -23,6 +23,7 @@
 		841A6520247FC3A700253A2A /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841A651E247FC3A700253A2A /* DropDownCell.xib */; };
 		841A6522247FCA0A00253A2A /* CompanyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A6521247FCA0A00253A2A /* CompanyListModel.swift */; };
 		841D869A247923590062EC61 /* SubscriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D8699247923590062EC61 /* SubscriptionVC.swift */; };
+		8444A0112484CABF006FDC26 /* SociaPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444A0102484CABF006FDC26 /* SociaPostManager.swift */; };
 		844F4FD52477DEE5007ACC82 /* ChangePssVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FD42477DEE5007ACC82 /* ChangePssVC.swift */; };
 		844F4FD92477E1A0007ACC82 /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FD82477E1A0007ACC82 /* ForgotVC.swift */; };
 		844F4FDD2477E7CD007ACC82 /* OTPVerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FDC2477E7CD007ACC82 /* OTPVerificationVC.swift */; };
@@ -39,6 +40,7 @@
 		845D6FA2247CDD7100B2AF1B /* NetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6FA1247CDD7100B2AF1B /* NetworkManger.swift */; };
 		845D6FA4247CDDD300B2AF1B /* CONSTANT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6FA3247CDDD300B2AF1B /* CONSTANT.swift */; };
 		845D6FA6247CDE1600B2AF1B /* AlertLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6FA5247CDE1600B2AF1B /* AlertLoader.swift */; };
+		84707DCD2482220E00304E55 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84707DCC2482220E00304E55 /* Toast.swift */; };
 		8484BA2E2477C4F1002324EC /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484BA2D2477C4F1002324EC /* SignUpVC.swift */; };
 		849919882477AECC0073A1DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849919872477AECC0073A1DE /* AppDelegate.swift */; };
 		8499198D2477AECC0073A1DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8499198B2477AECC0073A1DE /* Main.storyboard */; };
@@ -145,7 +147,9 @@
 		841A651D247FC3A700253A2A /* DropDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		841A651E247FC3A700253A2A /* DropDownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
 		841A6521247FCA0A00253A2A /* CompanyListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListModel.swift; sourceTree = "<group>"; };
+		841A6523247FF4BC00253A2A /* SpotPraise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpotPraise.entitlements; sourceTree = "<group>"; };
 		841D8699247923590062EC61 /* SubscriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionVC.swift; sourceTree = "<group>"; };
+		8444A0102484CABF006FDC26 /* SociaPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SociaPostManager.swift; sourceTree = "<group>"; };
 		844F4FD42477DEE5007ACC82 /* ChangePssVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePssVC.swift; sourceTree = "<group>"; };
 		844F4FD82477E1A0007ACC82 /* ForgotVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
 		844F4FDC2477E7CD007ACC82 /* OTPVerificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPVerificationVC.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 		845D6FA1247CDD7100B2AF1B /* NetworkManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManger.swift; sourceTree = "<group>"; };
 		845D6FA3247CDDD300B2AF1B /* CONSTANT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CONSTANT.swift; sourceTree = "<group>"; };
 		845D6FA5247CDE1600B2AF1B /* AlertLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertLoader.swift; sourceTree = "<group>"; };
+		84707DCC2482220E00304E55 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		8484BA2D2477C4F1002324EC /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		849919842477AECC0073A1DE /* SpotPraise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotPraise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849919872477AECC0073A1DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -363,6 +368,14 @@
 			path = Networks;
 			sourceTree = "<group>";
 		};
+		845DCB7D2480BC0D0069FD0E /* PostManagers */ = {
+			isa = PBXGroup;
+			children = (
+				8444A0102484CABF006FDC26 /* SociaPostManager.swift */,
+			);
+			path = PostManagers;
+			sourceTree = "<group>";
+		};
 		8499197B2477AECB0073A1DE = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +401,7 @@
 		849919862477AECC0073A1DE /* SpotPraise */ = {
 			isa = PBXGroup;
 			children = (
+				841A6523247FF4BC00253A2A /* SpotPraise.entitlements */,
 				84991A0C2477B11C0073A1DE /* Resources */,
 				849919BE2477AF1F0073A1DE /* HelperClasses */,
 				849919BD2477AF170073A1DE /* AppDelegate */,
@@ -419,11 +433,11 @@
 		849919B82477AEE60073A1DE /* MVC */ = {
 			isa = PBXGroup;
 			children = (
+				849919B92477AEF00073A1DE /* Model */,
 				849919BB2477AEFC0073A1DE /* Controller */,
 				849919BA2477AEF50073A1DE /* View */,
 				84D4CACB247F819F005E2C14 /* EmptyScreen.swift */,
 				84D4CACD247F81D1005E2C14 /* EmptyScreenView.xib */,
-				849919B92477AEF00073A1DE /* Model */,
 			);
 			path = MVC;
 			sourceTree = "<group>";
@@ -431,6 +445,7 @@
 		849919B92477AEF00073A1DE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				845DCB7D2480BC0D0069FD0E /* PostManagers */,
 				845D6F9B247CDB9900B2AF1B /* ResponseModels */,
 				849919C82477AFE20073A1DE /* AppManager.swift */,
 				844F4FDE2477E825007ACC82 /* BaseViewController.swift */,
@@ -487,6 +502,7 @@
 				840AD1062479455C001E4F6D /* Validation.swift */,
 				845D6FA3247CDDD300B2AF1B /* CONSTANT.swift */,
 				845D6FA5247CDE1600B2AF1B /* AlertLoader.swift */,
+				84707DCC2482220E00304E55 /* Toast.swift */,
 			);
 			path = HelperClasses;
 			sourceTree = "<group>";
@@ -706,6 +722,11 @@
 				TargetAttributes = {
 					849919832477AECC0073A1DE = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					8499199A2477AECD0073A1DE = {
 						CreatedOnToolsVersion = 10.1;
@@ -931,6 +952,7 @@
 				849919FB2477B04B0073A1DE /* BorderType.swift in Sources */,
 				844F4FE72477F266007ACC82 /* HomeVC.swift in Sources */,
 				84991A062477B04B0073A1DE /* AnimationType.swift in Sources */,
+				84707DCD2482220E00304E55 /* Toast.swift in Sources */,
 				841A6522247FCA0A00253A2A /* CompanyListModel.swift in Sources */,
 				844F4FD52477DEE5007ACC82 /* ChangePssVC.swift in Sources */,
 				840A48832478F83900241B79 /* PostHistoryTableCell.swift in Sources */,
@@ -950,6 +972,7 @@
 				8451EE372478B422008F3E39 /* ProfileVC.swift in Sources */,
 				84991A082477B04B0073A1DE /* MaskType.swift in Sources */,
 				849919ED2477B04B0073A1DE /* CornerDesignable.swift in Sources */,
+				8444A0112484CABF006FDC26 /* SociaPostManager.swift in Sources */,
 				840AD10124793CF2001E4F6D /* SubscriptionPlanPopVC.swift in Sources */,
 				849919C32477AF720073A1DE /* PublicExtensions.swift in Sources */,
 				849919C12477AF660073A1DE /* PublicEnums.swift in Sources */,
@@ -1141,8 +1164,9 @@
 			baseConfigurationReference = 7885876DD042A854B32D8795 /* Pods-SpotPraise.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development: Kavita Aneja (L366S6G9W3)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = SpotPraise/SpotPraise.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2RCDVBDTE8;
 				INFOPLIST_FILE = SpotPraise/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1151,7 +1175,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orem.SpotPraise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Prov for SpotPraise";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1162,8 +1186,9 @@
 			baseConfigurationReference = CCDEBDDCC1E67983E7D8F005 /* Pods-SpotPraise.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development: Kavita Aneja (L366S6G9W3)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = SpotPraise/SpotPraise.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2RCDVBDTE8;
 				INFOPLIST_FILE = SpotPraise/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1172,7 +1197,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orem.SpotPraise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Prov for SpotPraise";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

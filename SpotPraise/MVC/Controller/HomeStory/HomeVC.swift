@@ -9,10 +9,12 @@
 import UIKit
 import Alamofire
 
-enum PostDataDict:String {
-    case postImage = "postImage"
-    case postVideo = "postVideo"
+enum SocialPostDataDictKEYS:String {
+    case postMode = "postMode"
     case postThumb = "postThumb"
+    case postImage = "postImage"
+    case postVideoURL = "postVideoURL"
+    
 }
 class HomeVC: BaseViewController {
 
@@ -35,6 +37,12 @@ class HomeVC: BaseViewController {
        
         return btn
     }()
+    lazy var cancelPreviewButton:UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        
+        return btn
+    }()
     
     lazy var postThumbNailHolder:UIView = {
        let v = UIView()
@@ -43,7 +51,7 @@ class HomeVC: BaseViewController {
     }()
     
     
-    var postData = [PostDataDict.RawValue:Any]()
+    var socialPostData = [SocialPostDataDictKEYS:Any]()
     var choosenPrefrence:UploadChoices?
   
     //MARK: -viewDidLoad
@@ -80,24 +88,27 @@ lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
 
 extension HomeVC {
     //MARK :-Custom functions
+    @objc func clickedOnCancelPreview(){
+        self.postThumbNailHolder.removeFromSuperview()
+    }
     @objc func clickedOnAddPost(){
         
         guard let vc = getVC(withId: VC.DescriptionVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? DescriptionVC else {
             return
         }
         
-        guard let thumNailImg = self.postData[PostDataDict.postThumb.rawValue] as? UIImage else {
-            return
-        }
-        if choosenPrefrence == .UploadVideo{
-            guard let videoURL = self.postData[PostDataDict.postVideo.rawValue] as? URL  else {
-                return
-            }
-          vc.videoURL = videoURL
-        }
-        
-        vc.uploadChoice = self.choosenPrefrence
-        vc.thumbNailImage = thumNailImg
+//        guard let thumNailImg = self.postData[postThumb.rawValue] as? UIImage else {
+//            return
+//        }
+//        if choosenPrefrence == .UploadVideo{
+//            guard let videoURL = self.postData[PostDataDict.postVideo.rawValue] as? URL  else {
+//                return
+//            }
+//          vc.videoURL = videoURL
+//        }
+        vc.socialPostData = self.socialPostData
+        //vc.uploadChoice = self.choosenPrefrence
+       // vc.thumbNailImage = thumNailImg
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -112,22 +123,24 @@ extension HomeVC:UploadPopUpListner{
         choosenPrefrence = prefrence
         switch prefrence {
         case .UploadImage:
-            guard let data = dataSource as? [String:Any] else {
+            guard let data = dataSource as? [SocialPostDataDictKEYS:Any] else {
                 return
             }
-            self.postData = data
-             self.imageV.image = data[PostDataDict.postThumb.rawValue] as? UIImage
+            self.socialPostData = data
+             self.imageV.image = data[.postImage] as? UIImage
             
         case .UploadVideo:
-            guard let data = dataSource as? [String:Any] else {
+            guard let data = dataSource as? [SocialPostDataDictKEYS:Any] else {
                 return
             }
-            self.postData = data
-             self.imageV.image = data[PostDataDict.postThumb.rawValue] as? UIImage
+            self.socialPostData = data
+             self.imageV.image = data[.postThumb] as? UIImage
           
         default:
             break
         }
+        
+        print(self.socialPostData)
         addPreview()
         
         
@@ -162,6 +175,31 @@ extension HomeVC{
         postButton.setBackgroundImage(#imageLiteral(resourceName: "ic_home_circle_button"), for: .normal)
         
         postButton.addTarget(self, action: #selector(clickedOnAddPost), for: .touchUpInside)
+        
+        
+        self.imageV.addSubview(cancelPreviewButton)
+        cancelPreviewButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        cancelPreviewButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        cancelPreviewButton.topAnchor.constraint(equalTo: (viewHolder?.topAnchor)!, constant: 5).isActive = true
+       cancelPreviewButton.leadingAnchor.constraint(equalTo: (viewHolder?.leadingAnchor)!, constant: 5).isActive = true
+       // postButton.centerXAnchor.constraint(equalTo: imageV.centerXAnchor).isActive = true
+        cancelPreviewButton.backgroundColor = .clear
+        cancelPreviewButton.layer.borderWidth = 1
+        cancelPreviewButton.layer.borderColor = UIColor.darkGray.cgColor
+        let img = UIImageView()
+        self.imageV.addSubview(img)
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        img.image = #imageLiteral(resourceName: "ic_cross")
+        img.centerXAnchor.constraint(equalTo: cancelPreviewButton.centerXAnchor).isActive = true
+         img.centerYAnchor.constraint(equalTo: cancelPreviewButton.centerYAnchor).isActive = true
+        
+        //cancelPreviewButton.setBackgroundImage(img.image, for: .normal)
+        
+         cancelPreviewButton.addTarget(self, action: #selector(clickedOnCancelPreview), for: .touchUpInside)
+        
+        
     }
 }
 

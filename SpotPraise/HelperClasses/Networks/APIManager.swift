@@ -550,14 +550,27 @@ enum serverURLEndpoint:String {
     case companylist = "companylist"
     
 }
+
+//const val DOWNLOADBASEURL= BASE+"/lalit/spot/img/posts/"
 struct MakeURL {
-    private static let   baseURL = "http://122.160.233.58/lalit/spot/api/apis/"
+    private static let  BASEURL = "http://122.160.233.58"
+    private  static let IMAGEBASEURL = "/lalit/spot/"
+    
     static func genrateURL(endPoint:serverURLEndpoint)->URL?{
-        guard var  urlis = URL(string: self.baseURL) else {return nil}
+        guard var  urlis = URL(string: BASEURL) else {return nil}
+        urlis.appendPathComponent("/lalit/spot/api/apis/")
         urlis.appendPathComponent(endPoint.rawValue)
         return urlis
     }
+    static func generateImageURL(imageEndPoint:String)->URL?{
+      //  http://122.160.233.58/lalit/spot/img/users/1590732075-1507738677256.png
+        guard var  urlis = URL(string: self.BASEURL) else {return nil}
+         urlis.appendPathComponent(IMAGEBASEURL)
+        urlis.appendPathComponent(imageEndPoint)
+        return urlis
+    }
 }
+
 
 
 struct OptionalSettingsKeys {

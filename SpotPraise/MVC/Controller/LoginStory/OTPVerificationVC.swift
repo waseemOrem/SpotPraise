@@ -8,6 +8,8 @@
 
 import UIKit
 
+var userJustRegister = ""
+
 class OTPVerificationVC: BaseViewController {
     
     //MARK: - Outlets
@@ -100,25 +102,29 @@ extension OTPVerificationVC{
         
         
         APIManager.requestWebServerWithAlamo(to: .verifyOtp, httpMethd: .post , params: params as [String : Any], completion: { [weak self] response in
-        APIManager.getJsonDict(response: response, completion: { [weak self] cleanDict in
-            print(cleanDict)
-        var message = "verified successfully.".localized
-        
-        if let msg = cleanDict["msg"] as? String {
-        message = msg
-        }
-        
-            Alert.shared.showAlertWithCompletion(buttons: ["Proceed to complete the registration?","Cancel"], msg: message, success: {option in
-                if option == "Proceed to complete the registration?"{
-                    self?.registerToServer()
-                }
-            })
-        // print(cleanDict)
-        }
-            )
+            
+             self?.registerToServer()
+            
+//        APIManager.getJsonDict(response: response, completion: { [weak self] cleanDict in
+//            print(cleanDict)
+//        var message = "verified successfully.".localized
+//
+//        if let msg = cleanDict["msg"] as? String {
+//        message = msg
+//        }
+//
+//            Alert.shared.showAlertWithCompletion(buttons: ["Proceed to complete the registration?","Cancel"], msg: message, success: {option in
+//                if option == "Proceed to complete the registration?"{
+//
+//                }
+//            })
+//        // print(cleanDict)
+//        }
+//            )
         })
     }
     func registerToServer() {
+        let p = RegistrationData.CodingKeys.self
          APIManager.requestWebServerWithAlamo(to: .register, httpMethd: .post , params: signUpParameters as [String : Any], completion: { [weak self] response in
             
 //                                        APIManager.getJsonDict(response: response, completion: {cleanDict in
@@ -126,17 +132,21 @@ extension OTPVerificationVC{
 //                                      console(cleanDict)
 //                                        })
             
-            let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
+           let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
             //  let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
             
             if response.response?.statusCode == 200{
-                guard  resData?.data != nil else {
-                    Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
-                    return}
-               AppManager.Manager.loginToApp(registrationData: resData)
+//                guard  resData?.data != nil else {
+//                    Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
+//                    return}
+               // AppManager.Manager.saveLoggedData(registrationData: resData)
+                Toast.show(message: resData?.msg ?? "User Registered successfully.", controller: self!)
+                userJustRegister = self?.signUpParameters[p.email.rawValue] as! String
+                self?.navigationController?.popToRootViewController(animated: true)
+              // AppManager.Manager.loginToApp(registrationData: resData)
             }
             else {
-                Alert.shared.showSimpleAlert(messageStr:resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue )
+                Alert.shared.showSimpleAlert(messageStr:MESSAGES.RESPONSE_ERROR.rawValue )
                 
             }
         }

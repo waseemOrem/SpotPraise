@@ -34,6 +34,7 @@ class ChangePssVC: BaseViewController,validationListner {
     
    
     @IBAction func btnDoneClick(){
+        self.view.endEditing(true)
         let vali = Validation.Validate
         vali.delegate = self
         guard Validation.Validate.validateForEmpty(validatedObj: tfCurrentPass, forInvalid: "Please enter current Password"),
@@ -65,12 +66,23 @@ vali.validateForEmpty(validatedObj: tfNewPass, forInvalid: "Please enter new Pas
                 if let msg = cleanDict["msg"] as? String {
                     message = msg
                 }
+               
                 
-              Alert.shared.showSimpleAlert(messageStr: message)
-                // print(cleanDict)
+                guard let responV = cleanDict["response"] as? String else {
+                    Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue)
+                    return
+                }
+                 Toast.show(message: message, controller: self)
+                if responV == "1"{
+                    
+                    AppManager.Manager.logoutFromApp(fromVc: self, .High)
+                }
+              
             }
             )
         })
     }
 
 }
+
+

@@ -171,17 +171,21 @@ extension SignUpVC{
                     otpIs = String(otp)
                 }
                 if otpIs != "0" {
+                    
                     Alert.shared.showAlertWithCompletion(buttons: ["Verify" ,"Cancel"], msg: message, success: {option in
-                        
+
                         if option == "Verify"{
                             guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
                                 return
                             }
                             vc.signUpParameters = paramsForSignUP
                             vc.verifiedOTP = otpIs
+                            //for pre email
+                           
+                            
                             self?.pushVC(vc)
                         }
-                        
+
                     })
                   //  Alert.shared.showSimpleAlert(messageStr: message)
                 }else {

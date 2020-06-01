@@ -24,19 +24,54 @@ class DescriptionVC: BaseViewController {
     //MARK: -Parameters
     private var imagePicker:ImagePicker?;
     private let pickerController = UIImagePickerController();
-    var thumbNailImage:UIImage? = nil
-    var videoURL:URL? = nil
-     var uploadChoice:UploadChoices?
+//    var thumbNailImage:UIImage? = nil
+//    var videoURL:URL? = nil
+     var socialPostData = [SocialPostDataDictKEYS:Any]()
+   // var postUploadedOnServer = false
+    var formValidation = ""
+     //var uploadChoice:UploadChoices?
     
     
+    lazy var postMode:UploadChoices? = {
+        
+        guard let  tImg =  self.socialPostData[.postMode] as? UploadChoices else {return nil }
+        return tImg
+    }()
+    
+    lazy var postThumbNailImage:UIImage? = {
+        
+        guard let  tImg =  self.socialPostData[.postThumb] as? UIImage else {return nil }
+        return tImg
+    }()
+    
+    lazy var postImage:UIImage? = {
+        
+        guard let  tImg =  self.socialPostData[.postImage] as? UIImage else {return nil }
+        return tImg
+    }()
+    
+    lazy var postvideoURL:URL? = {
+        
+        guard let  pURL =  self.socialPostData[.postVideoURL] as? URL else {return nil }
+        return pURL
+    }()
+    
+
+    
+    deinit {
+        print("")
+    }
     //MARK: -ViewDidlpad
     override func viewDidLoad() {
         super.viewDidLoad()
         tfCompanyName.text = ModelDataHolder.shared.loggedData?.companyName ?? ""
         tfCompanyName.isUserInteractionEnabled = false
+        tfEmailAddress.isUserInteractionEnabled = false
+        tfEmailAddress.text = ModelDataHolder.shared.loggedData?.email ?? ""
         imgUpload.isUserInteractionEnabled = true
         imgUpload.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(uploadLogo)))
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        print(self.socialPostData)
         // Do any additional setup after loading the view.
     }
     
@@ -45,11 +80,17 @@ class DescriptionVC: BaseViewController {
     }
     
     @IBAction func btnActionUpload(_ sender: UIButton) {
+        
+        let toCompare = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
+        if self.formValidation == toCompare  && toCompare.count > 0 {
+            self.openPostMediaPopUp()
+        }else {
+         self.formValidation = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
           let toValidate = Validation.Validate
         toValidate.delegate = self
       
         if imgUpload.image !=   #imageLiteral(resourceName: "upload_logo"){
-            guard  toValidate.validateForEmpty(validatedObj: tfCompanyName, forInvalid: "Please enter company name."),
+            guard  
                 toValidate.validateForEmpty(validatedObj: tfTitle, forInvalid: "Please enter the title."),
                 toValidate.validateForEmpty(validatedObj: tVDescription, forInvalid: "Please enter the description"),
                 toValidate.validateForEmpty(validatedObj: tfEmailAddress, forInvalid: "Please enter a correct email"),
@@ -57,9 +98,10 @@ class DescriptionVC: BaseViewController {
                 else {
                     return
             }
+           
             
-            if uploadChoice == .UploadImage{
-                postImage()
+            if postMode == .UploadImage{
+                postImageToServer()
             }else {
                 postVideo()
             }
@@ -67,7 +109,7 @@ class DescriptionVC: BaseViewController {
             Alert.shared.showSimpleAlert(messageStr: "Please add logo")
         }
         
-       
+        }
         
     }
     
@@ -79,10 +121,10 @@ class DescriptionVC: BaseViewController {
         vc.modalPresentationStyle = .overFullScreen
         vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
         self.navigationController?.present(vc, animated: true, completion: nil)
-       // AppManager.Manager.logoutFromApp(fromVc: self)
+    //  AppManager.Manager.logoutFromApp(fromVc: self)
     }
     
-    func postImage(){ ///"thumbnail":"", "video":""
+    func postImageToServer(){ ///"thumbnail":"", "video":""
         let params = ["company_title":self.tfTitle.text!,
                       "description":self.tVDescription.text,
                       "email":self.tfEmailAddress.text!,
@@ -91,8 +133,9 @@ class DescriptionVC: BaseViewController {
                       "logo_image":"",
                       
         ] as [String:Any]
+        //guard let postImage = self.socialPostData[.postImage] as? UIImage else {return}
         
-        let imageParams = ["post_image":thumbNailImage,
+        let imageParams = ["post_image":postImage,
                            "logo_image":self.imgUpload.image]
         
         APIManager.requestWebServerWithAlamoToUploadImage(to: .addPost,
@@ -101,6 +144,8 @@ class DescriptionVC: BaseViewController {
                                                           completion: {response in
                                                             APIManager.getJsonDict(response: response, completion: {cleanDict in
                                                                 var mm = "Post Added successfully."
+                                                              
+                                                              
                                                                 if let msg = cleanDict["msg"] as? String {
                                                                    mm = msg
                                                                 }
@@ -109,13 +154,7 @@ class DescriptionVC: BaseViewController {
                                                                 Alert.shared.showAlertWithCompletion(buttons: ["Post on social apps"], msg: "", success: {[weak self] pst in
                                                                     
                                                                     if pst == "Post on social apps"{
-                                                                                guard let vc = self?.getVC(withId: VC.PostVideoPOPVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostVideoPOPVC else {
-                                                                                    return
-                                                                                }
-                                                                                vc.delegate = self
-                                                                                vc.modalPresentationStyle = .overFullScreen
-                                                                                vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
-                                                                                self?.navigationController?.present(vc, animated: true, completion: nil)
+                                                                               self?.openPostMediaPopUp()
                                                                     }
                                                                     
                                                                 })
@@ -135,10 +174,16 @@ class DescriptionVC: BaseViewController {
                       "logo_image":"",
                       "thumbnail":"",
                       "video":""]
-        APIManager.requestWebServerWithAlamoToUploadVideo(to: .addPost, VideoUrl: videoURL!, postImge: self.imgUpload.image, imagethumbnel: thumbNailImage!,parameters:params as [String : AnyObject], completion: {response in
+       // guard let thumbNailImage = self.socialPostData[.postThumb] as? UIImage else {return}
+       // guard let videoURL = self.socialPostData[.postVideoURL] as? URL else {return}
+        
+        APIManager.requestWebServerWithAlamoToUploadVideo(to: .addPost,
+                                                          VideoUrl: postvideoURL!,
+                                                          postImge: self.imgUpload.image,
+                                                          imagethumbnel: self.postThumbNailImage!,parameters:params as [String : AnyObject], completion: {response in
             
             APIManager.getJsonDict(response: response, completion: { cleanDict in
-            
+              //  postUploadedOnServer = true
                 var mm = "Post Added successfully."
                 if let msg = cleanDict["msg"] as? String {
                     mm = msg
@@ -174,30 +219,71 @@ extension DescriptionVC : validationListner{
 }
 
 extension DescriptionVC:SocialAppListener{
+    
+    func openPostMediaPopUp(){
+        guard let vc = self.getVC(withId: VC.PostVideoPOPVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? PostVideoPOPVC else {
+            return
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overFullScreen
+        vc.view.backgroundColor = UIColor.white.withAlphaComponent(0.70)
+        self.navigationController?.present(vc, animated: true, completion: nil)
+    }
     func userSelectedApp(preferedApp: SocialApps) {
        
-        
-        
-        
-        switch preferedApp {
-        case .FaceBook:
-            openFB()
+         switch preferedApp {
+        case .FaceBook: openFB()
         case .Youtube:break
-              case .Twitter:break
+              case .Twitter:openTwitter()
               case .Linked:break
-        case .Instagram:break
+        case .Instagram:openInsta()
         default:
             break
         }
     }
     
+    func openInsta(){
+        //First we wiil check weather user has choosen image or view
+        // UploadImage , UploadVideo
+        if postMode == .UploadImage{
+              SocialPostManager.sharedManager.postImageToInstaStoryV2(sharingImageView: self.postImage,
+                                                                      instagramCaption:tVDescription.text, view: self.view)
+        }
+        else if  postMode == .UploadVideo{
+            
+            if self.postvideoURL != nil {
+                guard let videData = NSData(contentsOf: self.postvideoURL!) else {
+                    return
+                }
+                
+                guard let imageData = self.postImage?.pngData() else { return }
+                
+               SocialPostManager.sharedManager.shareVideoToInstagramV2(videoData: videData,
+                                                                       imageData: imageData as NSData,
+                                                                       caption: tVDescription.text)
+            }
+            
+            
+            
+        }
+        
+      
+        //  SocialPostManager.sharedManager.postImageToInstaStoryV1(imageInstagram: self.imgThumb.image!, instagramCaption: txtV.text, view: self.view)
+   
+  //  SocialPostManager.sharedManager.shareVideoToInstagramV2(videoData: self.videoDataIs, imageData: self.imgDataIs, caption: "Hello test caption")
+        
+       // InstagramManager.sharedManager.postImageToInstaStory(sharingImageView: self.postImage,
+                                                            // instagramCaption:  "\(self.tVDescription.text)", view: self.view)
+       // InstagramManager.sharedManager.postImageToInstagramWithCaption(imageInstagram: image!, instagramCaption: "\(self.tVDescription.text)", view: self.view)
+    }
+    
     func openFB(){
         if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
             var fbShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-            if uploadChoice == .UploadImage{
-                fbShare.add(thumbNailImage)
+            if self.postMode == .UploadImage{
+                fbShare.add(self.postImage)
             }
-            else if uploadChoice == .UploadVideo{
+            else if self.postMode == .UploadVideo{
                 
             }
             fbShare.setInitialText(tVDescription.text)
@@ -216,14 +302,15 @@ extension DescriptionVC:SocialAppListener{
     func openTwitter(){
         if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
             var twShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-             if uploadChoice == .UploadImage{
-                 twShare.add(thumbNailImage)
+             if self.postMode == .UploadImage{
+                 twShare.add(self.postThumbNailImage)
             }
+            //twShare.
             twShare.setInitialText(tVDescription.text)
             self.present(twShare, animated: true, completion: nil)
             
         } else {
-            var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertController.Style.alert)
+            var alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to share.", preferredStyle: UIAlertController.Style.alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)

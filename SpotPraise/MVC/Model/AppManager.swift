@@ -86,14 +86,26 @@ class AppManager: NSObject {
         AppManager.Manager.initStoryBoard(type: .Home)
         
     }
-    
-    func logoutFromApp(fromVc:UIViewController){
-        Alert.shared.showAlertWithCompletion(buttons: ["YES","NO"], title: "Logout", msg: "Do you want to logout?", success: {someType in
-            if someType == "YES"{
-                self.logout(fromVc: fromVc)
-            }
-            //  console(someType)
-        })
+    enum LogOutPriority:String {
+        case High = "High"
+        case Medium = "Medium"
+        case low = "low"
+    }
+    func logoutFromApp(fromVc:UIViewController, _ priorityOfLogout:LogOutPriority = .Medium ){
+        
+        switch priorityOfLogout {
+        case .High: logout(fromVc: fromVc)
+        case .low:break
+        case .Medium:
+            Alert.shared.showAlertWithCompletion(buttons: ["YES","NO"], title: "Logout", msg: "Do you want to logout?", success: {someType in
+                if someType == "YES"{
+                    self.logout(fromVc: fromVc)
+                }
+                //  console(someType)
+            })
+        
+        }
+       
     }
  
 }

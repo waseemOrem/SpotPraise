@@ -39,7 +39,8 @@ class ProfileVC: BaseViewController {
 self.tableView?.dataSource = self
         self.tableView?.delegate = self
         if let imgLink = ModelDataHolder.shared.loggedData?.image{
-            if let imgURL =   URL(string: imgLink)  {
+            if let imgURL =  MakeURL.generateImageURL(imageEndPoint: imgLink)  {
+              //  console(imgURL)
                 imgUser?.sd_setImage(with: imgURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
             }
         }

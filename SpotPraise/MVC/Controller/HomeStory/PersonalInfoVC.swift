@@ -54,6 +54,7 @@ uploadData()
                 guard  resData?.data != nil else {
                     Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
                     return}
+                Toast.show(message: resData?.msg ?? "Updated", controller: self)
                 AppManager.Manager.saveLoggedData(registrationData: resData)
                 
             }
@@ -67,10 +68,12 @@ uploadData()
         }
         console(userData)
         if let logoLink = userData.image{
-            if let logoURL =   URL(string: logoLink)  {
+            if let logoURL =   MakeURL.generateImageURL(imageEndPoint: logoLink)  {
                 imgUser?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
             }
         }
+        
+        
         
         self.tfFullName?.text = userData.name
         self.tfEmail?.text = userData.email

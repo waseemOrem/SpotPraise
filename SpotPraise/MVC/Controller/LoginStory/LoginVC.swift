@@ -27,12 +27,18 @@ tFUserPassword?.isSecureTextEntry = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        LocalStorage.callLocalDBTo( dbActions: .Fetch, accessKey: .AccesskeyEmail, processComplete: {maildata in
-            
-            guard let mail = maildata as? String else {return}
-            self.tFUserName?.text = mail
-            
-        })
+        tFUserPassword?.text = ""
+        if userJustRegister == "" {
+            LocalStorage.callLocalDBTo( dbActions: .Fetch, accessKey: .AccesskeyEmail, processComplete: {maildata in
+                
+                guard let mail = maildata as? String else {return}
+                self.tFUserName?.text = mail
+                
+            })
+        }else {
+          self.tFUserName?.text =    userJustRegister
+        }
+       
         
     }
     //MARK: -Actions
@@ -58,6 +64,8 @@ tFUserPassword?.isSecureTextEntry = true
         guard let vc = getVC(withId: VC.SignUpVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? SignUpVC else {
             return
         }
+        
+        
         self.navigationController?.pushViewController(vc, animated: true )
     }
  }
@@ -125,6 +133,10 @@ extension LoginVC{
 //MARK: -APIS
 
 extension LoginVC : validationListner{
+    func emailAfteRe(email: String) {
+        self.tFUserName?.text = email
+    }
+    
     func unableToValidate(validationCandidate: AnyObject?, message: String) {
         Alert.shared.showAlertWithCompletion(buttons: ["ok"], msg: message, success: { [weak self]
             ok in

@@ -74,6 +74,7 @@ class BaseViewController: UIViewController {
         //MARK: - LIFE CYCLE FUNCTIONS
         override func viewDidLoad() {
             super.viewDidLoad()
+            tableView?.separatorStyle = .none
 //            navBar?.tintColor = #colorLiteral(red: 0.3882781863, green: 0.5528389812, blue: 0.973059833, alpha: 1)
 //            navBar?.isTranslucent = false
 //            navBar?.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: CustomFonts.Montserrat_Medium.rawValue, size: 20)!,

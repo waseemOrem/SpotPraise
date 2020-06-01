@@ -31,8 +31,8 @@ class UploadVideoPopUpVC: UIViewController {
     private var imagePicker:ImagePicker?;
     private let pickerController = UIImagePickerController();
     var choosenData:Any?
-    var mypath:URL? = nil
-     var thumbnail = UIImage()
+//    var mypath:URL? = nil
+//     var thumbnail = UIImage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,27 +87,40 @@ extension UploadVideoPopUpVC:AVPlayerViewControllerDelegate,UIImagePickerControl
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        guard  let mediaType = info[UIImagePickerController.InfoKey.mediaURL] as? NSString else {
-//            return
-//            print("no it not")
-//        }
-       // let url = info[UIImagePickerControllerMediaURL]
-        //  print(url!)
-    //    if mediaType.isEqual(to: kUTTypeMovie  as String)//
-      //  {
-        var _videoData = [String:Any]()
+
+        // *** store the video URL returned by UIImagePickerController *** //
+        guard  let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
+            return
+        }
+        
+        // *** load video data from URL *** //
+        guard  let videoData = NSData(contentsOf: videoURL) else {return}
+        
+        // *** Get documents directory path *** //
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
+        
+        // *** Append video file name *** //
+       // let dataPath = FileManager.default .stringByAppendingPathComponent("/videoFileName.mp4")
+        
+        // *** Write video file data to path *** //
+      //  videoData?.writeToFile(dataPath, atomically: false)
+        
+         print("we found a video url.. \(paths)")
+        var _videoData = [SocialPostDataDictKEYS:Any]()
         
             let urlOfVideo = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL
             if urlOfVideo != nil
             {
-                mypath = urlOfVideo as URL?
+                let videoPath = urlOfVideo as URL?
                 
                 
                 // print(mypath!)
-                print("we found a video url.. \(mypath)")
+                print("we found a video url.. \(videoPath)")
+                
+               // InstagramManager.sharedManager.postVideoToStory()
                 do
                 {
-                    let asset = AVURLAsset(url: mypath! , options: nil)
+                    let asset = AVURLAsset(url: videoPath! , options: nil)
                     let durationInSeconds = asset.duration.seconds
                     print("SEC ARE \(durationInSeconds)")
 //                    let videoReso = CommonMethods.Manager.getVideoResolution(with: urlOfVideo! as URL)
@@ -117,9 +130,10 @@ extension UploadVideoPopUpVC:AVPlayerViewControllerDelegate,UIImagePickerControl
                     let imgGenerator = AVAssetImageGenerator(asset: asset)
                     imgGenerator.appliesPreferredTrackTransform = true
                     let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
-                    thumbnail = UIImage(cgImage: cgImage)
-                    _videoData[PostDataDict.postThumb.rawValue] = thumbnail
-                    _videoData[PostDataDict.postVideo.rawValue] =  mypath
+                  let  thumbnail = UIImage(cgImage: cgImage)
+                      _videoData[.postMode] = self.userChoice
+                    _videoData[.postThumb] = thumbnail
+                    _videoData[.postVideoURL] =  videoPath
                     print("Thumbnail image \(thumbnail)")
                     
                 }
@@ -137,7 +151,7 @@ extension UploadVideoPopUpVC:AVPlayerViewControllerDelegate,UIImagePickerControl
         closeVideoPopUp(videoData: _videoData)
     }
     
-    func closeVideoPopUp(videoData:[String:Any?]){
+    func closeVideoPopUp(videoData:Any){
         
         
         choosenData = videoData
@@ -152,14 +166,14 @@ extension UploadVideoPopUpVC:AVPlayerViewControllerDelegate,UIImagePickerControl
         
     }
     
-    func openVideoEditor(){
-        if UIVideoEditorController.canEditVideo(atPath: (mypath?.absoluteString)!) {
-            let editController = UIVideoEditorController()
-            editController.videoPath = (mypath?.absoluteString)!
-            editController.delegate = self
-            present(editController, animated:true)
-        }
-    }
+//    func openVideoEditor(){
+//        if UIVideoEditorController.canEditVideo(atPath: (mypath?.absoluteString)!) {
+//            let editController = UIVideoEditorController()
+//            editController.videoPath = (mypath?.absoluteString)!
+//            editController.delegate = self
+//            present(editController, animated:true)
+//        }
+//    }
 }
 
 extension UploadVideoPopUpVC: UIVideoEditorControllerDelegate {
@@ -185,9 +199,11 @@ extension UploadVideoPopUpVC: ImagePickerDelegate {
     
     func didSelect(image: UIImage?) {
         if image != nil {
-             var _videoData = [String:Any]()
+             var _videoData = [SocialPostDataDictKEYS:Any]()
             
-            _videoData[PostDataDict.postThumb.rawValue] = image
+            _videoData[.postImage] = image
+            _videoData[.postThumb] = image
+              _videoData[.postMode] = self.userChoice
             
             choosenData = _videoData
             guard userChoice != nil , choosenData != nil else {
