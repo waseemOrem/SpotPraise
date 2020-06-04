@@ -75,7 +75,7 @@ vali.validateForEmpty(validatedObj: tfNewPass, forInvalid: "Please enter new Pas
                  Toast.show(message: message, controller: self)
                 if responV == "1"{
                     
-                    AppManager.Manager.logoutFromApp(fromVc: self, .High)
+                    AppManager.Manager.logoutFromApp(fromVc: self, priorityOfLogout: .High)
                 }
               
             }

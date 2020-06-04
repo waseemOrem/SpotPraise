@@ -202,6 +202,13 @@ class APIManager :NSObject {
     case 200 , 0:
         
         return true
+    case 401:
+       // AppManager.Manager
+    Toast.show(message: "Login again", controller: nil)
+        AppManager.Manager.logoutFromApp(fromVc: nil, priorityOfLogout: .High)
+       // (UIApplication.shared.delegate as? AppDelegate)?.logout()
+        
+          return false
         
     default:
         guard let res = response else {

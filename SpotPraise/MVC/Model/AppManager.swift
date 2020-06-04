@@ -39,7 +39,7 @@ class AppManager: NSObject {
             let navigationController = UINavigationController(rootViewController: loginController)
             navigationController.setNavigationBarHidden(true, animated: true)
             self.window?.rootViewController = navigationController
-            let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+           // let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         //   statusBar.sty = UIColor.white
            // statusBar.col = .white
             self.window?.makeKeyAndVisible()
@@ -49,7 +49,7 @@ class AppManager: NSObject {
     }
     
     
-    private func logout(fromVc:UIViewController){
+    private func logout(fromVc:UIViewController?){
        // APIManager.requestWebServerWithAlamo(to: .Logout,  httpMethd: .post, completion: {onSuccess in
             
             self.deleteData(fromVc: fromVc)
@@ -58,9 +58,9 @@ class AppManager: NSObject {
 //        //})
     }
     
-    private func deleteData(fromVc:UIViewController){
+    private func deleteData(fromVc:UIViewController?){
         LocalStorage.callLocalDBTo( dbActions: .Delete, accessKey: .AccessKeyLoggedData, processComplete: {pc in
-            let LoginVC =  fromVc.getVC(withId: VC.LoginVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? LoginVC
+            let LoginVC =  fromVc?.getVC(withId: VC.LoginVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? LoginVC
             
             if let LoginVC = LoginVC  {
                 
@@ -72,6 +72,16 @@ class AppManager: NSObject {
                 }
                 
             }
+            else {
+                //let LoginVC =  getVC(withId: VC.LoginVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? LoginVC
+                 DispatchQueue.main.async {
+                    
+                    (UIApplication.shared.delegate as? AppDelegate)?.logout(window: self.window)
+                }
+                
+            }
+            
+            
         })
         
     }
@@ -91,7 +101,7 @@ class AppManager: NSObject {
         case Medium = "Medium"
         case low = "low"
     }
-    func logoutFromApp(fromVc:UIViewController, _ priorityOfLogout:LogOutPriority = .Medium ){
+    func logoutFromApp(fromVc:UIViewController?,   priorityOfLogout:LogOutPriority = .Medium ){
         
         switch priorityOfLogout {
         case .High: logout(fromVc: fromVc)

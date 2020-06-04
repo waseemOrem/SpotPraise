@@ -68,6 +68,9 @@ lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
     }
     
     @IBAction func btnProfileClick(_ sender: UIButton) {
+       
+        //Toast.show(message: "Login again", controller: nil)
+        //AppManager.Manager.logoutFromApp(fromVc: nil, priorityOfLogout: .High)
         guard let vc = getVC(withId: VC.ProfileVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? ProfileVC else {
             return
         }

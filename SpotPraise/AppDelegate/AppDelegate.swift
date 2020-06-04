@@ -53,6 +53,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
     }
+    ///MARK:- Logout function
+    func logout(window:UIWindow?) {
+        
+        let LoginVC =  getVC(withId: VC.LoginVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? LoginVC
+        
+        if let LoginVC = LoginVC  {
+           // let nvc: UINavigationController = UINavigationController(rootViewController: LoginVC)
+            //nvc.setNavigationBarHidden(true, animated: false)
+            //self.window?.rootViewController = nvc
+            let nvc: UINavigationController = UINavigationController(rootViewController: LoginVC)
+            nvc.setNavigationBarHidden(true, animated: false)
+            //            (UIApplication.shared.delegate as? AppDelegate)?.application.applicationIconBadgeNumber = 0
+//            let center = UNUserNotificationCenter.current()
+//            center.removeAllDeliveredNotifications() // To remove all delivered notifications
+//            center.removeAllPendingNotificationRequests()
+            //            UserSingleton.shared.loggedInUser = nil // To remove all UserData notifications
+           window?.rootViewController = nvc
+        }
+    }
 
     func checkFonts ()
     {
