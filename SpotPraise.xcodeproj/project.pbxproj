@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2ED275CB5271B8F0C404434A /* Pods_SpotPraiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A4D2FEC10BBCAE3B04A668 /* Pods_SpotPraiseTests.framework */; };
+		840A1402248BA3C2006659CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840A1401248BA3C2006659CB /* GoogleService-Info.plist */; };
 		840A487A2478E6B700241B79 /* PostVideoPOPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A48792478E6B700241B79 /* PostVideoPOPVC.swift */; };
 		840A48802478F76B00241B79 /* PostHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A487F2478F76B00241B79 /* PostHistoryVC.swift */; };
 		840A48832478F83900241B79 /* PostHistoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A48812478F83900241B79 /* PostHistoryTableCell.swift */; };
@@ -19,6 +20,8 @@
 		841012AA247E6DE600E530EB /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 841012A9247E6DE600E530EB /* ReadMe */; };
 		841012AC247EA35000E530EB /* PostHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841012AB247EA35000E530EB /* PostHistoryModel.swift */; };
 		8415A789247D2CFC00A6E1C2 /* WebResponseHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415A788247D2CFC00A6E1C2 /* WebResponseHolder.swift */; };
+		8415E1C9248B585400F4C274 /* SilentImagineryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8415E1C8248B585400F4C274 /* SilentImagineryView.xib */; };
+		8415E1CB248B589C00F4C274 /* SilentImagineryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415E1CA248B589C00F4C274 /* SilentImagineryView.swift */; };
 		841A651F247FC3A700253A2A /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A651D247FC3A700253A2A /* DropDown.swift */; };
 		841A6520247FC3A700253A2A /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841A651E247FC3A700253A2A /* DropDownCell.xib */; };
 		841A6522247FCA0A00253A2A /* CompanyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A6521247FCA0A00253A2A /* CompanyListModel.swift */; };
@@ -30,10 +33,12 @@
 		844F4FDF2477E825007ACC82 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FDE2477E825007ACC82 /* BaseViewController.swift */; };
 		844F4FE32477EA68007ACC82 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844F4FE22477EA68007ACC82 /* Home.storyboard */; };
 		844F4FE72477F266007ACC82 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F4FE62477F266007ACC82 /* HomeVC.swift */; };
+		845059E0248AC27400925AAF /* ImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845059DF248AC27400925AAF /* ImageMerger.swift */; };
 		8451EE332478AB37008F3E39 /* DescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE322478AB37008F3E39 /* DescriptionVC.swift */; };
 		8451EE372478B422008F3E39 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE362478B422008F3E39 /* ProfileVC.swift */; };
 		8451EE3A2478B912008F3E39 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE392478B912008F3E39 /* ProfileTableCell.swift */; };
 		8451EE792478DB01008F3E39 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EE782478DB01008F3E39 /* ImagePicker.swift */; };
+		8456DB20248BBED500952967 /* PhoneNumberValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456DB1F248BBED500952967 /* PhoneNumberValidation.swift */; };
 		845D6F99247CDAF300B2AF1B /* SpotPraiseNSPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6F98247CDAF300B2AF1B /* SpotPraiseNSPersistence.swift */; };
 		845D6F9D247CDBAB00B2AF1B /* RegistrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6F9C247CDBAB00B2AF1B /* RegistrationModel.swift */; };
 		845D6FA0247CDD4E00B2AF1B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6F9F247CDD4E00B2AF1B /* APIManager.swift */; };
@@ -133,6 +138,7 @@
 /* Begin PBXFileReference section */
 		56E0ABFAC36406C97D69DA69 /* Pods-SpotPraise-SpotPraiseUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotPraise-SpotPraiseUITests.debug.xcconfig"; path = "Target Support Files/Pods-SpotPraise-SpotPraiseUITests/Pods-SpotPraise-SpotPraiseUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7885876DD042A854B32D8795 /* Pods-SpotPraise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotPraise.debug.xcconfig"; path = "Target Support Files/Pods-SpotPraise/Pods-SpotPraise.debug.xcconfig"; sourceTree = "<group>"; };
+		840A1401248BA3C2006659CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		840A48792478E6B700241B79 /* PostVideoPOPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVideoPOPVC.swift; sourceTree = "<group>"; };
 		840A487F2478F76B00241B79 /* PostHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHistoryVC.swift; sourceTree = "<group>"; };
 		840A48812478F83900241B79 /* PostHistoryTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHistoryTableCell.swift; sourceTree = "<group>"; };
@@ -144,6 +150,8 @@
 		841012A9247E6DE600E530EB /* ReadMe */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
 		841012AB247EA35000E530EB /* PostHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHistoryModel.swift; sourceTree = "<group>"; };
 		8415A788247D2CFC00A6E1C2 /* WebResponseHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebResponseHolder.swift; sourceTree = "<group>"; };
+		8415E1C8248B585400F4C274 /* SilentImagineryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SilentImagineryView.xib; sourceTree = "<group>"; };
+		8415E1CA248B589C00F4C274 /* SilentImagineryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilentImagineryView.swift; sourceTree = "<group>"; };
 		841A651D247FC3A700253A2A /* DropDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		841A651E247FC3A700253A2A /* DropDownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
 		841A6521247FCA0A00253A2A /* CompanyListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyListModel.swift; sourceTree = "<group>"; };
@@ -156,10 +164,12 @@
 		844F4FDE2477E825007ACC82 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		844F4FE22477EA68007ACC82 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		844F4FE62477F266007ACC82 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		845059DF248AC27400925AAF /* ImageMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMerger.swift; sourceTree = "<group>"; };
 		8451EE322478AB37008F3E39 /* DescriptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionVC.swift; sourceTree = "<group>"; };
 		8451EE362478B422008F3E39 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		8451EE392478B912008F3E39 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
 		8451EE782478DB01008F3E39 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		8456DB1F248BBED500952967 /* PhoneNumberValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberValidation.swift; sourceTree = "<group>"; };
 		845D6F98247CDAF300B2AF1B /* SpotPraiseNSPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotPraiseNSPersistence.swift; sourceTree = "<group>"; };
 		845D6F9C247CDBAB00B2AF1B /* RegistrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationModel.swift; sourceTree = "<group>"; };
 		845D6F9F247CDD4E00B2AF1B /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -458,6 +468,8 @@
 			children = (
 				8451EE382478B8FA008F3E39 /* TableCells */,
 				84991A0B2477B0F90073A1DE /* InterFaceBuilder */,
+				8415E1C8248B585400F4C274 /* SilentImagineryView.xib */,
+				8415E1CA248B589C00F4C274 /* SilentImagineryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -503,6 +515,8 @@
 				845D6FA3247CDDD300B2AF1B /* CONSTANT.swift */,
 				845D6FA5247CDE1600B2AF1B /* AlertLoader.swift */,
 				84707DCC2482220E00304E55 /* Toast.swift */,
+				845059DF248AC27400925AAF /* ImageMerger.swift */,
+				8456DB1F248BBED500952967 /* PhoneNumberValidation.swift */,
 			);
 			path = HelperClasses;
 			sourceTree = "<group>";
@@ -566,6 +580,7 @@
 		84991A0C2477B11C0073A1DE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				840A1401248BA3C2006659CB /* GoogleService-Info.plist */,
 				845D6F9A247CDAF800B2AF1B /* DataBaseResources */,
 				84991A112477BAD20073A1DE /* CustomFonts */,
 				849919912477AECD0073A1DE /* Assets.xcassets */,
@@ -773,12 +788,14 @@
 				840A48842478F83900241B79 /* PostHistoryTableCell.xib in Resources */,
 				841012AA247E6DE600E530EB /* ReadMe in Resources */,
 				84D4CAE3247F8464005E2C14 /* success@3x.png in Resources */,
+				8415E1C9248B585400F4C274 /* SilentImagineryView.xib in Resources */,
 				84991A292477BC7E0073A1DE /* Poppins-Regular.ttf in Resources */,
 				84991A282477BC7E0073A1DE /* Poppins-Light.ttf in Resources */,
 				849919952477AECD0073A1DE /* LaunchScreen.storyboard in Resources */,
 				84991A2A2477BC7E0073A1DE /* Poppins-ExtraBold.ttf in Resources */,
 				84991A2B2477BC7E0073A1DE /* Poppins-Bold.ttf in Resources */,
 				84991A262477BC7E0073A1DE /* Poppins-Medium.ttf in Resources */,
+				840A1402248BA3C2006659CB /* GoogleService-Info.plist in Resources */,
 				84991A2C2477BC7E0073A1DE /* Poppins-Thin.ttf in Resources */,
 				849919922477AECD0073A1DE /* Assets.xcassets in Resources */,
 				841A6520247FC3A700253A2A /* DropDownCell.xib in Resources */,
@@ -914,6 +931,7 @@
 			files = (
 				84991A032477B04B0073A1DE /* GradientDesignable.swift in Sources */,
 				849919EE2477B04B0073A1DE /* AnimatableView.swift in Sources */,
+				845059E0248AC27400925AAF /* ImageMerger.swift in Sources */,
 				849919C52477AF790073A1DE /* Alert.swift in Sources */,
 				840A487A2478E6B700241B79 /* PostVideoPOPVC.swift in Sources */,
 				849919F02477B04B0073A1DE /* AnimatableImageView.swift in Sources */,
@@ -931,6 +949,8 @@
 				845D6F9D247CDBAB00B2AF1B /* RegistrationModel.swift in Sources */,
 				845D6FA0247CDD4E00B2AF1B /* APIManager.swift in Sources */,
 				84D4CAE8247F84AE005E2C14 /* EZSwiftExtensions.swift in Sources */,
+				8456DB20248BBED500952967 /* PhoneNumberValidation.swift in Sources */,
+				8415E1CB248B589C00F4C274 /* SilentImagineryView.swift in Sources */,
 				840AD1072479455C001E4F6D /* Validation.swift in Sources */,
 				84D4CADD247F8464005E2C14 /* Footer.swift in Sources */,
 				84D4CAE0247F8464005E2C14 /* Util.swift in Sources */,

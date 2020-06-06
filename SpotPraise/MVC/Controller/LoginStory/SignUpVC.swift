@@ -8,6 +8,8 @@
 
 import UIKit
 import ADCountryPicker
+import FirebaseAuth
+
 
 class SignUpVC: BaseViewController {
 
@@ -38,13 +40,15 @@ class SignUpVC: BaseViewController {
      override func viewDidLoad() {
         super.viewDidLoad()
  adpicker.delegate = self
+        //tfPhoneNo.delegate = self
         tfCompanyName?.addRightImage(img : #imageLiteral(resourceName: "ic_dropdown") , imgFrame : CGRect(x: 0, y: 0, width: 32, height: 18))
         
         // Do any additional setup after loading the view.
+         self.getCompanies()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.getCompanies()
+       
     }
     
     //MARK: -Actions
@@ -85,14 +89,39 @@ class SignUpVC: BaseViewController {
             Validation.Validate.validateForEmail(tfEmail, forInvalid: "Please enter the correct email."),
             Validation.Validate.validateForEmpty(validatedObj: tfPss, forInvalid: "Please enter the password."),
             Validation.Validate.validatePasswordLength(tfPss, forInvalid: "Passwords must be minimum 6 characters long"),
-        Validation.Validate.validateForEmpty(validatedObj: tfPhoneNo, forInvalid: "Please enter a valid phone number.") else {
+        Validation.Validate.validateForEmpty(validatedObj: tfPhoneNo, forInvalid: "Please enter a valid phone number.") ,
+        Validation.Validate.validateForPhoneNumber(tfPhoneNo, forInvalid: "Please enter a valid phone number.")
+        else {
             return
         }
-        requestOtpForRegistration()
-//        guard  let vc = self.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
-//            return
-//        }
-//        self.pushVC(vc)
+        
+      
+        //requestOtpForRegistration()
+        //print(phoneNumber)
+        let p = RegistrationData.CodingKeys.self
+        
+        
+        
+        let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
+                               p.name.rawValue:tfUserName.text!,
+                               p.password.rawValue:tfPss.text!,
+                               p.email.rawValue:tfEmail!.text!,
+                               p.phone.rawValue:tfPhoneNo!.text!,
+                               p.countryCode.rawValue:lblCC.text!,
+                               p.companyId.rawValue:self.companyID,
+                               "devicetype":"ios",
+                               "devicetoken":deviceTokenString
+            ] as [String : Any]
+        
+        guard let vc = self.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
+            return
+        }
+        vc.signUpParameters = paramsForSignUP
+        
+       // self.pushVC(vc)
+        
+        
+ 
     }
      @IBAction func btnAddCodeClick(_ sender: Any) {
              self.view.endEditing(true)
@@ -134,67 +163,67 @@ extension SignUpVC{
     }
     
     
-    func requestOtpForRegistration()  {
-        let p = RegistrationData.CodingKeys.self
-        let params = [
-                      p.email.rawValue:tfEmail!.text!,
-                      p.phone.rawValue:tfPhoneNo!.text!,
-                      p.countryCode.rawValue:lblCC.text!
-                      ] as [String : Any]
-        
-      
-        let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
-                               p.name.rawValue:tfUserName.text!,
-                               p.password.rawValue:tfPss.text!,
-                    p.email.rawValue:tfEmail!.text!,
-            p.phone.rawValue:tfPhoneNo!.text!,
-            p.countryCode.rawValue:lblCC.text!,
-            p.companyId.rawValue:self.companyID,
-            "devicetype":"ios",
-            "devicetoken":deviceTokenString
-            ] as [String : Any]
-        
-         APIManager.requestWebServerWithAlamo(to: .sentOtp, httpMethd: .post , params: params as [String : Any], completion: { response in
-            APIManager.getJsonDict(response: response, completion: {  [weak self] cleanDict in
-                var message = "Otp has been sent to your number.".localized
-                var otpIs = "0"
-                if let msg = cleanDict["msg"] as? String {
-                  message = msg
-                }
-                
-                if let otp = cleanDict["otp"] as? String
-                {
-                   otpIs = otp
-                }
-                
-                if let otp = cleanDict["otp"] as? Int {
-                    otpIs = String(otp)
-                }
-                if otpIs != "0" {
-                    
-                    Alert.shared.showAlertWithCompletion(buttons: ["Verify" ,"Cancel"], msg: message, success: {option in
-
-                        if option == "Verify"{
-                            guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
-                                return
-                            }
-                            vc.signUpParameters = paramsForSignUP
-                            vc.verifiedOTP = otpIs
-                            //for pre email
-                           
-                            
-                            self?.pushVC(vc)
-                        }
-
-                    })
-                  //  Alert.shared.showSimpleAlert(messageStr: message)
-                }else {
-                    Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue)
-                }
-               // print(cleanDict)
-            })
-        })
-    }
+//    func requestOtpForRegistration()  {
+//        let p = RegistrationData.CodingKeys.self
+//        let params = [
+//                      p.email.rawValue:tfEmail!.text!,
+//                      p.phone.rawValue:tfPhoneNo!.text!,
+//                      p.countryCode.rawValue:lblCC.text!
+//                      ] as [String : Any]
+//
+//
+//        let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
+//                               p.name.rawValue:tfUserName.text!,
+//                               p.password.rawValue:tfPss.text!,
+//                    p.email.rawValue:tfEmail!.text!,
+//            p.phone.rawValue:tfPhoneNo!.text!,
+//            p.countryCode.rawValue:lblCC.text!,
+//            p.companyId.rawValue:self.companyID,
+//            "devicetype":"ios",
+//            "devicetoken":deviceTokenString
+//            ] as [String : Any]
+//
+//         APIManager.requestWebServerWithAlamo(to: .sentOtp, httpMethd: .post , params: params as [String : Any], completion: { response in
+//            APIManager.getJsonDict(response: response, completion: {  [weak self] cleanDict in
+//                var message = "Otp has been sent to your number.".localized
+//                var otpIs = "0"
+//                if let msg = cleanDict["msg"] as? String {
+//                  message = msg
+//                }
+//
+//                if let otp = cleanDict["otp"] as? String
+//                {
+//                   otpIs = otp
+//                }
+//
+//                if let otp = cleanDict["otp"] as? Int {
+//                    otpIs = String(otp)
+//                }
+//                if otpIs != "0" {
+//
+//                    Alert.shared.showAlertWithCompletion(buttons: ["Verify" ,"Cancel"], msg: message, success: {option in
+//
+//                        if option == "Verify"{
+//                            guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
+//                                return
+//                            }
+//                            vc.signUpParameters = paramsForSignUP
+//                            vc.verifiedOTP = otpIs
+//                            //for pre email
+//
+//
+//                            self?.pushVC(vc)
+//                        }
+//
+//                    })
+//                  //  Alert.shared.showSimpleAlert(messageStr: message)
+//                }else {
+//                    Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue)
+//                }
+//               // print(cleanDict)
+//            })
+//        })
+//    }
     
     
 }
@@ -219,7 +248,7 @@ extension SignUpVC:validationListner{
 
 //MARK:  -ADCountryPickerDelegate
 
-extension SignUpVC:ADCountryPickerDelegate
+extension SignUpVC:ADCountryPickerDelegate,UITextFieldDelegate
 {
     func countryPicker(_ picker: ADCountryPicker, didSelectCountryWithName name: String, code: String) {
         print(code)
@@ -230,5 +259,16 @@ extension SignUpVC:ADCountryPickerDelegate
         self.lblCC?.text = dialCode
         self.dismiss(animated: true, completion: nil)
         
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var fullString = textField.text ?? ""
+        fullString.append(string)
+        if range.length == 1 {
+            textField.text = format(phoneNumber: fullString, shouldRemoveLastDigit: true)
+        } else {
+            textField.text = format(phoneNumber: fullString)
+        }
+        return false
     }
 }

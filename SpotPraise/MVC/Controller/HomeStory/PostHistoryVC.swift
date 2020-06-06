@@ -17,6 +17,7 @@ class PostHistoryVC: BaseViewController {
         super.viewDidLoad()
         
        configureTableView()
+        getPostHistory()
         // Do any additional setup after loading the view.
     }
     
@@ -25,7 +26,7 @@ class PostHistoryVC: BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        getPostHistory()
+        
         headerRefresh()
     }
 }

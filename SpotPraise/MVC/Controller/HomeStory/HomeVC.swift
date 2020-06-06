@@ -152,7 +152,7 @@ extension HomeVC:UploadPopUpListner{
 }
 //MARK: -PREVIEW ADDITION
 extension HomeVC{
-    
+    //UP
     func addPreview(){
         self.viewHolder?.addSubview(postThumbNailHolder)
         postThumbNailHolder.leadingAnchor.constraint(equalTo: (self.viewHolder?.leadingAnchor)!).isActive = true
@@ -184,26 +184,27 @@ extension HomeVC{
         cancelPreviewButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         cancelPreviewButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         cancelPreviewButton.topAnchor.constraint(equalTo: (viewHolder?.topAnchor)!, constant: 5).isActive = true
-       cancelPreviewButton.leadingAnchor.constraint(equalTo: (viewHolder?.leadingAnchor)!, constant: 5).isActive = true
+       cancelPreviewButton.leadingAnchor.constraint(equalTo: (viewHolder?.leadingAnchor)!, constant: 10).isActive = true
        // postButton.centerXAnchor.constraint(equalTo: imageV.centerXAnchor).isActive = true
-        cancelPreviewButton.backgroundColor = .clear
+        cancelPreviewButton.backgroundColor = .white
         cancelPreviewButton.layer.borderWidth = 1
+        cancelPreviewButton.clipsToBounds = true
+        cancelPreviewButton.layer.masksToBounds = true //layer.masksToBounds = true
         cancelPreviewButton.layer.borderColor = UIColor.darkGray.cgColor
+        cancelPreviewButton.layer.cornerRadius = cancelPreviewButton.frame.width/2
         let img = UIImageView()
         self.imageV.addSubview(img)
         img.translatesAutoresizingMaskIntoConstraints = false
         img.heightAnchor.constraint(equalToConstant: 25).isActive = true
         img.widthAnchor.constraint(equalToConstant: 25).isActive = true
+      img.clipsToBounds = true
+        img.contentMode = .scaleAspectFit
         img.image = #imageLiteral(resourceName: "ic_cross")
         img.centerXAnchor.constraint(equalTo: cancelPreviewButton.centerXAnchor).isActive = true
          img.centerYAnchor.constraint(equalTo: cancelPreviewButton.centerYAnchor).isActive = true
-        
-        //cancelPreviewButton.setBackgroundImage(img.image, for: .normal)
-        
-         cancelPreviewButton.addTarget(self, action: #selector(clickedOnCancelPreview), for: .touchUpInside)
-        
-        
-    }
+          cancelPreviewButton.addTarget(self, action: #selector(clickedOnCancelPreview), for: .touchUpInside)
+      }
+     //END
 }
 
 

@@ -36,17 +36,24 @@ class ProfileVC: BaseViewController {
     let menuItemsArray = MenuItems.allCases
     override func viewDidLoad() {
         super.viewDidLoad()
-self.tableView?.dataSource = self
+      //  print(ModelDataHolder.shared.loggedData?.firstname)
+       // print(ModelDataHolder.shared.loggedData?.lastname)
+        
+        
+       // r.[0].Pipe
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView?.dataSource = self
         self.tableView?.delegate = self
         if let imgLink = ModelDataHolder.shared.loggedData?.image{
             if let imgURL =  MakeURL.generateImageURL(imageEndPoint: imgLink)  {
-              //  console(imgURL)
+                //  console(imgURL)
                 imgUser?.sd_setImage(with: imgURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
             }
         }
         
-       // r.[0].Pipe
-        // Do any additional setup after loading the view.
     }
     
 

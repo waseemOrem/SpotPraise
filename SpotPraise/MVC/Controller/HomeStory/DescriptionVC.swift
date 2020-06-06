@@ -15,6 +15,7 @@ class DescriptionVC: BaseViewController {
     //MARK: -Outlets
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var imgUpload: UIImageView!
+     @IBOutlet weak var imgSilent: UIImageView?
     @IBOutlet weak var tfCompanyName: AnimatableTextField!
     @IBOutlet weak var tfTitle: AnimatableTextField!
     @IBOutlet weak var tVDescription: AnimatableTextView!
@@ -56,6 +57,8 @@ class DescriptionVC: BaseViewController {
         return pURL
     }()
     
+  //  var renderedImage:UIImage?
+    
 
     
     deinit {
@@ -80,28 +83,42 @@ class DescriptionVC: BaseViewController {
     }
     
     @IBAction func btnActionUpload(_ sender: UIButton) {
-        
-        let toCompare = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
-        if self.formValidation == toCompare  && toCompare.count > 0 {
-            self.openPostMediaPopUp()
-        }else {
-         self.formValidation = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
-          let toValidate = Validation.Validate
+        let toValidate = Validation.Validate
         toValidate.delegate = self
-      
+        
         if imgUpload.image !=   #imageLiteral(resourceName: "upload_logo"){
-            guard  
-                toValidate.validateForEmpty(validatedObj: tfTitle, forInvalid: "Please enter the title."),
-                toValidate.validateForEmpty(validatedObj: tVDescription, forInvalid: "Please enter the description"),
-                toValidate.validateForEmpty(validatedObj: tfEmailAddress, forInvalid: "Please enter a correct email"),
-                toValidate.validateForEmail(tfEmailAddress, forInvalid: "Please enter a coreect email")
-                else {
-                    return
-            }
+                        guard
+                            toValidate.validateForEmpty(validatedObj: tfTitle, forInvalid: "Please enter the title."),
+                            toValidate.validateForEmpty(validatedObj: tVDescription, forInvalid: "Please enter the description"),
+                            toValidate.validateForEmpty(validatedObj: tfEmailAddress, forInvalid: "Please enter a correct email"),
+                            toValidate.validateURL(tfWebsiteName, forInvalid: "Please enter correct website."),
+                            toValidate.validateForEmail(tfEmailAddress, forInvalid: "Please enter a coreect email")
+                            else {
+                                return
+                        }
            
             
             if postMode == .UploadImage{
-                postImageToServer()
+                //Here we authenticate the form so we have what we needed now we will create a post image
+                //UNDER TEST
+                guard let silentView = Bundle.main.loadNibNamed("SilentImagineryView", owner: self, options: nil)?.first else { return }
+                let silentV = silentView as? SilentImagineryView
+                silentV?.frame = (self.view?.frame) ?? CGRect.init(x: 0, y: 0, width: /self.view?.frame.width, height: /self.view?.frame.height)
+                silentV?.finalPostImage?.image = self.postImage
+                silentV?.logoImageToRender?.image = self.imgUpload.image
+                
+                
+                let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+                let image = renderer.image { ctx in
+                    silentV?.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+                }
+                
+                // self.imgSilent?.isHidden = false
+                self.imgSilent?.image = image
+                
+                // self.view.addSubview(silentV!)
+                
+                //postImageToServer()
             }else {
                 postVideo()
             }
@@ -109,7 +126,14 @@ class DescriptionVC: BaseViewController {
             Alert.shared.showSimpleAlert(messageStr: "Please add logo")
         }
         
-        }
+//        let toCompare = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
+//        if self.formValidation == toCompare  && toCompare.count > 0 {
+//            self.openPostMediaPopUp()
+//        }else {
+//         self.formValidation = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
+//
+//
+//        }
         
     }
     
@@ -243,6 +267,7 @@ extension DescriptionVC:SocialAppListener{
     }
     
     func openInsta(){
+       
         //First we wiil check weather user has choosen image or view
         // UploadImage , UploadVideo
         if postMode == .UploadImage{
@@ -334,3 +359,17 @@ extension DescriptionVC: ImagePickerDelegate {
         
     }
 }
+
+//extension String {
+//
+//    var canOpenURL : Bool {
+//
+//        guard let url = NSURL(string: self) else {return false}
+//        if !UIApplication.shared.canOpenURL(url as URL) {return false}
+//        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+//        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
+//        return predicate.evaluate(with: self)
+//    }
+//}
+
+

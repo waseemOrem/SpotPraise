@@ -187,6 +187,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="bgImage" destination="tON-fk-gTW" id="5NB-L4-xta"/>
                 <outlet property="imgLogo" destination="B0t-sh-t5Z" id="K3D-e5-3pB"/>
                 <outlet property="lblAddress" destination="cqb-s2-0hM" id="ODZ-pe-MQg"/>
                 <outlet property="lblCompanyName" destination="Vxu-aa-JMe" id="5gf-Ra-ZgA"/>

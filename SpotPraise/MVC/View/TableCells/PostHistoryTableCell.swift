@@ -19,6 +19,7 @@ protocol cellButtonTapped :AnyObject{
 class PostHistoryTableCell: UITableViewCell {
 
     @IBOutlet weak var imgLogo: UIImageView?
+     @IBOutlet weak var bgImage: UIImageView?
     @IBOutlet weak var lblDescription: UILabel?
     
     
@@ -40,6 +41,22 @@ class PostHistoryTableCell: UITableViewCell {
                     imgLogo?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
                 }
             }
+            
+            if item?.thumbnail == "" {
+                if let logoLink = item?.postImage{
+                    if let logoURL =   URL(string: logoLink)  {
+                        bgImage?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+                    }
+                }
+            }else {
+                if let logoLink = item?.thumbnail{
+                    if let logoURL =   URL(string: logoLink)  {
+                        bgImage?.sd_setImage(with: logoURL , placeholderImage: #imageLiteral(resourceName: "upload_logo"))
+                    }
+                }
+            }
+           
+            
            lblDescription?.text = item?.descriptionField ?? ""
            lblAddress?.text =  item?.companyTitle ?? ""
             

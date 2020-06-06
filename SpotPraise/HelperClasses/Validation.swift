@@ -50,6 +50,25 @@ class Validation {
         
         return true
     }
+    func validateURL(_ validateObj:UITextField, forInvalid msg:String) -> Bool {
+        
+        
+//            if (validateObj.text!.trimmingCharacters(in: .whitespaces).isEmpty)
+//            {
+//                delegate?.unableToValidate(validationCandidate: validateObj, message: (msg))
+//                return false
+//            }
+        
+        var returnType = false
+        let urlRegEx = "^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w#\\+\\.~#\\?&/=%]*)?$"
+        let urlTest = NSPredicate(format:"SELF MATCHES %@", urlRegEx)
+       returnType = urlTest.evaluate(with: validateObj.text)
+        if !returnType{
+            delegate?.unableToValidate(validationCandidate: validateObj, message: (msg))
+        }
+        return returnType
+    }
+    
     func validateForEmail(_ emailField:UITextField, forInvalid msg:String?) -> Bool {
         
         let emailRegEx = "(?:[a-zA-Z0-9!#$%\\&‘*+/=?\\^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%\\&'*+/=?\\^_`{|}" +
@@ -66,5 +85,23 @@ class Validation {
             return false
         }
         return emailTest.evaluate(with: emailField.text)
+    }
+    
+    func validateForPhoneNumber(_ phoneField:UITextField, forInvalid msg:String?) -> Bool {
+       // var isPhoneNumber: Bool {
+            do {
+                let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.phoneNumber.rawValue)
+                let matches = detector.matches(in: phoneField.text!, options: [], range: NSRange(location: 0, length: phoneField.text!.count))
+                if let res = matches.first {
+                    return res.resultType == .phoneNumber && res.range.location == 0 && res.range.length == phoneField.text!.count
+                } else {
+                     delegate?.unableToValidate(validationCandidate: phoneField, message: (msg)!)
+                    return false
+                }
+            } catch {
+                 delegate?.unableToValidate(validationCandidate: phoneField, message: (msg)!)
+                return false
+            }
+       // }
     }
 }

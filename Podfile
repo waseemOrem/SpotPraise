@@ -10,8 +10,8 @@ pod 'IQKeyboardManagerSwift'
 pod 'Alamofire', '~> 4.4'
 pod 'ADCountryPicker', '~> 2.1.0'
 pod 'SDWebImage'
-pod 'FBSDKCoreKit'
-pod 'FBSDKShareKit'
+pod 'Firebase/Auth'
+
 
 
 
