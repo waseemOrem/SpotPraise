@@ -15,7 +15,7 @@ class DescriptionVC: BaseViewController {
     //MARK: -Outlets
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var imgUpload: UIImageView!
-     @IBOutlet weak var imgSilent: UIImageView?
+    
     @IBOutlet weak var tfCompanyName: AnimatableTextField!
     @IBOutlet weak var tfTitle: AnimatableTextField!
     @IBOutlet weak var tVDescription: AnimatableTextView!
@@ -49,6 +49,13 @@ class DescriptionVC: BaseViewController {
         
         guard let  tImg =  self.socialPostData[.postImage] as? UIImage else {return nil }
         return tImg
+    }()
+    
+    lazy var silentPostImage:UIImage? = {
+        
+       let img = UIImage()
+        
+        return img
     }()
     
     lazy var postvideoURL:URL? = {
@@ -114,8 +121,8 @@ class DescriptionVC: BaseViewController {
                 }
                 
                 // self.imgSilent?.isHidden = false
-                self.imgSilent?.image = image
-                
+                //self.imgSilent?.image = image
+                self.silentPostImage = image
                 // self.view.addSubview(silentV!)
                 
                 //postImageToServer()
@@ -123,7 +130,7 @@ class DescriptionVC: BaseViewController {
                 postVideo()
             }
         }else {
-            Alert.shared.showSimpleAlert(messageStr: "Please add logo")
+            Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "Please add logo")
         }
         
 //        let toCompare = (tfTitle?.text)! + (tVDescription?.text)! + (tfWebsiteName?.text)!
@@ -212,7 +219,7 @@ class DescriptionVC: BaseViewController {
                 if let msg = cleanDict["msg"] as? String {
                     mm = msg
                 }
-                Alert.shared.showSimpleAlert(messageStr: mm)
+                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: mm)
                 
             })
             

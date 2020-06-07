@@ -88,20 +88,21 @@ class Validation {
     }
     
     func validateForPhoneNumber(_ phoneField:UITextField, forInvalid msg:String?) -> Bool {
-       // var isPhoneNumber: Bool {
-            do {
-                let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.phoneNumber.rawValue)
-                let matches = detector.matches(in: phoneField.text!, options: [], range: NSRange(location: 0, length: phoneField.text!.count))
-                if let res = matches.first {
-                    return res.resultType == .phoneNumber && res.range.location == 0 && res.range.length == phoneField.text!.count
-                } else {
-                     delegate?.unableToValidate(validationCandidate: phoneField, message: (msg)!)
-                    return false
-                }
-            } catch {
-                 delegate?.unableToValidate(validationCandidate: phoneField, message: (msg)!)
-                return false
-            }
-       // }
+        
+        var returnType = false
+        if (phoneField.text?.count)! < 10 {
+            delegate?.unableToValidate(validationCandidate: phoneField, message: msg ?? "Invalid phone number".localized)
+            return returnType
+        }
+            
+        let allowedCharacters = CharacterSet(charactersIn:"0123456789 ")//Here change this characters based on your requirement
+        let characterSet = CharacterSet(charactersIn: phoneField.text!)
+       returnType =  allowedCharacters.isSuperset(of: characterSet)
+        
+        if !returnType{
+            delegate?.unableToValidate(validationCandidate: phoneField, message: msg ?? "Invalid phone number".localized)
+        }
+        
+        return true
     }
 }

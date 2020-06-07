@@ -24,15 +24,15 @@ class OTPVerificationVC: BaseViewController {
      let p = RegistrationData.CodingKeys.self
     var signUpParameters = [String:Any]()
    // var verifiedOTP = ""
-   private var verificationIDFromFireBase:String?// = ""
+    var verificationIDFromFireBase:String?// = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-print(signUpParameters)
+       print(signUpParameters)
         //tfOtp?.text = verifiedOTP
         lblResend?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(resendOTP)))
         
-       loadCaptchaVerification()
+      // loadCaptchaVerification()
         // Do any additional setup after loading the view.
     }
     
@@ -50,20 +50,10 @@ print(signUpParameters)
         phoneNumber = cc + phoneNumber
         print(phoneNumber)
         
-        PhoneAuthProvider.provider().verifyPhoneNumber( phoneNumber, uiDelegate: nil, completion: {(veriFicationId , error) in
-            
-            
-            
-            if error == nil {
-                print(veriFicationId)
-                self.verificationIDFromFireBase  = veriFicationId
-                
-                
-            }else {
-                Toast.show(message:error?.localizedDescription ?? "unable to get secret id from firebase" , controller: self)
-                print("unable to get secret id from firebase",error?.localizedDescription)
-            }
-        })
+        FireBaseMangerC.sharedManager.openCaptchaVerification(phoneNumberWithCountryCodeWithSign: phoneNumber, completion: { [weak self] uniqueID in
+             self?.verificationIDFromFireBase  = uniqueID
+            })
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         
@@ -80,7 +70,7 @@ print(signUpParameters)
         if (self.tfOtp?.hasText)!{
             verifyOtp()
         }else {
-        Alert.shared.showSimpleAlert(messageStr: "Unable to verify!")
+            Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "Unable to verify!".localized)
         }
     }
 
@@ -135,16 +125,10 @@ extension OTPVerificationVC{
         guard let vID = verificationIDFromFireBase else {
             return
         }
-        let credentails = PhoneAuthProvider.provider().credential(withVerificationID: vID, verificationCode: otpCode)
-        
-        Auth.auth().signIn(with: credentails, completion: {(success , error) in
-            if error == nil {
-                self.registerToServer()
-            }else {
-                Alert.shared.showSimpleAlert("Error".localized, messageStr: "Unable to verify please try again after sometime.".localized)
-            }
-            
+        FireBaseMangerC.sharedManager.verifyCaptcha(veriFicationId: vID, otp: otpCode, completion: {[weak self] isVerified in
+            self?.registerToServer()
         })
+        
         
 //         let p = RegistrationData.CodingKeys.self
 //
@@ -200,13 +184,13 @@ extension OTPVerificationVC{
               // AppManager.Manager.loginToApp(registrationData: resData)
             }
             else {
-                Alert.shared.showSimpleAlert(messageStr:MESSAGES.RESPONSE_ERROR.rawValue )
+                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr:MESSAGES.RESPONSE_ERROR.rawValue )
                 
             }
         }
             , onError: { [weak self] (errIs) in
                 if let er = errIs as? String {
-                    Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
+                    Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
                     
                 }
                 

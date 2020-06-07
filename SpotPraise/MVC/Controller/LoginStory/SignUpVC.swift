@@ -43,8 +43,7 @@ class SignUpVC: BaseViewController {
         //tfPhoneNo.delegate = self
         tfCompanyName?.addRightImage(img : #imageLiteral(resourceName: "ic_dropdown") , imgFrame : CGRect(x: 0, y: 0, width: 32, height: 18))
         
-        // Do any additional setup after loading the view.
-         self.getCompanies()
+          self.getCompanies()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -94,35 +93,39 @@ class SignUpVC: BaseViewController {
         else {
             return
         }
-        
-      
-        //requestOtpForRegistration()
-        //print(phoneNumber)
-        let p = RegistrationData.CodingKeys.self
-        
-        
-        
-        let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
-                               p.name.rawValue:tfUserName.text!,
-                               p.password.rawValue:tfPss.text!,
-                               p.email.rawValue:tfEmail!.text!,
-                               p.phone.rawValue:tfPhoneNo!.text!,
-                               p.countryCode.rawValue:lblCC.text!,
-                               p.companyId.rawValue:self.companyID,
-                               "devicetype":"ios",
-                               "devicetoken":deviceTokenString
-            ] as [String : Any]
-        
-        guard let vc = self.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
-            return
+        if companyID != "0"{
+            let p = RegistrationData.CodingKeys.self
+            
+            
+            
+            let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
+                                   p.name.rawValue:tfUserName.text!,
+                                   p.password.rawValue:tfPss.text!,
+                                   p.email.rawValue:tfEmail!.text!,
+                                   p.phone.rawValue:tfPhoneNo!.text!,
+                                   p.countryCode.rawValue:lblCC.text!,
+                                   p.companyId.rawValue:self.companyID,
+                                   "devicetype":"ios",
+                                   "devicetoken":deviceTokenString
+                ] as [String : Any]
+            
+            
+            let  phoneNumber = lblCC.text! + tfPhoneNo.text!
+            FireBaseMangerC.sharedManager.openCaptchaVerification(phoneNumberWithCountryCodeWithSign: phoneNumber, completion: { [weak self] uniqueID in
+                
+                guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
+                    return
+                }
+                vc.signUpParameters = paramsForSignUP
+                vc.verificationIDFromFireBase = uniqueID
+                self?.pushVC(vc)
+                
+            })
         }
-        vc.signUpParameters = paramsForSignUP
-        
-       // self.pushVC(vc)
-        
-        
- 
-    }
+        else {
+            Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "Please choose company".localized)
+        }
+     }
      @IBAction func btnAddCodeClick(_ sender: Any) {
              self.view.endEditing(true)
             let pickerNavigationController = UINavigationController(rootViewController: adpicker)

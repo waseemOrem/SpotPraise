@@ -64,7 +64,7 @@ class Alert: NSObject  {
     }
     
     
-    func showSimpleAlert(_ _title:String? = "Error", messageStr:String) -> Void {
+    func showSimpleAlert( _title:String? , messageStr:String) -> Void {
         
         DispatchQueue.main.async {
             let alert = UIAlertController(title: _title, message:  messageStr, preferredStyle: UIAlertController.Style.alert);

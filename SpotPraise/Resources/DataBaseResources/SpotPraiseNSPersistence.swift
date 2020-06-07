@@ -57,7 +57,7 @@ class LocalStorage: NSObject {
                 processComplete?("Done")
             }
             else {
-                Alert.shared.showSimpleAlert(messageStr: "INVALID DATA DELETE KEY!!")
+                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "INVALID DATA DELETE KEY!!")
             }
             
             // defaultK.removeObject(forKey: AccessKeys.AccesskeyUid.rawValue)

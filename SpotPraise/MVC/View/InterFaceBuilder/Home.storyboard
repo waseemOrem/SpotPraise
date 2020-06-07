@@ -730,9 +730,6 @@
                                     <action selector="btnActionPower:" destination="Y4J-a1-lXP" eventType="touchUpInside" id="ish-hw-Dkh"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tYg-SA-9J0">
-                                <rect key="frame" x="0.0" y="20" width="320" height="770"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -743,7 +740,6 @@
                             <constraint firstItem="tto-Gb-YYr" firstAttribute="leading" secondItem="uLf-xT-P0c" secondAttribute="leading" id="GfN-gy-low"/>
                             <constraint firstItem="cvs-QV-bny" firstAttribute="top" secondItem="RAF-l7-hnM" secondAttribute="top" id="MFL-jK-9m2"/>
                             <constraint firstItem="RAF-l7-hnM" firstAttribute="top" secondItem="hvS-0L-h6F" secondAttribute="top" id="Q4I-pp-0Pa"/>
-                            <constraint firstItem="tYg-SA-9J0" firstAttribute="leading" secondItem="uLf-xT-P0c" secondAttribute="leading" id="ThJ-rb-e9j"/>
                             <constraint firstItem="pjI-GQ-Hu6" firstAttribute="leading" secondItem="RAF-l7-hnM" secondAttribute="leading" id="UvO-AE-IoK"/>
                             <constraint firstItem="pjI-GQ-Hu6" firstAttribute="top" secondItem="RAF-l7-hnM" secondAttribute="bottom" id="Z2t-Eg-r0s"/>
                             <constraint firstItem="C2t-OO-dWg" firstAttribute="leading" secondItem="cvs-QV-bny" secondAttribute="trailing" constant="5" id="bYb-np-oWg"/>
@@ -751,12 +747,9 @@
                             <constraint firstItem="pjI-GQ-Hu6" firstAttribute="trailing" secondItem="cvs-QV-bny" secondAttribute="trailing" id="hTK-gm-0iJ"/>
                             <constraint firstItem="cvs-QV-bny" firstAttribute="leading" secondItem="RAF-l7-hnM" secondAttribute="trailing" id="jyk-uA-roR"/>
                             <constraint firstItem="RAF-l7-hnM" firstAttribute="leading" secondItem="hvS-0L-h6F" secondAttribute="trailing" constant="25" id="k49-h9-lw3"/>
-                            <constraint firstItem="tYg-SA-9J0" firstAttribute="top" secondItem="uLf-xT-P0c" secondAttribute="top" id="kYv-Fq-iDZ"/>
                             <constraint firstItem="hvS-0L-h6F" firstAttribute="leading" secondItem="uLf-xT-P0c" secondAttribute="leading" constant="25" id="pKR-9s-f1I"/>
                             <constraint firstItem="uLf-xT-P0c" firstAttribute="trailing" secondItem="C2t-OO-dWg" secondAttribute="trailing" constant="25" id="rOf-xf-7oz"/>
-                            <constraint firstItem="uLf-xT-P0c" firstAttribute="trailing" secondItem="tYg-SA-9J0" secondAttribute="trailing" id="uj9-mn-9lS"/>
                             <constraint firstItem="uLf-xT-P0c" firstAttribute="bottom" secondItem="tto-Gb-YYr" secondAttribute="bottom" id="xYw-T7-C68"/>
-                            <constraint firstItem="uLf-xT-P0c" firstAttribute="bottom" secondItem="tYg-SA-9J0" secondAttribute="bottom" id="zhr-q3-sGZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uLf-xT-P0c"/>
                         <userDefinedRuntimeAttributes>
@@ -771,7 +764,6 @@
                     </view>
                     <size key="freeformSize" width="320" height="790"/>
                     <connections>
-                        <outlet property="imgSilent" destination="tYg-SA-9J0" id="qgq-gX-0gA"/>
                         <outlet property="imgUpload" destination="wdj-OD-ycf" id="gt8-kw-7LR"/>
                         <outlet property="lblUserName" destination="cvs-QV-bny" id="kgH-qv-CId"/>
                         <outlet property="tVDescription" destination="Xz5-pD-Etg" id="Lsk-Vq-Ve4"/>

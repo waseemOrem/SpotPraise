@@ -19,12 +19,10 @@ class LoginVC: UIViewController {
     
     //MARK: -Parameters
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-tFUserPassword?.isSecureTextEntry = true
-        // Do any additional setup after loading the view.
-    }
+         tFUserPassword?.isSecureTextEntry = true
+      }
     
     override func viewWillAppear(_ animated: Bool) {
         tFUserPassword?.text = ""
@@ -50,8 +48,9 @@ tFUserPassword?.isSecureTextEntry = true
            // AppManager.Manager.initStoryBoard(type: .Home)
             loginToServer()
         }
-        
     }
+    
+    
     @IBAction func btnActionForget(){
         guard let vc = getVC(withId: VC.ForgotVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? ForgotVC else {
             return
@@ -72,6 +71,7 @@ tFUserPassword?.isSecureTextEntry = true
 
 extension LoginVC{
     func loginToServer(){
+        self.view.endEditing(true)
         let p = RegistrationData.CodingKeys.self
         let param = [p.email.rawValue:tFUserName!.text!,
                      p.password.rawValue:tFUserPassword!.text!]
@@ -99,13 +99,13 @@ extension LoginVC{
                     
                 }
                 else {
-                    Alert.shared.showSimpleAlert(messageStr:resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue )
+                    Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr:resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue )
                     
                 }
             }
                 , onError: { [weak self] (errIs) in
                     if let er = errIs as? String {
-                        Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
+                        Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
                         
                     }
                     

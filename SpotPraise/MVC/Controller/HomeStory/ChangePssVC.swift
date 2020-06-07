@@ -14,7 +14,7 @@ class ChangePssVC: BaseViewController,validationListner {
             return
         }
         f.becomeFirstResponder()
-        Alert.shared.showSimpleAlert(messageStr: message)
+        Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: message)
     }
     
 
@@ -45,7 +45,7 @@ vali.validateForEmpty(validatedObj: tfNewPass, forInvalid: "Please enter new Pas
         }
         
         if tfNewPass?.text != tfConfirmPass?.text{
-            Alert.shared.showSimpleAlert(messageStr: "New password and confirm password doesn't match.")
+            Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "New password and confirm password doesn't match.")
         }
         
         else {
@@ -69,7 +69,7 @@ vali.validateForEmpty(validatedObj: tfNewPass, forInvalid: "Please enter new Pas
                
                 
                 guard let responV = cleanDict["response"] as? String else {
-                    Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue)
+                    Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue)
                     return
                 }
                  Toast.show(message: message, controller: self)

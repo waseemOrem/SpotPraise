@@ -45,6 +45,7 @@
 		845D6FA2247CDD7100B2AF1B /* NetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6FA1247CDD7100B2AF1B /* NetworkManger.swift */; };
 		845D6FA4247CDDD300B2AF1B /* CONSTANT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6FA3247CDDD300B2AF1B /* CONSTANT.swift */; };
 		845D6FA6247CDE1600B2AF1B /* AlertLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D6FA5247CDE1600B2AF1B /* AlertLoader.swift */; };
+		8465C4A8248D0D42009692FC /* FirebaseManagerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465C4A7248D0D42009692FC /* FirebaseManagerClass.swift */; };
 		84707DCD2482220E00304E55 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84707DCC2482220E00304E55 /* Toast.swift */; };
 		8484BA2E2477C4F1002324EC /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484BA2D2477C4F1002324EC /* SignUpVC.swift */; };
 		849919882477AECC0073A1DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849919872477AECC0073A1DE /* AppDelegate.swift */; };
@@ -176,6 +177,7 @@
 		845D6FA1247CDD7100B2AF1B /* NetworkManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManger.swift; sourceTree = "<group>"; };
 		845D6FA3247CDDD300B2AF1B /* CONSTANT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CONSTANT.swift; sourceTree = "<group>"; };
 		845D6FA5247CDE1600B2AF1B /* AlertLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertLoader.swift; sourceTree = "<group>"; };
+		8465C4A7248D0D42009692FC /* FirebaseManagerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManagerClass.swift; sourceTree = "<group>"; };
 		84707DCC2482220E00304E55 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		8484BA2D2477C4F1002324EC /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		849919842477AECC0073A1DE /* SpotPraise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotPraise.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -459,6 +461,7 @@
 				845D6F9B247CDB9900B2AF1B /* ResponseModels */,
 				849919C82477AFE20073A1DE /* AppManager.swift */,
 				844F4FDE2477E825007ACC82 /* BaseViewController.swift */,
+				8465C4A7248D0D42009692FC /* FirebaseManagerClass.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -968,6 +971,7 @@
 				849919F12477B04B0073A1DE /* AnimatableTextView.swift in Sources */,
 				849919F82477B04B0073A1DE /* Typealias.swift in Sources */,
 				849919F32477B04B0073A1DE /* IB.swift in Sources */,
+				8465C4A8248D0D42009692FC /* FirebaseManagerClass.swift in Sources */,
 				8451EE332478AB37008F3E39 /* DescriptionVC.swift in Sources */,
 				849919FB2477B04B0073A1DE /* BorderType.swift in Sources */,
 				844F4FE72477F266007ACC82 /* HomeVC.swift in Sources */,

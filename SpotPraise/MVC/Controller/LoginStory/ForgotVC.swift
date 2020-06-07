@@ -35,7 +35,7 @@ class ForgotVC: UIViewController ,validationListner{
     }
     
     func unableToValidate(validationCandidate: AnyObject?, message: String) {
-        Alert.shared.showSimpleAlert(messageStr: message)
+        Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: message)
     }
    
     func requestForget()  {
@@ -46,12 +46,12 @@ class ForgotVC: UIViewController ,validationListner{
         
         APIManager.requestWebServerWithAlamo(to: .forgetPassword, httpMethd: .post , params: params as [String : Any], completion: { [weak self]  response in
             APIManager.getJsonDict(response: response, completion: {cleanDict in
-                var message = "Otp has been sent to your number.".localized
+                var message = "success.".localized
                  if let msg = cleanDict["msg"] as? String {
                     message = msg
                 }
-                
-                Alert.shared.showSimpleAlert(messageStr: message)
+                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: message)
+               // Alert.shared.showSimpleAlert(messageStr: message)
                  
                 // print(cleanDict)
             })
