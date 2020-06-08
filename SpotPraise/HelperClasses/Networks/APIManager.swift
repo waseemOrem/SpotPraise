@@ -239,9 +239,7 @@ class APIManager :NSObject {
             if isConnected{
                 var wereTwoDifferentImage = false
                 
-                DispatchQueue.main.async {
-                    Loader.shared.showLoader()
-                }
+               
                 headerSetup()
                 guard let  urlString = MakeURL.genrateURL(endPoint: urlS)  else {return}
                 //let url =   URL(string: serverURLEndpoint.baseURL.rawValue+urlS.rawValue)
@@ -249,90 +247,107 @@ class APIManager :NSObject {
                 console("******|||| API HEADER WAS \(Auth_header) |||||******")
                 console("******|||| PARAMETERS WAS \(parameters) |||||******")
                 
+                print("v IS \(VideoUrl)")
+                guard let  url = MakeURL.genrateURL(endPoint: serverURLEndpoint(rawValue: serverURLEndpoint.addPost.rawValue)!)  else {return}//"videoUploading" //"http://175.176.184.119/~apis~/lakapp/api/apis/videoUploading"
+                guard let thumbnailImgData = imagethumbnel.jpegData(compressionQuality: 0.75) else { return }
+                
+                guard let logoImageData = postImge?.jpegData(compressionQuality: 0.75) else {return}
+                DispatchQueue.main.async {
+                    Loader.shared.showLoader()
+                }
+                Alamofire.upload(
+                    multipartFormData: { multipartFormData in
+                        //multipartFormData.append(self.mypath!, withName: "video")
+                        
+                        multipartFormData.append(VideoUrl, withName: "video", fileName: "upload.mov", mimeType: "video/mov")
+                        multipartFormData.append(logoImageData , withName: "logo_image", fileName: "image.jpg", mimeType: "image/jpeg")
+                        
+                        multipartFormData.append(thumbnailImgData , withName: "thumbnail", fileName: "image.jpg", mimeType: "image/jpeg")
+                        
+                        for (key, value) in parameters! {
+                            // multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                            multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: "\(key)")
+                            // multipartFormData.append(value.data(using: Int.encode(32)), withName: key)
+                            
+                        }
+                },
+                    usingThreshold:UInt64.init(),
+                    to:url,
+                    method:.post,
+                    headers:Auth_header,
+                    encodingCompletion: { encodingResult in
+                        
+                        switch encodingResult {
+                            
+                        case .success(let upload, _, _):
+                           
+                            upload.responseJSON { response in
+                                debugPrint(response.response?.statusCode)
+                                  Loader.shared.hideLoader()
+                                if response.result .isSuccess
+                                {
+                                    self.getJsonDict(response: response, completion: {dataDict in
+                                        var statusCode = 0
+                                        if  let status = dataDict["status"] as? String{
+                                            statusCode = Int(status) ?? 0
+                                        }
+                                        else  if  let status = dataDict["status"] as? Int{
+                                            statusCode = status
+                                        }
+                                        
+                                        if checkAndRespondCode(responseCode:statusCode,response:response){
+                                            completion(response)
+                                        }
+                                        
+                                    })
+                                    
+                                    
+                                }
+                                else
+                                {
+                                    
+                                }
+                                
+                                }.uploadProgress { progress in // main queue by default
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                    //                        CircularSpinner.frame
+                                    
+                                    print(Float(progress.fractionCompleted) * 100)
+                                    
+                                    let per = Int(Float(progress.fractionCompleted) * 100)
+                                    print("\(per)%")
+                                    //  self.viewLoader.isHidden = false
+                                    //printself.lblLoading.text! =   "\(per)%"// String(per)
+                                    
+                                    
+                            }
+                        case .failure(let encodingError):
+                            print(encodingError)
+                             Loader.shared.hideLoader()
+                            //     self.throwError(encodingError.localizedDescription)
+                            //
+                        }
+                }
+                )
+                
+            }
+            else
+            {let err = NetWorkErro.NoNetwork.rawValue
+                
+                //if !logoutRequest{
+                Toast.show(message: err, controller: nil)
+                    showErrorMessage(messageStr: err)
+               // }
+               // else if logoutRequest{
+                   // onError?("No Internet!!" as AnyObject)
+               // }
+                
                 
             }
             
         }
             
             )
-        print("v IS \(VideoUrl)")
-        guard let  url = MakeURL.genrateURL(endPoint: serverURLEndpoint(rawValue: serverURLEndpoint.addPost.rawValue)!)  else {return}//"videoUploading" //"http://175.176.184.119/~apis~/lakapp/api/apis/videoUploading"
-        guard let thumbnailImgData = imagethumbnel.jpegData(compressionQuality: 0.75) else { return }
-        
-        guard let logoImageData = postImge?.jpegData(compressionQuality: 0.75) else {return}
-        
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                //multipartFormData.append(self.mypath!, withName: "video")
-                
-                multipartFormData.append(VideoUrl, withName: "video", fileName: "upload.mov", mimeType: "video/mov")
-                multipartFormData.append(logoImageData , withName: "logo_image", fileName: "image.jpg", mimeType: "image/jpeg")
-                
-                multipartFormData.append(thumbnailImgData , withName: "thumbnail", fileName: "image.jpg", mimeType: "image/jpeg")
-                
-                for (key, value) in parameters! {
-                    // multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                    multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: "\(key)")
-                    // multipartFormData.append(value.data(using: Int.encode(32)), withName: key)
-                    
-                }
-          },
-            usingThreshold:UInt64.init(),
-            to:url,
-            method:.post,
-            headers:Auth_header,
-            encodingCompletion: { encodingResult in
-                
-                switch encodingResult {
-                    
-                case .success(let upload, _, _):
-                    upload.responseJSON { response in
-                        debugPrint(response.response?.statusCode)
-                        
-                        if response.result .isSuccess
-                        {
-                            self.getJsonDict(response: response, completion: {dataDict in
-                                var statusCode = 0
-                                if  let status = dataDict["status"] as? String{
-                                    statusCode = Int(status) ?? 0
-                                }
-                                else  if  let status = dataDict["status"] as? Int{
-                                    statusCode = status
-                                }
-                                
-                                if checkAndRespondCode(responseCode:statusCode,response:response){
-                                    completion(response)
-                                }
-                                
-                            })
-                          
-                            
-                        }
-                        else
-                        {
-                            
-                        }
-                        
-                         }.uploadProgress { progress in // main queue by default
-                            print("Upload Progress: \(progress.fractionCompleted)")
-                            //                        CircularSpinner.frame
-                            
-                            print(Float(progress.fractionCompleted) * 100)
-                            
-                            let per = Int(Float(progress.fractionCompleted) * 100)
-                            print("\(per)%")
-                            //  self.viewLoader.isHidden = false
-                            //printself.lblLoading.text! =   "\(per)%"// String(per)
-                            
-                            
-                    }
-                case .failure(let encodingError):
-                    print(encodingError)
-                    //     self.throwError(encodingError.localizedDescription)
-                    //
-                }
-        }
-        )
         
         
     }

@@ -197,14 +197,24 @@ class DescriptionVC: BaseViewController {
     }
     
     func postVideo(){//"post_image":"",
-        let params = ["company_title":"WAseem",
-                      "description":"des",
-                      "email":"lalitattri.orem@gmail.com",
-                      "web_link":"www.google.com",
-                       "post_image":"",
+//      /  let params = ["company_title":"WAseem",
+//                      "description":"des",
+//                      "email":"lalitattri.orem@gmail.com",
+//                      "web_link":"www.google.com",
+//                       "post_image":"",
+//                      "logo_image":"",
+//                      "thumbnail":"",
+//                      "video":""]
+        let params = ["company_title":self.tfTitle.text!,
+                      "description":self.tVDescription.text,
+                      "email":self.tfEmailAddress.text!,
+                      "web_link":tfWebsiteName.text!,
+                      "post_image":"",
                       "logo_image":"",
                       "thumbnail":"",
-                      "video":""]
+                                        "video":""
+                      
+                      ] as [String:Any]
        // guard let thumbNailImage = self.socialPostData[.postThumb] as? UIImage else {return}
        // guard let videoURL = self.socialPostData[.postVideoURL] as? URL else {return}
         
