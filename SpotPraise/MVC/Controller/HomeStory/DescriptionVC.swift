@@ -99,7 +99,7 @@ class DescriptionVC: BaseViewController {
                             toValidate.validateForEmpty(validatedObj: tVDescription, forInvalid: "Please enter the description"),
                             toValidate.validateForEmpty(validatedObj: tfEmailAddress, forInvalid: "Please enter a correct email"),
                             toValidate.validateURL(tfWebsiteName, forInvalid: "Please enter correct website."),
-                            toValidate.validateForEmail(tfEmailAddress, forInvalid: "Please enter a coreect email")
+                            toValidate.validateForEmail(tfEmailAddress, forInvalid: "Please enter a correct email")
                             else {
                                 return
                         }
@@ -125,7 +125,7 @@ class DescriptionVC: BaseViewController {
                 self.silentPostImage = image
                 // self.view.addSubview(silentV!)
                 
-                //postImageToServer()
+                postImageToServer()
             }else {
                 postVideo()
             }
@@ -229,7 +229,7 @@ class DescriptionVC: BaseViewController {
                 if let msg = cleanDict["msg"] as? String {
                     mm = msg
                 }
-                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: mm)
+                Alert.shared.showSimpleAlert(_title: "Alert".localized, messageStr: mm)
                 
             })
             

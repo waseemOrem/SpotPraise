@@ -99,13 +99,13 @@ extension LoginVC{
                     
                 }
                 else {
-                    Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr:resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue )
+                    Alert.shared.showSimpleAlert(_title: "Alert".localized, messageStr:resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue )
                     
                 }
             }
                 , onError: { [weak self] (errIs) in
                     if let er = errIs as? String {
-                        Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
+                        Alert.shared.showSimpleAlert(_title: "Alert".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
                         
                     }
                     

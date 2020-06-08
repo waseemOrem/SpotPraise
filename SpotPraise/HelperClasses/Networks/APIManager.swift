@@ -336,7 +336,7 @@ class APIManager :NSObject {
                 
                 //if !logoutRequest{
                 Toast.show(message: err, controller: nil)
-                    showErrorMessage(messageStr: err)
+                   // showErrorMessage(messageStr: err)
                // }
                // else if logoutRequest{
                    // onError?("No Internet!!" as AnyObject)

@@ -174,23 +174,23 @@ extension OTPVerificationVC{
             //  let resData  = (try? JSONDecoder().decode(RegistrationRootClass.self, from: response.data! ))
             
             if response.response?.statusCode == 200{
-//                guard  resData?.data != nil else {
-//                    Alert.shared.showAlertWithCompletion(buttons: ["Dismiss"], msg: resData?.msg ?? MESSAGES.RESPONSE_ERROR.rawValue, success: {_ in })
-//                    return}
-               // AppManager.Manager.saveLoggedData(registrationData: resData)
-                Toast.show(message: resData?.msg ?? "User Registered successfully.", controller: self!)
-                userJustRegister = self?.signUpParameters[p.email.rawValue] as! String
+                guard  resData?.data != nil else {
+                     Alert.shared.showSimpleAlert(_title: "Alert".localized, messageStr: resData?.msg ?? "Some Error")
+                    return}
+               
+                Alert.shared.showSimpleAlert(_title: "Message".localized, messageStr: resData?.msg ?? "User Registered successfully.")
+                 userJustRegister = self?.signUpParameters[p.email.rawValue] as! String
                 self?.navigationController?.popToRootViewController(animated: true)
               // AppManager.Manager.loginToApp(registrationData: resData)
             }
             else {
-                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr:MESSAGES.RESPONSE_ERROR.rawValue )
+                Alert.shared.showSimpleAlert(_title: "Alert".localized, messageStr:MESSAGES.RESPONSE_ERROR.rawValue )
                 
             }
         }
             , onError: { [weak self] (errIs) in
                 if let er = errIs as? String {
-                    Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
+                    Alert.shared.showSimpleAlert(_title: "Alert".localized, messageStr: MESSAGES.RESPONSE_ERROR.rawValue )
                     
                 }
                 

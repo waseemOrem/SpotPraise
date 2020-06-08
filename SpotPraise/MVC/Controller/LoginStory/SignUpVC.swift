@@ -94,33 +94,9 @@ class SignUpVC: BaseViewController {
             return
         }
         if companyID != "0"{
-            let p = RegistrationData.CodingKeys.self
             
-            
-            
-            let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
-                                   p.name.rawValue:tfUserName.text!,
-                                   p.password.rawValue:tfPss.text!,
-                                   p.email.rawValue:tfEmail!.text!,
-                                   p.phone.rawValue:tfPhoneNo!.text!,
-                                   p.countryCode.rawValue:lblCC.text!,
-                                   p.companyId.rawValue:self.companyID,
-                                   "devicetype":"ios",
-                                   "devicetoken":deviceTokenString
-                ] as [String : Any]
-            
-            
-            let  phoneNumber = lblCC.text! + tfPhoneNo.text!
-            FireBaseMangerC.sharedManager.openCaptchaVerification(phoneNumberWithCountryCodeWithSign: phoneNumber, completion: { [weak self] uniqueID in
-                
-                guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
-                    return
-                }
-                vc.signUpParameters = paramsForSignUP
-                vc.verificationIDFromFireBase = uniqueID
-                self?.pushVC(vc)
-                
-            })
+            verifyCredentialsFromServer()
+ 
         }
         else {
             Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "Please choose company".localized)
@@ -160,73 +136,51 @@ extension SignUpVC{
               
                 
             }
-            
-            
+        
         })
     }
     
     
-//    func requestOtpForRegistration()  {
-//        let p = RegistrationData.CodingKeys.self
-//        let params = [
-//                      p.email.rawValue:tfEmail!.text!,
-//                      p.phone.rawValue:tfPhoneNo!.text!,
-//                      p.countryCode.rawValue:lblCC.text!
-//                      ] as [String : Any]
-//
-//
-//        let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
-//                               p.name.rawValue:tfUserName.text!,
-//                               p.password.rawValue:tfPss.text!,
-//                    p.email.rawValue:tfEmail!.text!,
-//            p.phone.rawValue:tfPhoneNo!.text!,
-//            p.countryCode.rawValue:lblCC.text!,
-//            p.companyId.rawValue:self.companyID,
-//            "devicetype":"ios",
-//            "devicetoken":deviceTokenString
-//            ] as [String : Any]
-//
-//         APIManager.requestWebServerWithAlamo(to: .sentOtp, httpMethd: .post , params: params as [String : Any], completion: { response in
-//            APIManager.getJsonDict(response: response, completion: {  [weak self] cleanDict in
-//                var message = "Otp has been sent to your number.".localized
-//                var otpIs = "0"
-//                if let msg = cleanDict["msg"] as? String {
-//                  message = msg
-//                }
-//
-//                if let otp = cleanDict["otp"] as? String
-//                {
-//                   otpIs = otp
-//                }
-//
-//                if let otp = cleanDict["otp"] as? Int {
-//                    otpIs = String(otp)
-//                }
-//                if otpIs != "0" {
-//
-//                    Alert.shared.showAlertWithCompletion(buttons: ["Verify" ,"Cancel"], msg: message, success: {option in
-//
-//                        if option == "Verify"{
-//                            guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
-//                                return
-//                            }
-//                            vc.signUpParameters = paramsForSignUP
-//                            vc.verifiedOTP = otpIs
-//                            //for pre email
-//
-//
-//                            self?.pushVC(vc)
-//                        }
-//
-//                    })
-//                  //  Alert.shared.showSimpleAlert(messageStr: message)
-//                }else {
-//                    Alert.shared.showSimpleAlert(messageStr: MESSAGES.RESPONSE_ERROR.rawValue)
-//                }
-//               // print(cleanDict)
-//            })
-//        })
-//    }
+    func verifyCredentialsFromServer()  {
+        let p = RegistrationData.CodingKeys.self
+        let params = [
+                      p.email.rawValue:tfEmail!.text!,
+                      p.phone.rawValue:tfPhoneNo!.text!,
+                      p.countryCode.rawValue:lblCC.text!
+                      ] as [String : Any]
+
+
+        let paramsForSignUP = [p.username.rawValue:tfUserName!.text!,
+                               p.name.rawValue:tfUserName.text!,
+                               p.password.rawValue:tfPss.text!,
+                    p.email.rawValue:tfEmail!.text!,
+            p.phone.rawValue:tfPhoneNo!.text!,
+            p.countryCode.rawValue:lblCC.text!,
+            p.companyId.rawValue:self.companyID,
+            "devicetype":"ios",
+            "devicetoken":deviceTokenString
+            ] as [String : Any]
+        
+        
+
+         APIManager.requestWebServerWithAlamo(to: .sentOtp, httpMethd: .post , params: params as [String : Any], completion: { response in
+           if  response.response?.statusCode == 200 {
+            
+                        let  phoneNumber = self.lblCC.text! + self.tfPhoneNo.text!
+                        FireBaseMangerC.sharedManager.openCaptchaVerification(phoneNumberWithCountryCodeWithSign: phoneNumber, completion: { [weak self] uniqueID in
+            
+                            guard let vc = self?.getVC(withId: VC.OTPVerificationVC.rawValue, storyBoardName: Storyboards.Login.rawValue) as? OTPVerificationVC else {
+                                return
+                            }
+                            vc.signUpParameters = paramsForSignUP
+                            vc.verificationIDFromFireBase = uniqueID
+                            self?.pushVC(vc)
+            
+                        })
+            }
+            
+        })
+    }
     
     
 }
@@ -275,3 +229,6 @@ extension SignUpVC:ADCountryPickerDelegate,UITextFieldDelegate
         return false
     }
 }
+
+
+

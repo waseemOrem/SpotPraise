@@ -37,7 +37,8 @@ class FireBaseMangerC{
                 
                 
             }else {
-                Toast.show(message:error?.localizedDescription ?? "unable to get secret id from firebase" , controller: nil)
+                 Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr:error?.localizedDescription ?? "unable to get secret id from firebase".localized)
+                //Toast.show(message:error?.localizedDescription ?? "unable to get secret id from firebase" , controller: nil)
                 print("unable to get secret id from firebase",error?.localizedDescription)
             }
         })
@@ -60,9 +61,12 @@ class FireBaseMangerC{
                 Loader.shared.hideLoader()
                 completion(true)
             }else {
-                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: "Unable to verify please try again after sometime.".localized)
+                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr:error?.localizedDescription ?? "Unable to verify please try again after sometime.".localized)
+                 print("unable to get secret id from firebase",error?.localizedDescription)
             }
             
         })
     }
 }
+
+

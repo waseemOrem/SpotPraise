@@ -50,7 +50,7 @@ class ForgotVC: UIViewController ,validationListner{
                  if let msg = cleanDict["msg"] as? String {
                     message = msg
                 }
-                Alert.shared.showSimpleAlert(_title: "Error".localized, messageStr: message)
+                Alert.shared.showSimpleAlert(_title: "Message".localized, messageStr: message)
                // Alert.shared.showSimpleAlert(messageStr: message)
                  
                 // print(cleanDict)
