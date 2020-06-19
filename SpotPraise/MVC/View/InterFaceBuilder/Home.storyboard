@@ -93,18 +93,20 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="426"/>
                                             </imageView>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bgo-fm-Uoo" customClass="AnimatableView" customModule="SpotPraise" customModuleProvider="target">
-                                                <rect key="frame" x="15" y="10" width="30" height="30"/>
+                                                <rect key="frame" x="15" y="10" width="35" height="35"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_cross" translatesAutoresizingMaskIntoConstraints="NO" id="0eg-W3-ZZa">
-                                                        <rect key="frame" x="3" y="3" width="24" height="24"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_cross" translatesAutoresizingMaskIntoConstraints="NO" id="0eg-W3-ZZa">
+                                                        <rect key="frame" x="10" y="10" width="15" height="15"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="0eg-W3-ZZa" secondAttribute="height" multiplier="1:1" id="MPz-d8-0mP"/>
+                                                            <constraint firstAttribute="width" constant="15" id="fhy-vK-2RG"/>
+                                                        </constraints>
                                                     </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="0eg-W3-ZZa" secondAttribute="bottom" constant="3" id="06I-tJ-uoP"/>
-                                                    <constraint firstAttribute="trailing" secondItem="0eg-W3-ZZa" secondAttribute="trailing" constant="3" id="ThF-uQ-OOs"/>
-                                                    <constraint firstItem="0eg-W3-ZZa" firstAttribute="top" secondItem="Bgo-fm-Uoo" secondAttribute="top" constant="3" id="WM3-ZP-evq"/>
-                                                    <constraint firstItem="0eg-W3-ZZa" firstAttribute="leading" secondItem="Bgo-fm-Uoo" secondAttribute="leading" constant="3" id="mv3-x6-jsp"/>
+                                                    <constraint firstItem="0eg-W3-ZZa" firstAttribute="centerY" secondItem="Bgo-fm-Uoo" secondAttribute="centerY" id="MT3-u1-gCu"/>
+                                                    <constraint firstItem="0eg-W3-ZZa" firstAttribute="centerX" secondItem="Bgo-fm-Uoo" secondAttribute="centerX" id="t8h-rG-mf1"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="circleIt" value="YES"/>
@@ -117,23 +119,30 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BLd-iI-8XU">
-                                                <rect key="frame" x="15" y="10" width="30" height="30"/>
+                                                <rect key="frame" x="15" y="10" width="35" height="35"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="E3G-XJ-kpf"/>
+                                                    <constraint firstAttribute="width" constant="35" id="E3G-XJ-kpf"/>
                                                     <constraint firstAttribute="width" secondItem="BLd-iI-8XU" secondAttribute="height" id="Ok3-Iz-pkq"/>
                                                 </constraints>
                                                 <connections>
                                                     <action selector="preViewRemoveClick:" destination="ljf-pG-t3c" eventType="touchUpInside" id="YU4-3L-fAb"/>
                                                 </connections>
                                             </button>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_home_circle_button" translatesAutoresizingMaskIntoConstraints="NO" id="Ms0-oI-7s1">
+                                                <rect key="frame" x="110" y="326" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="Ms0-oI-7s1" secondAttribute="height" multiplier="1:1" id="B3r-mt-fkC"/>
+                                                    <constraint firstAttribute="width" constant="100" id="k2k-iV-3oJ"/>
+                                                </constraints>
+                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHc-Vz-xIJ">
-                                                <rect key="frame" x="120" y="346" width="80" height="80"/>
+                                                <rect key="frame" x="120" y="376" width="80" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="F88-O4-4Bd"/>
-                                                    <constraint firstAttribute="width" secondItem="UHc-Vz-xIJ" secondAttribute="height" id="ihM-aR-SwJ"/>
+                                                    <constraint firstAttribute="height" constant="50" id="iQR-Dj-cBF"/>
                                                 </constraints>
-                                                <state key="normal" image="ic_home_circle_button"/>
                                                 <connections>
                                                     <action selector="btnMoveToPostClick:" destination="ljf-pG-t3c" eventType="touchUpInside" id="G77-3p-DrU"/>
                                                 </connections>
@@ -145,11 +154,13 @@
                                             <constraint firstItem="gYI-Rc-KDJ" firstAttribute="top" secondItem="fxH-ax-DYc" secondAttribute="top" id="BVB-1z-vl8"/>
                                             <constraint firstItem="gYI-Rc-KDJ" firstAttribute="leading" secondItem="fxH-ax-DYc" secondAttribute="leading" id="DZc-uc-tbQ"/>
                                             <constraint firstAttribute="bottom" secondItem="UHc-Vz-xIJ" secondAttribute="bottom" id="HH8-0m-fk3"/>
+                                            <constraint firstItem="Ms0-oI-7s1" firstAttribute="bottom" secondItem="UHc-Vz-xIJ" secondAttribute="bottom" id="UyQ-s5-sIm"/>
                                             <constraint firstAttribute="trailing" secondItem="gYI-Rc-KDJ" secondAttribute="trailing" id="YgL-km-Xy6"/>
                                             <constraint firstItem="Bgo-fm-Uoo" firstAttribute="bottom" secondItem="BLd-iI-8XU" secondAttribute="bottom" id="ZtT-Bn-3tb"/>
                                             <constraint firstAttribute="bottom" secondItem="gYI-Rc-KDJ" secondAttribute="bottom" id="aMU-Fs-Bvi"/>
                                             <constraint firstItem="UHc-Vz-xIJ" firstAttribute="centerX" secondItem="fxH-ax-DYc" secondAttribute="centerX" id="fgF-P6-bxA"/>
                                             <constraint firstItem="BLd-iI-8XU" firstAttribute="top" secondItem="gYI-Rc-KDJ" secondAttribute="top" constant="10" id="jGe-9y-aEC"/>
+                                            <constraint firstItem="Ms0-oI-7s1" firstAttribute="centerX" secondItem="UHc-Vz-xIJ" secondAttribute="centerX" id="jMO-xN-zfv"/>
                                             <constraint firstItem="BLd-iI-8XU" firstAttribute="leading" secondItem="gYI-Rc-KDJ" secondAttribute="leading" constant="15" id="pP7-gV-cH2"/>
                                             <constraint firstItem="Bgo-fm-Uoo" firstAttribute="leading" secondItem="BLd-iI-8XU" secondAttribute="leading" id="ysw-Ob-sPw"/>
                                             <constraint firstItem="Bgo-fm-Uoo" firstAttribute="trailing" secondItem="BLd-iI-8XU" secondAttribute="trailing" id="zb2-FZ-DXN"/>
