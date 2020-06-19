@@ -530,7 +530,7 @@ class APIManager :NSObject {
         if requestCancelled  == false {
             
             DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Error", message:  messageStr, preferredStyle: UIAlertController.Style.alert);
+                let alert = UIAlertController(title: "Alert".localized, message:  messageStr, preferredStyle: UIAlertController.Style.alert);
                 let okButton = UIAlertAction(title: "ok", style: .default, handler: nil)
                 alert.addAction(okButton)
                 

@@ -21,35 +21,12 @@ class HomeVC: BaseViewController {
     //MARK: -Outlets
     @IBOutlet weak var viewHolder:UIView?
      @IBOutlet weak var lblUserName:UILabel?
+     //MARK: - UPDATED 19 june
+    @IBOutlet weak var preViewImage: UIImageView?
+    @IBOutlet weak var viewPreview: UIView?
     
     
     //MARK: -Parameters
-    lazy var  imageV:UIImageView = {
-        let img = UIImageView()
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.clipsToBounds = true
-        return img
-        }()
-    
-    lazy var postButton:UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-       
-        return btn
-    }()
-    lazy var cancelPreviewButton:UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        
-        return btn
-    }()
-    
-    lazy var postThumbNailHolder:UIView = {
-       let v = UIView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
-    
     
     var socialPostData = [SocialPostDataDictKEYS:Any]()
     var choosenPrefrence:UploadChoices?
@@ -57,15 +34,28 @@ class HomeVC: BaseViewController {
     //MARK: -viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
+          lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
         
-       
-        // Do any additional setup after loading the view.
-    }
+        //MARK: - UPDATED 19 june
+        viewPreview?.isHidden = true
+     }
     
     //MARK: -Actions
-    @IBAction func btnPowerClick(_ sender: UIButton) {
+    //MARK: - UPDATED 19 june
+    @IBAction func btnMoveToPostClick(_ sender: UIButton) {
+        guard let vc = getVC(withId: VC.DescriptionVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? DescriptionVC else {
+            return
+        }
+        
+        vc.socialPostData = self.socialPostData
+        self.navigationController?.pushViewController(vc, animated: true)
     }
+   @IBAction func preViewRemoveClick(_ sender: UIButton) {
+        viewPreview?.isHidden = true
+    }
+    //End
+    
+    
     
     @IBAction func btnProfileClick(_ sender: UIButton) {
        
@@ -78,6 +68,9 @@ lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
     }
     
     @IBAction func btnUploadClick(){
+//        imageV.image = #imageLiteral(resourceName: "splash")
+//        addPreview()
+        
         guard let vc = getVC(withId: VC.UploadVideoPopUpVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? UploadVideoPopUpVC else {
             return
         }
@@ -89,33 +82,7 @@ lblUserName?.text = ModelDataHolder.shared.loggedData?.username ?? ""
  
 }
 
-extension HomeVC {
-    //MARK :-Custom functions
-    @objc func clickedOnCancelPreview(){
-        self.postThumbNailHolder.removeFromSuperview()
-    }
-    @objc func clickedOnAddPost(){
-        
-        guard let vc = getVC(withId: VC.DescriptionVC.rawValue, storyBoardName: Storyboards.Home.rawValue) as? DescriptionVC else {
-            return
-        }
-        
-//        guard let thumNailImg = self.postData[postThumb.rawValue] as? UIImage else {
-//            return
-//        }
-//        if choosenPrefrence == .UploadVideo{
-//            guard let videoURL = self.postData[PostDataDict.postVideo.rawValue] as? URL  else {
-//                return
-//            }
-//          vc.videoURL = videoURL
-//        }
-        vc.socialPostData = self.socialPostData
-        //vc.uploadChoice = self.choosenPrefrence
-       // vc.thumbNailImage = thumNailImg
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-}
+
 //MARK: DELEGATES
 
 //MARK: -UploadPopUpListner
@@ -130,21 +97,33 @@ extension HomeVC:UploadPopUpListner{
                 return
             }
             self.socialPostData = data
-             self.imageV.image = data[.postImage] as? UIImage
+           //MARK: - UPDATED 19 june
+           preViewImage?.image = data[.postImage] as? UIImage
             
         case .UploadVideo:
             guard let data = dataSource as? [SocialPostDataDictKEYS:Any] else {
                 return
             }
             self.socialPostData = data
-             self.imageV.image = data[.postThumb] as? UIImage
+            //MARK: - UPDATED 19 june
+            preViewImage?.image = data[.postImage] as? UIImage
           
         default:
             break
         }
         
         print(self.socialPostData)
-        addPreview()
+        guard let data = dataSource as? [SocialPostDataDictKEYS:Any] else {
+            return
+        }
+        
+        
+        //ptional(<UIImage: 0x600002ce5880> size {1125, 840} orientation 0 scale 1.000000)
+      //  DispatchQueue.main.async {
+      //  self.imageV.image = #imageLiteral(resourceName: "splash")
+            self.addPreview()
+      //  }
+       
         
         
     }
@@ -152,59 +131,12 @@ extension HomeVC:UploadPopUpListner{
 }
 //MARK: -PREVIEW ADDITION
 extension HomeVC{
-    //UP
+    //MARK: - UPDATED 19 june
     func addPreview(){
-        self.viewHolder?.addSubview(postThumbNailHolder)
-        postThumbNailHolder.leadingAnchor.constraint(equalTo: (self.viewHolder?.leadingAnchor)!).isActive = true
-        postThumbNailHolder.trailingAnchor.constraint(equalTo: (self.viewHolder?.trailingAnchor)!).isActive = true
-        postThumbNailHolder.topAnchor.constraint(equalTo: (self.viewHolder?.topAnchor)!).isActive = true
-        postThumbNailHolder.bottomAnchor.constraint(equalTo: (self.viewHolder?.bottomAnchor)!).isActive = true
-        
-        self.postThumbNailHolder.addSubview(imageV)
-        
-        //self.viewHolder!.bringSubviewToFront(self.view!)
-        imageV.leadingAnchor.constraint(equalTo: (self.viewHolder?.leadingAnchor)!).isActive = true
-        imageV.trailingAnchor.constraint(equalTo: (self.viewHolder?.trailingAnchor)!).isActive = true
-        imageV.topAnchor.constraint(equalTo: (self.viewHolder?.topAnchor)!).isActive = true
-        imageV.bottomAnchor.constraint(equalTo: (self.viewHolder?.bottomAnchor)!).isActive = true
-        imageV.backgroundColor = .red
-        imageV.isUserInteractionEnabled = true
-        
-        self.imageV.addSubview(postButton)
-        postButton.heightAnchor.constraint(equalToConstant: 110).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
-        postButton.bottomAnchor.constraint(equalTo: (viewHolder?.bottomAnchor)!).isActive = true
-        postButton.centerXAnchor.constraint(equalTo: imageV.centerXAnchor).isActive = true
-        postButton.setBackgroundImage(#imageLiteral(resourceName: "ic_home_circle_button"), for: .normal)
-        
-        postButton.addTarget(self, action: #selector(clickedOnAddPost), for: .touchUpInside)
-        
-        
-        self.imageV.addSubview(cancelPreviewButton)
-        cancelPreviewButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        cancelPreviewButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        cancelPreviewButton.topAnchor.constraint(equalTo: (viewHolder?.topAnchor)!, constant: 5).isActive = true
-       cancelPreviewButton.leadingAnchor.constraint(equalTo: (viewHolder?.leadingAnchor)!, constant: 10).isActive = true
-       // postButton.centerXAnchor.constraint(equalTo: imageV.centerXAnchor).isActive = true
-        cancelPreviewButton.backgroundColor = .white
-        cancelPreviewButton.layer.borderWidth = 1
-        cancelPreviewButton.clipsToBounds = true
-        cancelPreviewButton.layer.masksToBounds = true //layer.masksToBounds = true
-        cancelPreviewButton.layer.borderColor = UIColor.darkGray.cgColor
-        cancelPreviewButton.layer.cornerRadius = cancelPreviewButton.frame.width/2
-        let img = UIImageView()
-        self.imageV.addSubview(img)
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        img.widthAnchor.constraint(equalToConstant: 25).isActive = true
-      img.clipsToBounds = true
-        img.contentMode = .scaleAspectFit
-        img.image = #imageLiteral(resourceName: "ic_cross")
-        img.centerXAnchor.constraint(equalTo: cancelPreviewButton.centerXAnchor).isActive = true
-         img.centerYAnchor.constraint(equalTo: cancelPreviewButton.centerYAnchor).isActive = true
-          cancelPreviewButton.addTarget(self, action: #selector(clickedOnCancelPreview), for: .touchUpInside)
-      }
-     //END
+        viewPreview?.isHidden = false
+    }
+
+    
 }
 
 
