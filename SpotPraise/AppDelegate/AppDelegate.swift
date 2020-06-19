@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-         AppManager.Manager.initStoryBoard(type: .Home)
-       // checkLoggedStatus()
+         
+       checkLoggedStatus()
         
         return true
     }

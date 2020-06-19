@@ -42,8 +42,8 @@ class SignUpVC: BaseViewController {
  adpicker.delegate = self
         //tfPhoneNo.delegate = self
         tfCompanyName?.addRightImage(img : #imageLiteral(resourceName: "ic_dropdown") , imgFrame : CGRect(x: 0, y: 0, width: 32, height: 18))
-        
-          self.getCompanies()
+//         //MARK: - UPDATED 19 june
+        self.getCompanies(openDropDown: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,10 +53,19 @@ class SignUpVC: BaseViewController {
     //MARK: -Actions
     @IBAction func btnActionDropDown(_ sender: UIButton) {
         self.view.endEditing(true)
-        self.setupDropDownMenu(for: self.dropDown, on: self.tfCompanyName, with:companyData, textField: self.tfCompanyName)
+         //MARK: - UPDATED 19 june
+        if companyData?.count == 0 || companyData == nil{
+            getCompanies(openDropDown: true)
+        }else {
+       openDropListForCompanies()
     }
-    
-    
+        //end
+    }
+     //MARK: - UPDATED 19 june
+    func openDropListForCompanies(){
+         self.setupDropDownMenu(for: self.dropDown, on: self.tfCompanyName, with:companyData, textField: self.tfCompanyName)
+    }
+    //end
     func setupDropDownMenu(for dropDown : DropDown?, on anchor : AnchorView?, with dataSource : [Any]?, textField : UITextField? ) {
         guard let dropDown = dropDown else { return }
         dropDown.anchorView = anchor
@@ -117,8 +126,8 @@ class SignUpVC: BaseViewController {
 
 //MARK: -API Functions
 extension SignUpVC{
-    
-    func getCompanies(){
+     //MARK: - UPDATED 19 june
+    func getCompanies(openDropDown:Bool?){
         
         APIManager.requestWebServerWithAlamo(to: .companylist, httpMethd: .get, completion: { [weak self] postResponse in
 
@@ -133,6 +142,9 @@ extension SignUpVC{
                     return}
                 
                 self?.companyData = resData?.data
+                if openDropDown == true{
+                   self?.openDropListForCompanies()
+                }
               
                 
             }
@@ -140,7 +152,7 @@ extension SignUpVC{
         })
     }
     
-    
+    //end
     func verifyCredentialsFromServer()  {
         let p = RegistrationData.CodingKeys.self
         let params = [
